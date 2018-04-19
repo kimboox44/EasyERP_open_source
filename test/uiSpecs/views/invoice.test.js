@@ -443,7 +443,7 @@ define([
                 },
                 whoCanRW: "everyOne",
                 workflow: "55647b962e4aa3804a765ec6",
-                products: [
+                Produits: [
                     {
                         scheduledDate: "2015-01-27T12:09:15.273Z",
                         jobs: "564cfd8ba6e6390160c9ee2c",
@@ -1133,7 +1133,7 @@ define([
                 },
                 whoCanRW: "everyOne",
                 workflow: "55647b962e4aa3804a765ec6",
-                products: [
+                Produits: [
                     {
                         scheduledDate: "2015-01-26T15:33:42.303Z",
                         jobs: "564cfd8ba6e6390160c9ee3e",
@@ -1737,7 +1737,7 @@ define([
             status: "Done",
             name: "Paid"
         },
-        products: [
+        Produits: [
             {
                 subTotal: 100000,
                 unitPrice: 100000,
@@ -1829,7 +1829,7 @@ define([
             },
             whoCanRW: "everyOne",
             workflow: "55647b962e4aa3804a765ec6",
-            products: [
+            Produits: [
                 {
                     unitPrice: 1000,
                     subTotal: 1000,

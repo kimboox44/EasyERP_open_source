@@ -2,10 +2,10 @@ define([
     'Backbone',
     'jQuery',
     'Underscore',
-    'text!templates/Products/CreateTemplate.html',
+    'text!templates/Produits/CreateTemplate.html',
     'views/dialogViewBase',
     'models/ProductModel',
-    'collections/Products/filterCollection',
+    'collections/Produits/filterCollection',
     'common',
     'populate',
     'views/Notes/AttachView',
@@ -32,7 +32,7 @@ define([
             if (options && options.contentType) {
                 this.contentType = options.contentType;
             } else {
-                this.contentType = CONSTANTS.PRODUCTS;
+                this.contentType = CONSTANTS.Produits;
             }
 
             this.viewType = options.viewType || 'list';
@@ -110,7 +110,7 @@ define([
         addToBundle: function (e) {
             var $thisEl = this.$el;
             var $target = $(e.target).closest('li');
-            var $container = $thisEl.find('#productsBundle');
+            var $container = $thisEl.find('#ProduitsBundle');
             var val = $target.text();
             var id = $target.data('id');
 
@@ -126,7 +126,7 @@ define([
         searchProduct: function (e) {
             var $target = e ? $(e.target) : null;
             var $searchContainer = $target && $target.closest('.searchContainer');
-            var $search = $searchContainer && $searchContainer.find('#searchProducts');
+            var $search = $searchContainer && $searchContainer.find('#searchProduits');
             var searchValue = $search ? $search.val() : '';
             var filterOpts = {
                 value: searchValue
@@ -145,15 +145,15 @@ define([
 
             if (!this.searchProdCollection) {
                 this.searchProdCollection = new SearchCollection(collectionOpts);
-                this.searchProdCollection.bind('reset', _.bind(this.renderSearchProducts, this));
+                this.searchProdCollection.bind('reset', _.bind(this.renderSearchProduits, this));
             } else {
                 this.searchProdCollection.getFirstPage(collectionOpts);
             }
         },
 
-        renderSearchProducts: function () {
+        renderSearchProduits: function () {
             var $thisEl = this.$el;
-            var $container = $thisEl.find('#productsForBundle');
+            var $container = $thisEl.find('#ProduitsForBundle');
             var variant = '';
 
             $container.html('');
@@ -366,7 +366,7 @@ define([
                 $($priceListCreate.closest('#priceBlock').find('a')[0]).addClass('active');
                 $priceListCreate.addClass('active');
 
-                populate.get('#productType', '/products/getProductsTypeForDd', {}, 'name', self, true);
+                populate.get('#productType', '/Produits/getProduitsTypeForDd', {}, 'name', self, true);
                 productCategoriesService.renderProductCategories.call(self);
                 common.canvasDraw({model: self.model.toJSON()}, self);
 

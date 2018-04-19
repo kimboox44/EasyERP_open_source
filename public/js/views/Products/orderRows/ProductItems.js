@@ -2,14 +2,14 @@ define([
     'Backbone',
     'jQuery',
     'Underscore',
-    'text!templates/Products/orderRows/ProductItems.html',
-    'text!templates/Products/orderRows/ExpenseInputContent.html',
-    'text!templates/Products/orderRows/ProductInputContent.html',
-    'text!templates/Products/orderRows/ProductItemsEditList.html',
-    'text!templates/Products/orderRows/ItemsEditList.html',
-    'text!templates/Products/orderRows/TotalAmount.html',
-    'text!templates/Products/orderRows/ShippingTemplate.html',
-    'collections/Products/products',
+    'text!templates/Produits/orderRows/ProductItems.html',
+    'text!templates/Produits/orderRows/ExpenseInputContent.html',
+    'text!templates/Produits/orderRows/ProductInputContent.html',
+    'text!templates/Produits/orderRows/ProductItemsEditList.html',
+    'text!templates/Produits/orderRows/ItemsEditList.html',
+    'text!templates/Produits/orderRows/TotalAmount.html',
+    'text!templates/Produits/orderRows/ShippingTemplate.html',
+    'collections/Produits/Produits',
     'views/Projects/projectInfo/wTracks/generateWTrack',
     'views/selectView/selectView',
     'populate',
@@ -41,7 +41,7 @@ define([
     var ProductItemTemplate = Backbone.View.extend({
 
         events: {
-            'click .addProductItem a'                                                 : 'getProducts',
+            'click .addProductItem a'                                                 : 'getProduits',
             'click #selectShippingMethod:not(.disabled)'                              : 'addShipping',
             'click #shippingRow .removeShipping'                                      : 'removeShipping',
             //'click :not(.newSelectList)'                                              : 'closeSelect',
@@ -49,9 +49,9 @@ define([
             'click .newSelectList li.miniStylePagination'                             : 'notHide',
             'click .newSelectList li.miniStylePagination .next:not(.disabled)'        : 'nextSelect',
             'click .newSelectList li.miniStylePagination .prev:not(.disabled)'        : 'prevSelect',
-            'click .current-selected.productsDd'                                      : 'showProductsSelect',
-            'click .current-selected.accountDd'                                       : 'showProductsSelect',
-            'click .current-selected.taxCode'                                         : 'showProductsSelect',
+            'click .current-selected.ProduitsDd'                                      : 'showProduitsSelect',
+            'click .current-selected.accountDd'                                       : 'showProduitsSelect',
+            'click .current-selected.taxCode'                                         : 'showProduitsSelect',
             'mouseenter .editable:not(.quickEdit), .editable .no-long:not(.quickEdit)': 'quickEdit',
             'mouseleave .editable'                                                    : 'removeEdit',
             'click #cancelSpan'                                                       : 'cancelClick',
@@ -72,20 +72,20 @@ define([
             var type = target.attr('data-level');
 
             Backbone.history.fragment = '';
-            Backbone.history.navigate('#easyErp/Products', {trigger: true});
+            Backbone.history.navigate('#easyErp/Produits', {trigger: true});
         },
 
         template: _.template(productItemTemplate),
 
         initialize: function (options) {
-            var products;
+            var Produits;
 
             options = options || Object.create(null);
 
             this.responseObj = {};
             this.taxesRate = 0;
             this.availableVisible = true;
-            this.productsCount = 0;
+            this.ProduitsCount = 0;
 
             if (options) {
                 this.parentModel = options.parentModel;
@@ -95,7 +95,7 @@ define([
                 this.createJob = options.createJob;
                 this.notEditable = options.notEditable;
                 this.discountVisible = options.discountVisible;
-                this.deletedProducts = options.deletedProducts;
+                this.deletedProduits = options.deletedProduits;
 
                 this.forSales = options.forSales;
 
@@ -143,11 +143,11 @@ define([
 
             delete options.responseObj;
 
-            products = new ProductCollection(options);
-            products.bind('reset', function () {
-                this.products = products;
-                this.responseObj['#productsDd'] = products.toJSON();
-                this.filterProductsForDD();
+            Produits = new ProductCollection(options);
+            Produits.bind('reset', function () {
+                this.Produits = Produits;
+                this.responseObj['#ProduitsDd'] = Produits.toJSON();
+                this.filterProduitsForDD();
             }, this);
 
             this.priceChange = _.debounce(this.priceChange, 250);
@@ -259,13 +259,13 @@ define([
             tr.remove();
             trNext.remove();
 
-            this.productsCount--;
+            this.ProduitsCount--;
 
-            if (this.productsCount === 1) {
+            if (this.ProduitsCount === 1) {
                 this.$el.find('.info').first().find('.removeProduct').remove();
             }
 
-            this.deletedProducts.push(productId);
+            this.deletedProduits.push(productId);
         },
 
         generatedWtracks: function () {
@@ -329,7 +329,7 @@ define([
 
         },
 
-        getProducts: function (e) {
+        getProduits: function (e) {
             var self = this;
             var target = $(e.target);
             var $parrent = target.closest('tbody');
@@ -337,7 +337,7 @@ define([
             var rowId = $parrentRow.attr('data-id');
             var hasError = $parrentRow.attr('data-error') === 'true';
             var $trEll = $parrent.find('tr.info');
-            var products = this.products ? this.products.toJSON() : [];
+            var Produits = this.Produits ? this.Produits.toJSON() : [];
             var templ = _.template(ProductInputContent);
             var curSymbol;
             var warehouse;
@@ -358,7 +358,7 @@ define([
                     }
                     $parrent.prepend(templ({
                         forSales  : self.forSales,
-                        products  : products,
+                        Produits  : Produits,
                         curSymbol : curSymbol,
                         writeOff  : self.writeOff,
                         quotations: self.quotations,
@@ -373,7 +373,7 @@ define([
 
                     $($trEll[$trEll.length - 1]).after(templ({
                         forSales  : self.forSales,
-                        products  : products,
+                        Produits  : Produits,
                         curSymbol : curSymbol,
                         writeOff  : self.writeOff,
                         quotations: self.quotations,
@@ -407,15 +407,15 @@ define([
             return false;
         },
 
-        filterProductsForDD: function () {
-            var id = '.productsDd';
+        filterProduitsForDD: function () {
+            var id = '.ProduitsDd';
             var self = this;
-            var products = this.products.toJSON();
+            var Produits = this.Produits.toJSON();
 
-            this.responseObj[id] = products;
+            this.responseObj[id] = Produits;
 
             /*this.responseObj[id] = [];
-             this.responseObj[id] = this.responseObj[id].concat(_.map(products, function (item) {
+             this.responseObj[id] = this.responseObj[id].concat(_.map(Produits, function (item) {
              return {_id: item._id, name: item.name, level: item.projectShortDesc || ''};
              }));*/
         },
@@ -452,7 +452,7 @@ define([
             this.recalculateTaxes(parent);
         },
 
-        showProductsSelect: function (e) {
+        showProduitsSelect: function (e) {
             var $target = $(e.target);
 
             e.stopPropagation();
@@ -503,7 +503,7 @@ define([
             var selectedProduct;
             var jobId;
             var currentJob;
-            var product = $trEl.find('.productsDd');
+            var product = $trEl.find('.ProduitsDd');
             var currency = {};
             var priceList = this.$dialogContainer.find('#priceList').attr('data-id');
             var costList = this.$dialogContainer.find('#costList').attr('data-id');
@@ -543,7 +543,7 @@ define([
             }
 
             function getAvailability(pCb) {
-                dataService.getData('/products/productAvalaible', {
+                dataService.getData('/Produits/productAvalaible', {
                     product  : _id,
                     warehouse: warehouse
                 }, function (data) {
@@ -624,7 +624,7 @@ define([
         },
 
         quantityRetriver: function ($parent) {
-            var selectedProduct = this.products || new Backbone.Collection();
+            var selectedProduct = this.Produits || new Backbone.Collection();
             var id;
             var quantity;
 
@@ -777,11 +777,11 @@ define([
         },
 
         nextSelect: function (e) {
-            this.showProductsSelect(e, false, true);
+            this.showProduitsSelect(e, false, true);
         },
 
         prevSelect: function (e) {
-            this.showProductsSelect(e, true, false);
+            this.showProduitsSelect(e, true, false);
         },
 
         removeEditableCass: function ($tr) {
@@ -852,12 +852,12 @@ define([
         },
 
         render: function (options) {
-            var productsContainer;
+            var ProduitsContainer;
             var totalAmountContainer;
             var $thisEl = this.$el;
             var model = this.parentModel ? this.parentModel.toJSON() : options ? options.model : '';
             var self = this;
-            var products;
+            var Produits;
             var currency;
             var channel;
             var templ;
@@ -869,7 +869,7 @@ define([
             populate.get('#shippingDd', '/shippingMethod/getForDd', {}, 'name', this, false, true);
 
             if (model) {
-                products = model.products;
+                Produits = model.Produits;
                 currency = model.currency;
                 channel = model.channel;
                 shipping = model.sourceDocument && model.sourceDocument.shippingMethod ? model.sourceDocument.shippingMethod : model.shippingMethod;
@@ -883,13 +883,13 @@ define([
                     notEditable: this.notEditable
                 }));
 
-                if (products) {
+                if (Produits) {
 
-                    this.productsCount = products.length;
+                    this.ProduitsCount = Produits.length;
 
-                    productsContainer = $thisEl.find('#productList');
-                    productsContainer.append(_.template(ItemsEditList, {
-                        products        : products,
+                    ProduitsContainer = $thisEl.find('#productList');
+                    ProduitsContainer.append(_.template(ItemsEditList, {
+                        Produits        : Produits,
                         shippingMethod  : shipping,
                         notEditable     : this.notEditable,
                         availableVisible: this.availableVisible,

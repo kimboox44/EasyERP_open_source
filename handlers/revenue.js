@@ -910,17 +910,17 @@ var wTrack = function (models) {
                 date     : 1,
                 project  : '$invoice.project',
                 invoiceId: '$invoice._id',
-                products : '$invoice.products'
+                Produits : '$invoice.Produits'
             }
         }, {
             $unwind: {
-                path                      : '$products',
+                path                      : '$Produits',
                 preserveNullAndEmptyArrays: true
             }
         }, {
             $lookup: {
                 from        : 'journalentries',
-                localField  : 'products.jobs',
+                localField  : 'Produits.jobs',
                 foreignField: 'sourceDocument._id',
                 as          : 'jobFinished'
             }
@@ -947,7 +947,7 @@ var wTrack = function (models) {
             }
         }, {
             $unwind: {
-                path                      : '$invoice.products',
+                path                      : '$invoice.Produits',
                 preserveNullAndEmptyArrays: true
             }
         }, {
@@ -4459,17 +4459,17 @@ var wTrack = function (models) {
                 date     : 1,
                 project  : '$invoice.project',
                 invoiceId: '$invoice._id',
-                products : '$invoice.products'
+                Produits : '$invoice.Produits'
             }
         }, {
             $unwind: {
-                path                      : '$products',
+                path                      : '$Produits',
                 preserveNullAndEmptyArrays: true
             }
         }, {
             $lookup: {
                 from        : 'journalentries',
-                localField  : 'products.jobs',
+                localField  : 'Produits.jobs',
                 foreignField: 'sourceDocument._id',
                 as          : 'jobFinished'
             }

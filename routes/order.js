@@ -200,7 +200,7 @@ module.exports = function (models, event) {
               name: "USD"
             }
           },
-          products: [
+          Produits: [
             {
               _id: "5840229b7a7667d81be7f9e5",
               description: "",

@@ -305,7 +305,7 @@ describe('Payment Specs', function () {
                     'fiscalPosition'   : null,
                     'destination'      : null,
                     'incoterm'         : null,
-                    'products'         : [
+                    'Produits'         : [
                         {
                             'product'      : CONSTANTS.PRODUCT,
                             'unitPrice'    : '500',

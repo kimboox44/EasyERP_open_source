@@ -138,7 +138,7 @@ module.exports = function (models, event) {
            "shippingStatus": "NOT"
          }
        ],
-       "name": "Products received",
+       "name": "Produits received",
        "count": 1
      },
      {

@@ -3,30 +3,30 @@ define([
     'jQuery',
     'Underscore',
     'views/listViewBase',
-    'text!templates/Products/list/ListHeader.html',
-    'views/Products/CreateView',
-    'views/Products/list/ListItemView',
-    'views/Products/EditView',
-    'views/Products/publishProductView',
+    'text!templates/Produits/list/ListHeader.html',
+    'views/Produits/CreateView',
+    'views/Produits/list/ListItemView',
+    'views/Produits/EditView',
+    'views/Produits/publishProductView',
     'models/ProductModel',
     'text!templates/Alpabet/AphabeticTemplate.html',
-    'collections/Products/filterCollection',
+    'collections/Produits/filterCollection',
     'views/guideTours/guideNotificationView',
     'dataService',
     'common',
     'constants',
     'helpers'
 ], function (Backbone, $, _, ListViewBase, listTemplate, CreateView, ListItemView, EditView, PublishProductView, ProductModel, aphabeticTemplate, contentCollection, GuideNotify, dataService, common, CONSTANTS, helpers) {
-    var ProductsListView = ListViewBase.extend({
+    var ProduitsListView = ListViewBase.extend({
         CreateView       : CreateView,
         EditView         : EditView,
         listTemplate     : listTemplate,
         ListItemView     : ListItemView,
         contentCollection: contentCollection,
         page             : null, // if reload page, and in url is valid page
-        contentType      : 'Products', // needs in view.prototype.changeLocationHash
-        exportToXlsxUrl  : '/Products/exportToXlsx',
-        exportToCsvUrl   : '/Products/exportToCsv',
+        contentType      : 'Produits', // needs in view.prototype.changeLocationHash
+        exportToXlsxUrl  : '/Produits/exportToXlsx',
+        exportToCsvUrl   : '/Produits/exportToCsv',
         hasPagination    : true,
 
         initialize: function (options) {
@@ -80,12 +80,12 @@ define([
             $('#channelStatus span').text('');
             $('#channelStatus div').attr('class', 'channelImg');
 
-            App.publishProductState = null;
+            App.publishProduitstate = null;
 
             if (self.productId) {
-                url = '#easyErp/Products/tform/' + self.productId + '/p=1/c=50';
+                url = '#easyErp/Produits/tform/' + self.productId + '/p=1/c=50';
             } else {
-                url = '#easyErp/Products/list/p=1/c=50';
+                url = '#easyErp/Produits/list/p=1/c=50';
             }
 
             Backbone.history.fragment = '';
@@ -101,7 +101,7 @@ define([
             var channelType = data.channelType;
             var channelName = data.channelName;
 
-            App.publishProductState = action;
+            App.publishProduitstate = action;
 
             this.toExpand = true;
 
@@ -141,7 +141,7 @@ define([
         getChannelData: function (isPublishAction) {
             var $currentEl = this.$el;
             var $checked = $currentEl.find('input.checkbox:checked');
-            var products = [];
+            var Produits = [];
             var data;
             var collection = this.collection;
             var channelType = this.channelType;
@@ -158,7 +158,7 @@ define([
                     return;
                 }
 
-                products.push(val);
+                Produits.push(val);
             });
 
             if (error) {
@@ -166,7 +166,7 @@ define([
             }
 
             data = {
-                products: products,
+                Produits: Produits,
                 channel : this.channel
             };
 
@@ -207,27 +207,27 @@ define([
                 $('#channelStatus div').attr('class', 'channelImg');
 
                 if (self.productId) {
-                    urlHash = '#easyErp/Products/tform/' + self.productId + '/p=1/c=50';
+                    urlHash = '#easyErp/Produits/tform/' + self.productId + '/p=1/c=50';
                 } else {
-                    urlHash = '#easyErp/Products/list/p=1/c=50';
+                    urlHash = '#easyErp/Produits/list/p=1/c=50';
                 }
 
-                App.publishProductState = null;
+                App.publishProduitstate = null;
                 Backbone.history.fragment = '';
                 Backbone.history.navigate(urlHash, {trigger: true});
             });
         },
 
         publish: function () {
-            this.makeTheAction('/products/channelLinks', 'published', dataService.postData);
+            this.makeTheAction('/Produits/channelLinks', 'published', dataService.postData);
         },
 
         unpublish: function () {
-            this.makeTheAction('/products/channelLinks', 'unpublished', dataService.patchData);
+            this.makeTheAction('/Produits/channelLinks', 'unpublished', dataService.patchData);
         },
 
         unlink: function () {
-            this.makeTheAction('/products//channelLinks/unlink', 'unlinked', dataService.patchData);
+            this.makeTheAction('/Produits//channelLinks/unlink', 'unlinked', dataService.patchData);
         },
 
         configureChannel: function (action) {
@@ -244,7 +244,7 @@ define([
 
             this.hideDeleteBtnAndUnSelectCheckAll();
 
-            if (App.publishProductState) {
+            if (App.publishProduitstate) {
                 $('#top-bar-back').show();
                 $('#top-bar-publishBtn').hide();
                 $('#top-bar-unpublishBtn').hide();
@@ -363,7 +363,7 @@ define([
             var self = this;
             var $thisEl = this.$el;
             var $table = $thisEl.find('#listTable');
-            var products = [];
+            var Produits = [];
             var $checkedInputs;
             var $el;
 
@@ -372,11 +372,11 @@ define([
             $.each($checkedInputs, function () {
                 $el = $(this);
 
-                products.push($el.val());
+                Produits.push($el.val());
             });
 
             data = {
-                products: products
+                Produits: Produits
             };
 
             dataService.postData(url, data, function (err, result) {
@@ -388,5 +388,5 @@ define([
         }
     });
 
-    return ProductsListView;
+    return ProduitsListView;
 });

@@ -6,7 +6,7 @@ define([
     'text!templates/invoice/baseForm/baseFormTemplate.html',
     'views/Notes/AttachView',
     'views/Notes/NoteView',
-    'views/Products/orderRows/ProductItems',
+    'views/Produits/orderRows/ProductItems',
     'views/Payment/CreateView',
     'views/salesInvoices/EmailView',
     'common',
@@ -351,7 +351,7 @@ define([
             this.notAddItem = true;
 
             if (this.isWtrack) {
-                wTracks = _.map(model.products, function (product) {
+                wTracks = _.map(model.Produits, function (product) {
                     return product.product;
                 });
                 project = model.project;

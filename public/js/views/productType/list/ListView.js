@@ -28,7 +28,7 @@ define([
     CONSTANTS) {
     'use strict';
 
-    var SettingsProductsListView = listViewBase.extend({
+    var SettingsProduitsListView = listViewBase.extend({
         listTemplate     : listTemplate,
         ListItemView     : ListItemView,
         contentCollection: contentCollection,
@@ -150,5 +150,5 @@ define([
         }
     });
 
-    return SettingsProductsListView;
+    return SettingsProduitsListView;
 });

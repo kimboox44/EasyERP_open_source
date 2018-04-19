@@ -81,18 +81,18 @@ module.exports = function (models) {
             }, {
                 $group: {
                     _id     : null,
-                    products: {$push: '$product'}
+                    Produits: {$push: '$product'}
                 }
             }], function (err, result) {
-                var products;
+                var Produits;
 
                 if (err) {
                     return callback(err);
                 }
 
-                products = result && result.length ? result[0].products : [];
+                Produits = result && result.length ? result[0].Produits : [];
 
-                callback(null, products);
+                callback(null, Produits);
             });
 
         };

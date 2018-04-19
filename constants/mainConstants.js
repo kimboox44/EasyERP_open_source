@@ -111,7 +111,7 @@ module.exports = {
     EQUITY: [
         '565eb53a6aa50532e5df0bf3' // retained Earnings
         // '565eb53a6aa50532e5df0bf2', // capital
-        // '565eb53a6aa50532e5df0be0', // productSales
+        // '565eb53a6aa50532e5df0be0', // Produitsales
         // '565eb53a6aa50532e5df0be2'// COGS
     ],
 
@@ -233,7 +233,7 @@ module.exports = {
     },
 
     REDIS: {
-        CHANGED_PRODUCTS: 'changedProducts'
+        CHANGED_Produits: 'changedProduits'
     },
 
     LOOKUP_FOR_EMPLOYEE_ARRAY: [

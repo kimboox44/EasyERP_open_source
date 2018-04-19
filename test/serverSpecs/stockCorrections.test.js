@@ -60,7 +60,7 @@ describe('stockCorrections Specs', function () {
             var body = {
                 warehouse  : '57dfb16b391780672759a97c',
                 location   : '57dfb181391780672759a97e',
-                products   : [{
+                Produits   : [{
                     product : '57f1f9919d3291200b4d9bd6',
                     adjusted: 10,
                     onHand  : 10
@@ -169,7 +169,7 @@ describe('stockCorrections Specs', function () {
             var body = {
                 warehouse  : '57dfb16b391780672759a97c',
                 location   : '57dfb181391780672759a97e',
-                products   : [{
+                Produits   : [{
                     product : '57f1f9919d3291200b4d9bd6',
                     adjusted: 10,
                     onHand  : 10

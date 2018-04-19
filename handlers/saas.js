@@ -23,7 +23,7 @@ var _Saas = function (mainDb, models) {
         var dbName = req.session.lastDb;
         var connection = dbsObject[dbName];
         var OrgSettings = models.get(req.session.lastDb, 'orgSettings', orgSettingsSchema);
-        var collections = ['warehouse', 'matchMagento', 'PriceLists', 'locations', 'Employees', 'Customers', 'Opportunities', 'birthdays', 'bonusType', 'cashTransfer', 'channelLinks', 'DealTasks', 'Department', 'followers', 'GoodsNote', 'History', 'Holiday', 'Invoice', 'JobPosition', 'jobs', 'journalentries', 'MonthHours', 'Order', 'orderRows', 'Payment', 'PaymentMethod', 'PayRoll', 'Products', 'productsAvailability', 'ProductCategories', 'ProductPrices', 'ProductOptions', 'ProductOptionsValues', 'productTypes', 'Project', 'projectMembers', 'tags', 'Tasks', 'transfers', 'Vacation', 'wTrack'];
+        var collections = ['warehouse', 'matchMagento', 'PriceLists', 'locations', 'Employees', 'Customers', 'Opportunities', 'birthdays', 'bonusType', 'cashTransfer', 'channelLinks', 'DealTasks', 'Department', 'followers', 'GoodsNote', 'History', 'Holiday', 'Invoice', 'JobPosition', 'jobs', 'journalentries', 'MonthHours', 'Order', 'orderRows', 'Payment', 'PaymentMethod', 'PayRoll', 'Produits', 'ProduitsAvailability', 'ProductCategories', 'ProductPrices', 'ProductOptions', 'ProductOptionsValues', 'productTypes', 'Project', 'projectMembers', 'tags', 'Tasks', 'transfers', 'Vacation', 'wTrack'];
 
         function dropCollections(connection, callback) {
             async.each(collections, function (collection, cb) {

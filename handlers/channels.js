@@ -218,7 +218,7 @@ var Module = function (models, event) {
                     res.status(200).send(result);
                 } else {
                     req.query.channel = result._id;
-                    getOnlyProducts(req, res, function (err, result) {
+                    getOnlyProduits(req, res, function (err, result) {
                         if (err) {
                             return next(err);
                         }
@@ -379,7 +379,7 @@ var Module = function (models, event) {
                     res.status(200).send(result);
                 } else {
                     req.query.channel = result._id;
-                    getOnlyProducts(req, res, function (err, result) {
+                    getOnlyProduits(req, res, function (err, result) {
                         if (err) {
                             return next(err);
                         }
@@ -398,7 +398,7 @@ var Module = function (models, event) {
             });
         }
 
-        function getOnlyProducts(req, res, cb) {
+        function getOnlyProduits(req, res, cb) {
             var dbName = req.session.lastDb;
             var query = req.query;
             var channelId = query.channel;
@@ -459,7 +459,7 @@ var Module = function (models, event) {
                 setting = result.getUrlSettings;
                 version = getVersion(channel.type);
 
-                helper.getOnlyProducts({
+                helper.getOnlyProduits({
                     _id              : channel._id,
                     channelName      : channel.channelName,
                     dbName           : dbName,
@@ -487,7 +487,7 @@ var Module = function (models, event) {
                         }
 
                         event.emit('recollectedStats', {dbName: dbName, stats: stats});
-                        event.emit('sendMessage', {dbName: dbName, message: 'Get products done', view: ''});
+                        event.emit('sendMessage', {dbName: dbName, message: 'Get Produits done', view: ''});
                         redisClient.writeToStorage('syncStats', dbName, JSON.stringify(stats));
 
                         cb(null, channel);
@@ -497,10 +497,10 @@ var Module = function (models, event) {
             });
         }
 
-        this.getOnlyProducts = function (req, res, next) {
+        this.getOnlyProduits = function (req, res, next) {
             var dbName = req.session.lastDb;
 
-            return getOnlyProducts(req, res, function (err, resultChannel) {
+            return getOnlyProduits(req, res, function (err, resultChannel) {
                 if (err) {
                     return next(err);
                 }
@@ -511,7 +511,7 @@ var Module = function (models, event) {
                     }
 
                     event.emit('recollectedStats', {dbName: dbName, stats: stats});
-                    event.emit('sendMessage', {dbName: dbName, message: 'Get products done', view: ''});
+                    event.emit('sendMessage', {dbName: dbName, message: 'Get Produits done', view: ''});
                     redisClient.writeToStorage('syncStats', dbName, JSON.stringify(stats));
 
                     res.status(200).send(resultChannel);
@@ -639,7 +639,7 @@ var Module = function (models, event) {
                         doc.uId = req.session.uId;
                     }
 
-                    etsyHelper.importProducts(query, doc, function (err) {
+                    etsyHelper.importProduits(query, doc, function (err) {
                         var newDate = new Date();
                         if (err) {
                             next(err);
@@ -884,7 +884,7 @@ var Module = function (models, event) {
                     res.status(200).send(result);
                 } else {
                     req.query.channel = result._id;
-                    getOnlyProducts(req, res, function (err, result) {
+                    getOnlyProduits(req, res, function (err, result) {
                         if (err) {
                             return next(err);
                         }
@@ -1054,7 +1054,7 @@ var Module = function (models, event) {
                     res.status(200).send(result);
                 } else {
                     req.query.channel = result._id;
-                    getOnlyProducts(req, res, function (err, result) {
+                    getOnlyProduits(req, res, function (err, result) {
                         if (err) {
                             return next(err);
                         }

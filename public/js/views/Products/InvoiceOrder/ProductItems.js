@@ -5,12 +5,12 @@ define([
     'Backbone',
     'jQuery',
     'Underscore',
-    'text!templates/Products/InvoiceOrder/ProductItems.html',
-    'text!templates/Products/InvoiceOrder/ProductInputContent.html',
-    'text!templates/Products/InvoiceOrder/ProductItemsEditList.html',
-    'text!templates/Products/InvoiceOrder/ItemsEditList.html',
-    'text!templates/Products/InvoiceOrder/TotalAmount.html',
-    'collections/Products/products',
+    'text!templates/Produits/InvoiceOrder/ProductItems.html',
+    'text!templates/Produits/InvoiceOrder/ProductInputContent.html',
+    'text!templates/Produits/InvoiceOrder/ProductItemsEditList.html',
+    'text!templates/Produits/InvoiceOrder/ItemsEditList.html',
+    'text!templates/Produits/InvoiceOrder/TotalAmount.html',
+    'collections/Produits/Produits',
     'views/Projects/projectInfo/wTracks/generateWTrack',
     'populate',
     'helpers',
@@ -37,12 +37,12 @@ define([
         /*el: '#productItemsHolder',*/
 
         events: {
-            'click .addProductItem a'                                                 : 'getProducts',
+            'click .addProductItem a'                                                 : 'getProduits',
             'click .newSelectList li:not(.miniStylePagination, #createNewEl)'         : 'chooseOption',
             'click .newSelectList li.miniStylePagination'                             : 'notHide',
             'click .newSelectList li.miniStylePagination .next:not(.disabled)'        : 'nextSelect',
             'click .newSelectList li.miniStylePagination .prev:not(.disabled)'        : 'prevSelect',
-            'click .current-selected.productsDd'                                      : 'showProductsSelect',
+            'click .current-selected.ProduitsDd'                                      : 'showProduitsSelect',
             'click .current-selected.jobs'                                            : 'showSelect',
             'mouseenter .editable:not(.quickEdit), .editable .no-long:not(.quickEdit)': 'quickEdit',
             'mouseleave .editable'                                                    : 'removeEdit',
@@ -63,13 +63,13 @@ define([
             var type = target.attr('data-level');
 
             Backbone.history.fragment = '';
-            Backbone.history.navigate('#easyErp/Products', {trigger: true});
+            Backbone.history.navigate('#easyErp/Produits', {trigger: true});
         },
 
         template: _.template(productItemTemplate),
 
         initialize: function (options) {
-            var products;
+            var Produits;
 
             options = options || Object.create(null);
 
@@ -117,10 +117,10 @@ define([
                 info: 1
             };
 
-            products = new ProductCollection(options);
-            products.bind('reset', function () {
-                this.products = products;
-                this.filterProductsForDD();
+            Produits = new ProductCollection(options);
+            Produits.bind('reset', function () {
+                this.Produits = Produits;
+                this.filterProduitsForDD();
             }, this);
 
             this.priceChange = _.debounce(this.priceChange, 250);
@@ -271,7 +271,7 @@ define([
             }
         },
 
-        getProducts: function (e) {
+        getProduits: function (e) {
             var self = this;
             var target = $(e.target);
             var $parrent = target.closest('tbody');
@@ -279,7 +279,7 @@ define([
             var rowId = $parrentRow.attr('data-id');
             var hasError = $parrentRow.attr('data-error') === 'true';
             var $trEll = $parrent.find('tr.productItem');
-            var products = this.products ? this.products.toJSON() : [];
+            var Produits = this.Produits ? this.Produits.toJSON() : [];
             var templ = _.template(ProductInputContent);
             var curSymbol;
 
@@ -292,7 +292,7 @@ define([
                 if (!$trEll.length) {
                     $parrent.prepend(templ({
                         forSales  : self.forSales,
-                        products  : products,
+                        Produits  : Produits,
                         curSymbol : curSymbol,
                         writeOff  : self.writeOff,
                         quotations: self.quotations
@@ -305,7 +305,7 @@ define([
                 }
                 $($trEll[$trEll.length - 1]).after(templ({
                     forSales  : self.forSales,
-                    products  : products,
+                    Produits  : Produits,
                     curSymbol : curSymbol,
                     writeOff  : self.writeOff,
                     quotations: self.quotations
@@ -318,15 +318,15 @@ define([
             return false;
         },
 
-        filterProductsForDD: function () {
-            var id = '.productsDd';
+        filterProduitsForDD: function () {
+            var id = '.ProduitsDd';
             var self = this;
-            var products = this.products.toJSON();
+            var Produits = this.Produits.toJSON();
 
-            this.responseObj[id] = products;
+            this.responseObj[id] = Produits;
 
             /*this.responseObj[id] = [];
-             this.responseObj[id] = this.responseObj[id].concat(_.map(products, function (item) {
+             this.responseObj[id] = this.responseObj[id].concat(_.map(Produits, function (item) {
              return {_id: item._id, name: item.name, level: item.projectShortDesc || ''};
              }));*/
         },
@@ -369,14 +369,14 @@ define([
             this.recalculateTaxes(parent);
         },
 
-        showProductsSelect: function (e, prev, next) {
+        showProduitsSelect: function (e, prev, next) {
             var $targetEl = $(e.target);
 
             if (!this.checkForQuickEdit($targetEl)) {
                 return false;
             }
 
-            populate.showProductsSelect(e, prev, next, this);
+            populate.showProduitsSelect(e, prev, next, this);
 
             return false;
         },
@@ -405,7 +405,7 @@ define([
             var selectedProduct;
             var jobId;
             var currentJob;
-            var product = $trEl.find('.productsDd');
+            var product = $trEl.find('.ProduitsDd');
             var price;
             var currency = {};
             var classForParent;
@@ -429,10 +429,10 @@ define([
                 $parrent.find('.jobsWescWrap').append('<textarea class="jobsDescription">' + currentJob.description + '</textarea>');
                 $parrent.attr('data-content', jobId); // in case of getting id  on edit quotation
                 // $quantity.text(currentJob.budget.budgetTotal.hoursSum);
-                model = this.products.get(_id);
+                model = this.Produits.get(_id);
                 $quantity.attr('disabled', 'disabled');
             } else {
-                model = this.products.get(_id);
+                model = this.Produits.get(_id);
 
                 $trEl.attr('data-id', model.id);
                 $parrent.find('.current-selected').text($target.text()).attr('data-id', _id);
@@ -491,7 +491,7 @@ define([
         },
 
         quantityRetriver: function ($parent) {
-            var selectedProduct = this.products || new Backbone.Collection();
+            var selectedProduct = this.Produits || new Backbone.Collection();
             var id;
             var quantity;
 
@@ -614,11 +614,11 @@ define([
         },
 
         nextSelect: function (e) {
-            this.showProductsSelect(e, false, true);
+            this.showProduitsSelect(e, false, true);
         },
 
         prevSelect: function (e) {
-            this.showProductsSelect(e, true, false);
+            this.showProduitsSelect(e, true, false);
         },
 
         removeEditableCass: function ($tr) {
@@ -632,25 +632,25 @@ define([
         },
 
         render: function (options) {
-            var productsContainer;
+            var ProduitsContainer;
             var totalAmountContainer;
             var $thisEl = this.$el;
-            var products;
+            var Produits;
             var self = this;
             var currency;
 
             this.$dialogContainer = $('#dialogContainer').html() ? $('#dialogContainer') : $('#formContent');
 
             if (options && options.model) {
-                products = options.model.products;
+                Produits = options.model.Produits;
                 currency = options.model.currency;
 
                 $thisEl.html(_.template(ProductItemsEditList, {model: options.model, forSales: self.forSales}));
 
-                if (products) {
-                    productsContainer = $thisEl.find('#productList');
-                    productsContainer.append(_.template(ItemsEditList, {
-                        products        : products,
+                if (Produits) {
+                    ProduitsContainer = $thisEl.find('#productList');
+                    ProduitsContainer.append(_.template(ItemsEditList, {
+                        Produits        : Produits,
                         editable        : this.editable,
                         editablePrice   : this.editablePrice,
                         forSales        : self.forSales,

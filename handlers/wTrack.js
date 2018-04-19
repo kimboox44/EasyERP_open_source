@@ -30,7 +30,7 @@ var TCard = function (event, models) {
 
     var JournalEntryHandler = require('./journalEntry');
     var journalEntry = new JournalEntryHandler(models);
-    var ProductService = require('../services/products')(models);
+    var Produitservice = require('../services/Produits')(models);
     var AvailabilityService = require('../services/productAvailability')(models);
 
     var lookupForWTrackArrayBeforeFilter = [{
@@ -1190,7 +1190,7 @@ var TCard = function (event, models) {
                         }
                     };
 
-                    ProductService.createProduct({
+                    Produitservice.createProduct({
                         body  : body,
                         dbName: req.session.lastDb,
                         uId   : req.session.uId

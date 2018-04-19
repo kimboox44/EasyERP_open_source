@@ -5,7 +5,7 @@ define([
     'views/ExpensesInvoice/form/FormView',
     'text!templates/ExpensesInvoice/form/EditTemplate.html',
     'views/Editor/AttachView',
-    'views/Products/orderRows/ProductItems',
+    'views/Produits/orderRows/ProductItems',
     'views/Payment/CreateView',
     'views/salesInvoices/EmailView',
     'views/Payment/list/ListHeaderInvoice',
@@ -221,9 +221,9 @@ define([
             var self = this;
             var mid = 97;
             var $currentEl = this.$el;
-            var selectedProducts = $currentEl.find('.item');
-            var products = [];
-            var selectedLength = selectedProducts.length;
+            var selectedProduits = $currentEl.find('.item');
+            var Produits = [];
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var quantity;
             var price;
@@ -270,7 +270,7 @@ define([
 
             if (selectedLength) {
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = $(selectedProducts[i]);
+                    targetEl = $(selectedProduits[i]);
 
                     quantity = targetEl.find('[data-name="quantity"] input').val() || targetEl.find('[data-name="quantity"] span').text();
                     price = helpers.spaceReplacer(targetEl.find('[data-name="price"] input').val()) * 100;
@@ -309,7 +309,7 @@ define([
                         });
                     }
 
-                    products.push({
+                    Produits.push({
                         unitPrice    : price,
                         quantity     : quantity,
                         description  : description,
@@ -332,7 +332,7 @@ define([
                 invoiceDate     : invoiceDate,
                 dueDate         : dueDate,
                 journal         : null,
-                products        : products,
+                Produits        : Produits,
                 expensesCategory: expensesCategory,
                 paymentInfo     : payments,
                 currency        : currency,

@@ -366,7 +366,7 @@ var companyInfo = [{
                 }],
 
                 incomingStockReport: [{
-                    products     : 'Product',
+                    Produits     : 'Product',
                     variants     : 'Variants',
                     sku          : 'SKU',
                     purchaseOrder: 'PO',
@@ -374,7 +374,7 @@ var companyInfo = [{
                     incomingStock: 'Incoming Stock',
                     total        : 'Total Cost'
                 }, {
-                    products     : 'Atomic Endurance Running Tee (Crew-Neck)-XL-Blue',
+                    Produits     : 'Atomic Endurance Running Tee (Crew-Neck)-XL-Blue',
                     variants     : '3',
                     sku          : 'MS09-XL-Black',
                     purchaseOrder: 'MS09',
@@ -382,7 +382,7 @@ var companyInfo = [{
                     incomingStock: 25,
                     total        : 30
                 }, {
-                    products     : 'Ryker LumaTech™ Tee (Crew-neck)-XL-Black',
+                    Produits     : 'Ryker LumaTech™ Tee (Crew-neck)-XL-Black',
                     variants     : '5',
                     sku          : 'MS09-XL-Black',
                     purchaseOrder: 'MS06',
@@ -395,7 +395,7 @@ var companyInfo = [{
                     variant     : 'Variant',
                     sku         : 'SKU',
                     salesChannel: 'Sales Channel',
-                    listingPrice: 'Products Price',
+                    listingPrice: 'Produits Price',
                     unitSold    : 'Unit Sold',
                     dateLinked  : 'Date Linked'
                 }, {
@@ -1640,7 +1640,7 @@ var companyInfo = [{
                 },
 
                 incomingStockReport: {
-                    products     : 'String',
+                    Produits     : 'String',
                     variants     : 'String',
                     sku          : 'String',
                     purchaseOrder: 'String',
@@ -1722,7 +1722,7 @@ var companyInfo = [{
             salesReports                : 'Sales',
             stockDetails                : 'Stock details',
             inventoryReports            : 'Inventory',
-            productListingReport        : 'Products',
+            productListingReport        : 'Produits',
             incomingStockReport         : 'Incoming stock',
             lowStockReport              : 'Low stock report',
             warehouseMovementReport     : 'Warehouse movement',

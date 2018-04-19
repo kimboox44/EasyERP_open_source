@@ -1,8 +1,8 @@
 ﻿﻿
 define([
-        "text!templates/Products/thumbnails/ThumbnailsItemTemplate.html",
-        'views/Products/EditView',
-        'views/Products/CreateView',
+        "text!templates/Produits/thumbnails/ThumbnailsItemTemplate.html",
+        'views/Produits/EditView',
+        'views/Produits/CreateView',
         'dataService',
         'models/ProductModel',
         'views/Filter/filterView',
@@ -50,7 +50,7 @@ define([
 
             //modified for filter Vasya
             getTotalLength: function (currentNumber, filter, newCollection) {
-                dataService.getData('/products/totalCollectionLength', {
+                dataService.getData('/Produits/totalCollectionLength', {
                     currentNumber: currentNumber,
                     filter       : filter,
                     newCollection: newCollection
@@ -73,7 +73,7 @@ define([
                 var ids = _.map(collection.toJSON(), function (item) {
                     return item._id;
                 });
-                common.getImages(ids, "/products/getProductsImages");
+                common.getImages(ids, "/Produits/getProduitsImages");
             },
 
             //modified for filter Vasya
@@ -190,7 +190,7 @@ define([
                 e.preventDefault();
                 App.ownContentType = true;
                 var id = $(e.target).closest('.thumbnailwithavatar').attr("id");
-                window.location.hash = "#easyErp/products/form/" + id;
+                window.location.hash = "#easyErp/Produits/form/" + id;
             },
 
             gotoEditForm: function (e) {
@@ -204,7 +204,7 @@ define([
                     e.preventDefault();
                     var id = $(e.target).closest('.thumbnailwithavatar').attr("id");
                     var model = new currentModel({validate: false});
-                    model.urlRoot = '/products/form/';
+                    model.urlRoot = '/Produits/form/';
                     model.fetch({
                         data   : {id: id},
                         success: function (model) {
@@ -274,12 +274,12 @@ define([
 
             exportToCsv: function () {
                 //todo change after routes refactoring
-                window.location = '/Products/exportToCsv'
+                window.location = '/Produits/exportToCsv'
             },
 
             exportToXlsx: function () {
                 //todo change after routes refactoring
-                window.location = '/Products/exportToXlsx'
+                window.location = '/Produits/exportToXlsx'
             }
         });
 

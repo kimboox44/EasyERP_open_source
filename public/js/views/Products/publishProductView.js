@@ -2,7 +2,7 @@ define([
     'Backbone',
     'jQuery',
     'Underscore',
-    'text!templates/Products/publishProduct.html',
+    'text!templates/Produits/publishProduct.html',
     'views/selectView/selectView',
     'services/select',
     'dataService',
@@ -20,7 +20,7 @@ define([
     'use strict';
 
     var Integrations = Backbone.View.extend({
-        contentType    : CONSTANTS.PRODUCTS,
+        contentType    : CONSTANTS.Produits,
         publishTemplate: _.template(publishTemplate),
         events         : {
             'click .newSelectList li'               : 'chooseOption',

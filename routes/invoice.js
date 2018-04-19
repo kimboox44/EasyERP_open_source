@@ -275,7 +275,7 @@ module.exports = function (models, event) {
            "_type": "wTrackInvoice",
            "__v": 0,
            "dueDate": "2016-07-19T21:00:00.000Z",
-           "products": [
+           "Produits": [
              {
                "unitPrice": 400000,
                "subTotal": 400000,
@@ -387,7 +387,7 @@ module.exports = function (models, event) {
            "_type": "wTrackInvoice",
            "__v": 0,
            "dueDate": "2016-08-10T22:00:00.000Z",
-           "products": [
+           "Produits": [
              {
                "unitPrice": 120600,
                "subTotal": 120600,

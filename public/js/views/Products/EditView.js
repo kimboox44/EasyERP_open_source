@@ -2,10 +2,10 @@ define([
     'Backbone',
     'jQuery',
     'Underscore',
-    'text!templates/Products/EditTemplate.html',
+    'text!templates/Produits/EditTemplate.html',
     'views/Notes/AttachView',
     'views/dialogViewBase',
-    'collections/Products/filterCollection',
+    'collections/Produits/filterCollection',
     'common',
     'custom',
     'dataService',
@@ -15,7 +15,7 @@ define([
 
     var EditView = ParentView.extend({
         el         : '#content-holder',
-        contentType: 'Products',
+        contentType: 'Produits',
         imageSrc   : '',
         template   : _.template(EditTemplate),
         responseObj: {},
@@ -82,7 +82,7 @@ define([
         addToBundle: function (e) {
             var $thisEl = this.$el;
             var $target = $(e.target);
-            var $container = $thisEl.find('#productsBundle');
+            var $container = $thisEl.find('#ProduitsBundle');
             var val = $target.text();
             var id = $target.data('id');
 
@@ -101,7 +101,7 @@ define([
             var $thisEl = this.$el;
             var $target = $(e.target);
             var $searchContatiner = $target.closest('.searchContainer');
-            var $search = $searchContatiner.find('#searchProducts');
+            var $search = $searchContatiner.find('#searchProduits');
             var searchValue = $search.val();
             var filterOpts = {
                 value: searchValue
@@ -115,16 +115,16 @@ define([
 
             if (!this.searchProdCollection) {
                 this.searchProdCollection = new SearchCollection(collectionOpts);
-                this.searchProdCollection.bind('reset', _.bind(this.renderSearchProducts, this));
+                this.searchProdCollection.bind('reset', _.bind(this.renderSearchProduits, this));
             } else {
                 //this.searchProdCollection.getFirstPage(collectionOpts);
-                this.renderSearchProducts();
+                this.renderSearchProduits();
             }
         },
 
-        renderSearchProducts: function () {
+        renderSearchProduits: function () {
             var $thisEl = this.$el;
-            var $container = $thisEl.find('#productsForBundle');
+            var $container = $thisEl.find('#ProduitsForBundle');
 
             $container.html();
 
@@ -311,7 +311,7 @@ define([
             );
 
             // populate.getProductTypeOrCategory('#productCategory', '/category', {}, 'fullName', this, true, false, null, categoryId);
-            populate.getProductTypeOrCategory('#productType', '/products/getProductsTypeForDd', {}, 'name', this, true, false, null, productTypeId);
+            populate.getProductTypeOrCategory('#productType', '/Produits/getProduitsTypeForDd', {}, 'name', this, true, false, null, productTypeId);
 
             //this.renderAssignees(this.currentModel);
 

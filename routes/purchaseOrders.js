@@ -283,7 +283,7 @@ module.exports = function (models, event) {
               name: "USD"
             }
           },
-          products: [
+          Produits: [
             {
               _id: "5878df114573d1846774d0d9",
               taxCode: null,

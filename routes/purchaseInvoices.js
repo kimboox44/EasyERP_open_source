@@ -236,7 +236,7 @@ module.exports = function (models, event) {
        forSales: false,
        name: "PI2",
        id: "584fc4f2e1c14d4e363404f9",
-       products: [
+       Produits: [
          {
            _id: "584fbc303a3e8718364754bb",
            description: "",

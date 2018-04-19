@@ -144,8 +144,8 @@ define([
                 switch (option.contentType) {
                     case CONTENT_TYPES.PRICELISTS:
                     case CONTENT_TYPES.PRODUCTTYPE:
-                    case CONTENT_TYPES.PRODUCTS:
-                    case CONTENT_TYPES.PRODUCTS_SETTINGS:
+                    case CONTENT_TYPES.Produits:
+                    case CONTENT_TYPES.Produits_SETTINGS:
                     case CONTENT_TYPES.IMPORT:
                     case CONTENT_TYPES.DASHBOARD:
                     case CONTENT_TYPES.TASKS:
@@ -237,8 +237,8 @@ define([
                 switch (option.contentType) {
                     case CONTENT_TYPES.PRICELISTS:
                     case CONTENT_TYPES.PRODUCTTYPE:
-                    case CONTENT_TYPES.PRODUCTS:
-                    case CONTENT_TYPES.PRODUCTS_SETTINGS:
+                    case CONTENT_TYPES.Produits:
+                    case CONTENT_TYPES.Produits_SETTINGS:
                     case CONTENT_TYPES.IMPORT:
                     case CONTENT_TYPES.DASHBOARD:
                     case CONTENT_TYPES.TASKS:

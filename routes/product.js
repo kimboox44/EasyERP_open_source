@@ -30,10 +30,10 @@ module.exports = function (models, event) {
     router.use(accessStackMiddleware);
 
     /**
-     *@api {get} /products/ Request Products
+     *@api {get} /Produits/ Request Produits
      *
      * @apiVersion 0.0.1
-     * @apiName getProducts
+     * @apiName getProduits
      * @apiGroup Product
      *
      * @apiParam (?Field=value) {Boolean} balanceVisible=true
@@ -42,7 +42,7 @@ module.exports = function (models, event) {
      * @apiParam (?Field=value) {Boolean} paidAndNotApproved=true
      * @apiParam (?Field=value) {Boolean} notAddItem=true
      *
-     * @apiSuccess {Object} Productss
+     * @apiSuccess {Object} Produitss
      * @apiSuccessExample Success-Response:
      HTTP/1.1 200 OK
      {
@@ -92,13 +92,13 @@ module.exports = function (models, event) {
      }
      */
 
-    router.get('/getProductsAlphabet', handler.getProductsAlphabet);
-    router.get('/getProductsTypeForDd', handler.getProductsTypeForDd);
+    router.get('/getProduitsAlphabet', handler.getProduitsAlphabet);
+    router.get('/getProduitsTypeForDd', handler.getProduitsTypeForDd);
     // router.get('/totalCollectionLength', handler.totalCollectionLength);
-    router.get('/getProductsImages', handler.getProductsImages);
+    router.get('/getProduitsImages', handler.getProduitsImages);
 
-    router.get('/getProductsNames', handler.getProductsNames);
-    router.get('/getProductDimension', handler.getProductsDimension);
+    router.get('/getProduitsNames', handler.getProduitsNames);
+    router.get('/getProductDimension', handler.getProduitsDimension);
     // router.get('/exportToXlsx', handler.exportToXlsx);
     // router.get('/exportToCsv', handler.exportToCsv);
 
@@ -114,7 +114,7 @@ module.exports = function (models, event) {
     // product options
     router.get('/options/:_id', optionsHandler.getOneOption);
     router.get('/options', optionsHandler.getForList);
-    router.get('/productAvalaible', handler.getProductsAvailable);
+    router.get('/productAvalaible', handler.getProduitsAvailable);
 
     router.post('/options', optionsHandler.createOptions);
     router.get('/productVariants/:id', optionsHandler.getProductVariants);
@@ -144,7 +144,7 @@ module.exports = function (models, event) {
 
     router.get('/:id', handler.getForView);
     /* router.post('/uploadProductFiles', multipartMiddleware, handler.uploadProductFiles);*/// FixMe
-    router.patch('/:_id', handler.productsUpdateOnlySelectedFields);
+    router.patch('/:_id', handler.ProduitsUpdateOnlySelectedFields);
 
     router.delete('/:_id', handler.removeProduct);
     router.delete('/', accessDeleteStackMiddlewareFunction, handler.bulkRemove);

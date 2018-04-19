@@ -20,7 +20,7 @@ define([
                         _type           : "wTrackInvoice",
                         __v             : 0,
                         project         : "55b92ad621e4b7c40f00068c",
-                        products        : [
+                        Produits        : [
                             {
                                 subTotal   : 13300,
                                 unitPrice  : 13300,
@@ -198,7 +198,7 @@ define([
                         _type           : "wTrackInvoice",
                         __v             : 0,
                         project         : "55b92ad621e4b7c40f000672",
-                        products        : [
+                        Produits        : [
                             {
                                 unitPrice  : 7200,
                                 subTotal   : 7200,
@@ -385,7 +385,7 @@ define([
                         _type           : "wTrackInvoice",
                         __v             : 0,
                         project         : "55b92ad621e4b7c40f00067f",
-                        products        : [
+                        Produits        : [
                             {
                                 subTotal   : 432000,
                                 unitPrice  : 432000,

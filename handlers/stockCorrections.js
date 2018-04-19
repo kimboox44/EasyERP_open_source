@@ -5,7 +5,7 @@ stockCorrections = function (models, event) {
 
     var mongoose = require('mongoose');
 
-    var AvailabilitySchema = mongoose.Schemas.productsAvailability;
+    var AvailabilitySchema = mongoose.Schemas.ProduitsAvailability;
     var StockCorrectionsSchema = mongoose.Schemas.stockCorrection;
     var GoodsOutSchema = mongoose.Schemas.GoodsOutNote;
     var objectId = mongoose.Types.ObjectId;
@@ -146,7 +146,7 @@ stockCorrections = function (models, event) {
 
     this.allocate = function (req, res, next) {
         var body = req.body;
-        var Availability = models.get(req.session.lastDb, 'productsAvailability', AvailabilitySchema);
+        var Availability = models.get(req.session.lastDb, 'ProduitsAvailability', AvailabilitySchema);
         var GoodsOutNote = models.get(req.session.lastDb, 'GoodsOutNote', GoodsOutSchema);
         var orderId = body.order;
 
@@ -264,7 +264,7 @@ stockCorrections = function (models, event) {
             }
 
             event.emit('recalculateStatus', req, orderId, next);
-            res.status(200).send({success: 'Products updated'});
+            res.status(200).send({success: 'Produits updated'});
         });
 
     };
@@ -402,8 +402,8 @@ stockCorrections = function (models, event) {
             });
     };
 
-    this.getProductsAvailable = function (req, res, next) {
-        var Availability = models.get(req.session.lastDb, 'productsAvailability', AvailabilitySchema);
+    this.getProduitsAvailable = function (req, res, next) {
+        var Availability = models.get(req.session.lastDb, 'ProduitsAvailability', AvailabilitySchema);
         var queryObject = req.query;
         var product = queryObject.product;
         var warehouseFrom = queryObject.warehouse;
@@ -435,7 +435,7 @@ stockCorrections = function (models, event) {
                 $match: queryFrom
             }, {
                 $lookup: {
-                    from        : 'Products',
+                    from        : 'Produits',
                     localField  : 'product',
                     foreignField: '_id',
                     as          : 'product'
@@ -467,7 +467,7 @@ stockCorrections = function (models, event) {
                 $match: queryTo
             }, {
                 $lookup: {
-                    from        : 'Products',
+                    from        : 'Produits',
                     localField  : 'product',
                     foreignField: '_id',
                     as          : 'product'

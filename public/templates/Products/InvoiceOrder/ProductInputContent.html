@@ -1,15 +1,15 @@
-<tr class="productItem deleteRow" data-id="<%= products[0] ? products[0]._id : 'false'%>" data-error="true">
+<tr class="productItem deleteRow" data-id="<%= Produits[0] ? Produits[0]._id : 'false'%>" data-error="true">
 
     <td data-name="productName" class="">
         <div class="jobsWescWrap _newSelectListWrap ">
-        <a class="current-selected productsDd" href="javascript:;" data-id="<%= products[0] ? products[0]._id : null%>">
+        <a class="current-selected ProduitsDd" href="javascript:;" data-id="<%= Produits[0] ? Produits[0]._id : null%>">
 
             <%=
-            products[0] && forSales ? products[0].name : 'Select'%>
+            Produits[0] && forSales ? Produits[0].name : 'Select'%>
         </a>
 
-        <% if (products[0]  && forSales) {%>
-        <textarea class="productDescr"><%=products[0].info ? products[0].info.description :  ''%></textarea>
+        <% if (Produits[0]  && forSales) {%>
+        <textarea class="productDescr"><%=Produits[0].info ? Produits[0].info.description :  ''%></textarea>
         <% } else { %>
             <textarea class="productDescr"></textarea>
             <% }  %>

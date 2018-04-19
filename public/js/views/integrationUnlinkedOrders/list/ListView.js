@@ -21,10 +21,10 @@ define([
         },
 
         events: {
-            'click .goToUnlinkedProducts': 'goToUnlinkedProducts'
+            'click .goToUnlinkedProduits': 'goToUnlinkedProduits'
         },
 
-        goToUnlinkedProducts: function (e) {
+        goToUnlinkedProduits: function (e) {
             var orderId = $(e.target).closest('tr').attr('data-id');
             var filter = {
                 order: {
@@ -32,7 +32,7 @@ define([
                     value: [orderId]
                 }
             };
-            var href = '#easyErp/unlinkedProducts/filter=' + encodeURIComponent(JSON.stringify(filter));
+            var href = '#easyErp/unlinkedProduits/filter=' + encodeURIComponent(JSON.stringify(filter));
 
             Backbone.history.fragment = '';
             Backbone.history.navigate(href, {trigger: true});

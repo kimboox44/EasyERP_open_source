@@ -171,7 +171,7 @@ module.exports = function (models) {
                 },
                 {
                     $lookup: {
-                        from        : 'Products',
+                        from        : 'Produits',
                         localField  : 'orderRows.product',
                         foreignField: '_id',
                         as          : 'product'
@@ -272,7 +272,7 @@ module.exports = function (models) {
                 },
                 {
                     $lookup: {
-                        from        : 'Products',
+                        from        : 'Produits',
                         localField  : 'orderRows.product',
                         foreignField: '_id',
                         as          : 'product'

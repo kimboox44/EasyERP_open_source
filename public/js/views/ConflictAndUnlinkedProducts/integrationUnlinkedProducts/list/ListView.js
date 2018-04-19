@@ -4,17 +4,17 @@ define([
     'Underscore',
     'views/listViewBase',
     'collections/conflicts/filterCollection',
-    'text!templates/integrationUnlinkedProducts/list/ListHeader.html',
-    'views/ConflictAndUnlinkedProducts/integrationUnlinkedProducts/list/ListItemView',
-    'views/ConflictAndUnlinkedProducts/integrationUnlinkedProducts/linkProduct',
-    'views/ConflictAndUnlinkedProducts/integrationUnlinkedProducts/buildProduct',
+    'text!templates/integrationUnlinkedProduits/list/ListHeader.html',
+    'views/ConflictAndUnlinkedProduits/integrationUnlinkedProduits/list/ListItemView',
+    'views/ConflictAndUnlinkedProduits/integrationUnlinkedProduits/linkProduct',
+    'views/ConflictAndUnlinkedProduits/integrationUnlinkedProduits/buildProduct',
     'dataService'
 ], function (Backbone, $, _, listViewBase, UnlinkedCollection, listTemplate, ListItemView, LinkProductView, BuildProductView, dataService) {
     'use strict';
     var unlinkedListView = listViewBase.extend({
-        el          : '#unlinkedProducts',
+        el          : '#unlinkedProduits',
         viewType    : 'list',
-        contentType : 'integrationUnlinkedProducts',
+        contentType : 'integrationUnlinkedProduits',
         ListItemView: ListItemView,
 
         initialize: function (options) {
@@ -26,7 +26,7 @@ define([
                 count           : 50,
                 filter          : options.filter,
                 parrentContentId: null,
-                contentType     : 'integrationUnlinkedProducts',
+                contentType     : 'integrationUnlinkedProduits',
                 showMore        : false
             });
             unlinkedCollection.bind('reset', this.render, this);
@@ -183,7 +183,7 @@ define([
             $currentEl.append(_.template(listTemplate));
 
             if (!this.collection.length) {
-                return $currentEl.find('._integrationProductsTable').html('<div id="conflictInformation">Unlinked products not found</div>');
+                return $currentEl.find('._integrationProduitsTable').html('<div id="conflictInformation">Unlinked Produits not found</div>');
             }
             $currentEl.append((new ListItemView({
                 collection     : this.collection,

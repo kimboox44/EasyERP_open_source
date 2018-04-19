@@ -316,7 +316,7 @@ define([
         });
     };
 
-    var getProductsInfo = function (id, url, data, field, content, isCreate, canBeEmpty, parrrentContentId, defaultId) {
+    var getProduitsInfo = function (id, url, data, field, content, isCreate, canBeEmpty, parrrentContentId, defaultId) {
         dataService.getData(url, data, function (response) {
             content.responseObj[id] = [];
 
@@ -548,8 +548,8 @@ define([
         return false;
     };
 
-    var showProductsSelect = function (e, prev, next, context) {
-        var data = context.responseObj['.productsDd'];
+    var showProduitsSelect = function (e, prev, next, context) {
+        var data = context.responseObj['.ProduitsDd'];
         var elementVisible = 10;
         var $targetEl = $(e.target);
         var newSel = $targetEl.parent().find('.newSelectList');
@@ -677,10 +677,10 @@ define([
         getParrentCategory      : getParrentCategory,
         getCompanies            : getCompanies,
         showSelectPriority      : showSelectPriority,
-        showProductsSelect      : showProductsSelect,
+        showProduitsSelect      : showProduitsSelect,
         fetchWorkflow           : fetchWorkflow,
         getParrentCategoryById  : getParrentCategoryById,
         getProductTypeOrCategory: getProductTypeOrCategory
-//            getProductsInfo       : getProductsInfo
+//            getProduitsInfo       : getProduitsInfo
     };
 });

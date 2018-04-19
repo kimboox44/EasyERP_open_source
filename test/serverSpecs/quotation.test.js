@@ -46,7 +46,7 @@ describe('Quotation Specs', function () {
                 destination      : null,
                 incoterm         : null,
 
-                products: [
+                Produits: [
                     {
                         product      : CONSTANTS.PRODUCT,
                         unitPrice    : '500',
@@ -105,10 +105,10 @@ describe('Quotation Specs', function () {
                         .and.have.property('rate')
                         .and.to.be.below(1);
                     expect(body)
-                        .to.have.property('products');
-                    expect(body.products)
+                        .to.have.property('Produits');
+                    expect(body.Produits)
                         .to.be.instanceOf(Array);
-                    expect(body.products.length)
+                    expect(body.Produits.length)
                         .not.to.be.equal(0);
 
                     id = body._id;
@@ -259,12 +259,12 @@ describe('Quotation Specs', function () {
                         .and.to.be.instanceOf(Object)
                         .and.to.have.property('_id', CONSTANTS.WORKFLOW);
                     expect(body)
-                        .to.have.property('products')
+                        .to.have.property('Produits')
                         .and.to.be.instanceOf(Array)
                         .and.to.have.deep.property('[0]')
                         .and.to.have.property('product')
                         .and.to.have.property('_id', CONSTANTS.PRODUCT);
-                    expect(body.products[0])
+                    expect(body.Produits[0])
                         .to.have.property('jobs')
                         .and.to.have.property('_id', CONSTANTS.JOB);
 
@@ -288,7 +288,7 @@ describe('Quotation Specs', function () {
                 },
 
                 supplier    : '5717873cc6efb4847a5bc78c',
-                products    : [{
+                Produits    : [{
                     product  : '5540d528dacb551c24000003',
                     unitPrice: 10000,
                     quantity : '1',
@@ -426,7 +426,7 @@ describe('Quotation Specs', function () {
                 fiscalPosition   : null,
                 destination      : null,
                 incoterm         : null,
-                products         : [
+                Produits         : [
                     {
                         product      : CONSTANTS.PRODUCT,
                         unitPrice    : '500',

@@ -27,7 +27,7 @@
             page = options.page;
 
             this.startTime = new Date();
-            this.mid = options.contentType && options.contentType === 'Products' ? 58 : 65;
+            this.mid = options.contentType && options.contentType === 'Produits' ? 58 : 65;
 
             /* if (options.contentType && !(options.filter)) {
              options.filter = {};

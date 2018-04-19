@@ -123,7 +123,7 @@ HTTP/1.1 200 OK
       "fiscalPosition": "",
       "destination": "",
       "incoterm": "",
-      "products": [
+      "Produits": [
         {
           "product": "5540d528dacb551c24000003",
           "unitPrice": "30",
@@ -200,7 +200,7 @@ HTTP/1.1 201 Created
         ],
         "visible": true
       },
-      "products": [
+      "Produits": [
         {
           "jobs": "5787a78be310cbc64dc9d2f5",
           "description": "",
@@ -274,7 +274,7 @@ HTTP/1.1 201 Created
       "fiscalPosition": "",
       "destination": "",
       "incoterm": "",
-      "products": [
+      "Produits": [
         {
           "product": "5540d528dacb551c24000003",
           "unitPrice": 100000,
@@ -358,7 +358,7 @@ HTTP/1.1 200 OK
         ],
         "whoCanRW": "everyOne",
         "workflow": "5555bf276a3f01acae0b5560",
-        "products": [
+        "Produits": [
           {
             "scheduledDate": "",
             "jobs": "574be45a33b93d771f443485",
@@ -438,7 +438,7 @@ HTTP/1.1 200 OK
         ],
         "whoCanRW": "everyOne",
         "workflow": "5555bf276a3f01acae0b5560",
-        "products": [
+        "Produits": [
           {
             "scheduledDate": "",
             "jobs": "5787a78be310cbc64dc9d2f5",

@@ -2,7 +2,7 @@ define([
     'Backbone',
     'Underscore',
     'jQuery',
-    'text!templates/productSettings/EditTemplate.html',
+    'text!templates/Produitsettings/EditTemplate.html',
     'common',
     'custom',
     'populate',
@@ -10,7 +10,7 @@ define([
 ], function (Backbone, _, $, EditTemplate, common, Custom, populate, CONSTANTS) {
     var EditView = Backbone.View.extend({
         el         : '#content-holder',
-        contentType: CONSTANTS.PRODUCTS_SETTINGS,
+        contentType: CONSTANTS.Produits_SETTINGS,
         template   : _.template(EditTemplate),
         events     : {
             'click .dialog-tabs a'                                            : 'changeTab',
@@ -176,7 +176,7 @@ define([
                 wait   : true,
                 success: function (model) {
                     Backbone.history.fragment = '';
-                    Backbone.history.navigate('#easyErp/productSettings', {trigger: true});
+                    Backbone.history.navigate('#easyErp/Produitsettings', {trigger: true});
                 },
 
                 error: function (model, xhr) {

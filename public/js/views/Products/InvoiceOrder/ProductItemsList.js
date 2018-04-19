@@ -5,9 +5,9 @@ define([
     'Backbone',
     'jQuery',
     'Underscore',
-    'text!templates/Products/ProductItemsList.html',
-    'text!templates/Products/ProductInputContent.html',
-    'collections/Products/products',
+    'text!templates/Produits/ProductItemsList.html',
+    'text!templates/Produits/ProductInputContent.html',
+    'collections/Produits/Produits',
     'populate',
     'helpers'
 ], function (Backbone, $, _, productItemTemplate, ProductInputContent, productCollection, populate, helpers) {
@@ -15,12 +15,12 @@ define([
         el: '#productItemsHolder',
 
         events: {
-            'click .addProductItem'                                                   : 'getProducts',
+            'click .addProductItem'                                                   : 'getProduits',
             "click .newSelectList li:not(.miniStylePagination)"                       : "chooseOption",
             "click .newSelectList li.miniStylePagination"                             : "notHide",
             "click .newSelectList li.miniStylePagination .next:not(.disabled)"        : "nextSelect",
             "click .newSelectList li.miniStylePagination .prev:not(.disabled)"        : "prevSelect",
-            "click .current-selected"                                                 : "showProductsSelect",
+            "click .current-selected"                                                 : "showProduitsSelect",
             "mouseenter .editable:not(.quickEdit), .editable .no-long:not(.quickEdit)": "quickEdit",
             "mouseleave .editable"                                                    : "removeEdit",
             "click #cancelSpan"                                                       : "cancelClick",
@@ -29,7 +29,7 @@ define([
         },
 
         initialize: function (options) {
-            var products;
+            var Produits;
 
             this.responseObj = {};
 
@@ -37,16 +37,16 @@ define([
 
             this.taxesRate = 0;
 
-            products = new productCollection();
-            products.bind('reset', function () {
-                this.products = products;
-                this.filterProductsForDD();
+            Produits = new productCollection();
+            Produits.bind('reset', function () {
+                this.Produits = Produits;
+                this.filterProduitsForDD();
             }, this);
         },
 
         template: _.template(productItemTemplate),
 
-        getProducts: function (e) {
+        getProduits: function (e) {
             var target = $(e.target);
             var parrent = target.closest('tbody');
             var parrentRow = parrent.find('.productItem').last();
@@ -61,12 +61,12 @@ define([
             }
         },
 
-        filterProductsForDD: function () {
-            var id = '.productsDd';
-            var products = this.products.toJSON();
+        filterProduitsForDD: function () {
+            var id = '.ProduitsDd';
+            var Produits = this.Produits.toJSON();
 
             this.responseObj[id] = [];
-            this.responseObj[id] = this.responseObj[id].concat(_.map(products, function (item) {
+            this.responseObj[id] = this.responseObj[id].concat(_.map(Produits, function (item) {
                 return {_id: item._id, name: item.name, level: item.projectShortDesc || ""};
             }));
 
@@ -166,8 +166,8 @@ define([
             }
         },
 
-        showProductsSelect: function (e, prev, next) {
-            populate.showProductsSelect(e, prev, next, this);
+        showProduitsSelect: function (e, prev, next) {
+            populate.showProduitsSelect(e, prev, next, this);
 
             return false;
         },
@@ -178,7 +178,7 @@ define([
             var trEl = target.parents("tr");
             var parrents = trEl.find('td');
             var _id = target.attr("id");
-            var model = this.products.get(_id);
+            var model = this.Produits.get(_id);
             var selectedProduct = model.toJSON();
             var taxes;
             var datePicker;
@@ -287,11 +287,11 @@ define([
         },
 
         nextSelect: function (e) {
-            this.showProductsSelect(e, false, true);
+            this.showProduitsSelect(e, false, true);
         },
 
         prevSelect: function (e) {
-            this.showProductsSelect(e, true, false);
+            this.showProduitsSelect(e, true, false);
         },
 
         render: function (options) {

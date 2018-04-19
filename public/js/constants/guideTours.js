@@ -11,7 +11,7 @@
                     display: 'Create Product',
                     steps  : [{
                         title         : 'Inventory',
-                        message       : 'You can access the Inventory section from the main menu. From here you can create and manage all of your products. Clear, then press Next button to go to Products.',
+                        message       : 'You can access the Inventory section from the main menu. From here you can create and manage all of your Produits. Clear, then press Next button to go to Produits.',
                         selector      : 'i.icon-Inventory',
                         url           : '#easyErp/reportsDashboard',
                         isDefault     : 1,
@@ -20,7 +20,7 @@
                     }, {
                         title   : 'Creating A Product & Variant',
                         message : 'Click on "New" button to open create dialog.',
-                        url     : '#easyErp/Products',
+                        url     : '#easyErp/Produits',
                         selector: '#top-bar-createBtn',
                         step    : 1
                     }, {
@@ -36,7 +36,7 @@
                     steps  : [
                         {
                             title         : 'Inventory',
-                            message       : 'Go to Inventory -> Products',
+                            message       : 'Go to Inventory -> Produits',
                             selector      : 'i.icon-Inventory',
                             url           : '#easyErp/reportsDashboard',
                             step          : 0,
@@ -45,9 +45,9 @@
                         },
                         {
                             title   : 'Inventory',
-                            message : 'Click on the item of products',
+                            message : 'Click on the item of Produits',
                             selector: '#listTable > tr:first',
-                            url     : '#easyErp/Products/list',
+                            url     : '#easyErp/Produits/list',
                             step    : 1,
                             error   : {
                                 title  : 'Error!',
@@ -514,7 +514,7 @@
                         button: '#editButton'
                     }, {
                         title   : 'Create a goods-in note',
-                        message : 'Create a goods-in note and take products to warehouse. ',
+                        message : 'Create a goods-in note and take Produits to warehouse. ',
                         selector: 'span.fullfillOrder:first',
                         step    : 5
                     }, {

@@ -1,11 +1,11 @@
 define([
     'Backbone',
     'Underscore',
-    'text!templates/productSettings/list/ListTemplate.html'
+    'text!templates/Produitsettings/list/ListTemplate.html'
 ], function (Backbone, _, ListTemplate) {
     'use strict';
 
-    var SettingsProductsListItemView = Backbone.View.extend({
+    var SettingsProduitsListItemView = Backbone.View.extend({
         el: '#listTable',
 
         initialize: function (options) {
@@ -25,5 +25,5 @@ define([
         }
     });
 
-    return SettingsProductsListItemView;
+    return SettingsProduitsListItemView;
 });

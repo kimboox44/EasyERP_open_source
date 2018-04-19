@@ -7,7 +7,7 @@ var MODULES = require('../constants/modules');
 module.exports = function (models, event) {
     var handler = new CategoryHandler(models, event);
 
-    var moduleId = MODULES.PRODUCTSETTINGS;
+    var moduleId = MODULES.ProduitsETTINGS;
     var accessStackMiddleware = require('../helpers/access')(moduleId, models);
     var accessDeleteStackMiddleware = require('../helpers/checkDelete');
 

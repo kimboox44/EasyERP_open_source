@@ -42,7 +42,7 @@ var Chart = function (models) {
                 caregory = model.category;
 
                 if (caregory) {
-                    Category.update({_id: caregory}, {$inc: {productsCount: 1}}, function (err) {
+                    Category.update({_id: caregory}, {$inc: {ProduitsCount: 1}}, function (err) {
                         if (err) {
                             return next(err);
                         }
@@ -240,12 +240,12 @@ var Chart = function (models) {
                             return cb(err);
                         }
 
-                        Category.update({_id: model.caregory}, {$inc: {productsCount: 1}}, function (err) {
+                        Category.update({_id: model.caregory}, {$inc: {ProduitsCount: 1}}, function (err) {
                             if (err) {
                                 return cb(err);
                             }
 
-                            Category.update({_id: modelOld.caregory}, {$inc: {productsCount: -1}}, function (err) {
+                            Category.update({_id: modelOld.caregory}, {$inc: {ProduitsCount: -1}}, function (err) {
                                 if (err) {
                                     return cb(err);
                                 }
@@ -285,7 +285,7 @@ var Chart = function (models) {
                 return next(err);
             }
 
-            Category.update({_id: removed.caregory}, {$inc: {productsCount: -1}}, function (err) {
+            Category.update({_id: removed.caregory}, {$inc: {ProduitsCount: -1}}, function (err) {
                 if (err) {
                     return next(err);
                 }
@@ -308,7 +308,7 @@ var Chart = function (models) {
                     return cb(err);
                 }
 
-                Category.update({_id: removed.caregory}, {$inc: {productsCount: -1}}, function (err) {
+                Category.update({_id: removed.caregory}, {$inc: {ProduitsCount: -1}}, function (err) {
                     if (err) {
                         return cb(err);
                     }

@@ -17,7 +17,7 @@ var WorkflowHandler = require('../handlers/workflow');
 module.exports = function (models, event) {
     var customerService = require('../services/customer')(models);
     var currencyService = require('../services/currency')(models);
-    var productService = require('../services/products')(models);
+    var Produitservice = require('../services/Produits')(models);
     var paymentMethodService = require('../services/paymentMethod')(models);
     var AvailabilityService = require('../services/productAvailability')(models);
     var ConflictService = require('../services/conflict')(models);
@@ -91,7 +91,7 @@ module.exports = function (models, event) {
             return callback(error);
         }
 
-        updateUrl = 'products/';
+        updateUrl = 'Produits/';
 
         woo.get(updateUrl + wooProductId, function (err, data, res) {
             if (err) {
@@ -161,7 +161,7 @@ module.exports = function (models, event) {
             return allCallback(err);
         }
 
-        categoriesUrl = (urlSettings[versionApi] && urlSettings[versionApi].categories && urlSettings[versionApi].categories.create) || 'products/categories';
+        categoriesUrl = (urlSettings[versionApi] && urlSettings[versionApi].categories && urlSettings[versionApi].categories.create) || 'Produits/categories';
 
         if (!woo) {
             woo = new WooCommerceApi({
@@ -353,7 +353,7 @@ module.exports = function (models, event) {
             return allCallback(err);
         }
 
-        categoriesUrl = (urlSettings[versionApi] && urlSettings[versionApi].categories && urlSettings[versionApi].categories.create) || 'products/categories';
+        categoriesUrl = (urlSettings[versionApi] && urlSettings[versionApi].categories && urlSettings[versionApi].categories.create) || 'Produits/categories';
 
         if (!woo) {
             woo = new WooCommerceApi({
@@ -534,7 +534,7 @@ module.exports = function (models, event) {
         // TODO: set logs options
         logsOptions = {
             action  : 'imports',
-            category: 'products'
+            category: 'Produits'
         };
 
         var imageOpts = {
@@ -732,7 +732,7 @@ module.exports = function (models, event) {
                             },
 
                             function (wCb) {
-                                productService.createProduct(options, function (err, product) {
+                                Produitservice.createProduct(options, function (err, product) {
                                     if (err) {
                                         // TODO: write error logs
                                         logs = syncLogsHelper.addError(logs, logsOptions, {
@@ -803,7 +803,7 @@ module.exports = function (models, event) {
         });
     }
 
-    function getProducts(opts, allCallback) {
+    function getProduits(opts, allCallback) {
         var db = opts.dbName;
         var uId = opts.userId || opts.user;
         var baseUrl = opts.baseUrl;
@@ -814,17 +814,17 @@ module.exports = function (models, event) {
         var channel = opts._id || opts.channel;
         var internalProds = [];
         var urlSettings = opts.settings;
-        var productsUrl;
+        var ProduitsUrl;
         var versionApi = 'v1';
         var fullRoute;
-        var products = [];
+        var Produits = [];
         var logsOptions;
         var err;
 
         // TODO: set logs options
         logsOptions = {
             action  : 'imports',
-            category: 'products'
+            category: 'Produits'
         };
 
         if (typeof opts === 'function') {
@@ -844,7 +844,7 @@ module.exports = function (models, event) {
             return allCallback(err);
         }
 
-        productsUrl = (urlSettings[versionApi] && urlSettings[versionApi].products && urlSettings[versionApi].products.get) || 'products';
+        ProduitsUrl = (urlSettings[versionApi] && urlSettings[versionApi].Produits && urlSettings[versionApi].Produits.get) || 'Produits';
 
         if (!woo) {
             woo = new WooCommerceApi({
@@ -868,7 +868,7 @@ module.exports = function (models, event) {
                 async.whilst(function () {
                     return helperForWhile;
                 }, function (whCb) {
-                    woo.get(productsUrl + '?page=' + pageNumber + '&per_page=100', function (err, data, res) {
+                    woo.get(ProduitsUrl + '?page=' + pageNumber + '&per_page=100', function (err, data, res) {
                         var result;
 
                         if (err) {
@@ -900,7 +900,7 @@ module.exports = function (models, event) {
                             helperForWhile = false;
                         }
 
-                        products = products.concat(result);
+                        Produits = Produits.concat(result);
                         pageNumber++;
 
                         whCb();
@@ -910,19 +910,19 @@ module.exports = function (models, event) {
                         return wCb(err);
                     }
 
-                    wCb(null, products);
+                    wCb(null, Produits);
                 });
             },
 
-            function (products, wCb) {
+            function (Produits, wCb) {
 
-                if (products && typeof wCb === 'function') {
-                    return wCb(null, products);
+                if (Produits && typeof wCb === 'function') {
+                    return wCb(null, Produits);
                 }
 
-                wCb = products;
+                wCb = Produits;
 
-                woo.get(productsUrl + opts.product.id, function (err, data, res) {
+                woo.get(ProduitsUrl + opts.product.id, function (err, data, res) {
                     if (err) {
                         // TODO: write critical error
                         logs = syncLogsHelper.addCriticalError(logs, logsOptions, {
@@ -932,17 +932,17 @@ module.exports = function (models, event) {
                         return wCb(err);
                     }
 
-                    products = JSON.parse(res);
+                    Produits = JSON.parse(res);
 
-                    wCb(null, [products]);
+                    wCb(null, [Produits]);
                 });
             }
-        ], function (err, products) {
+        ], function (err, Produits) {
             if (err) {
                 return allCallback(err);
             }
 
-            productService.find({}, {
+            Produitservice.find({}, {
                 'info.SKU': 1,
                 dbName    : db
             }, function (err, result) {
@@ -958,7 +958,7 @@ module.exports = function (models, event) {
                     });
                 }
 
-                async.eachLimit(products, 1, function (wooProduct, eachCb) {
+                async.eachLimit(Produits, 1, function (wooProduct, eachCb) {
                     var options = {
                         dbName: db
                     };
@@ -1177,14 +1177,14 @@ module.exports = function (models, event) {
         });
     }
 
-    function exportProducts(opts, allCallback) {
+    function exportProduits(opts, allCallback) {
         var productObjectIds;
         var consumerSecret;
         var productPrices;
         var channelLinks;
         var consumerKey;
         var urlSettings;
-        var productsUrl;
+        var ProduitsUrl;
         var versionApi = 'v1';
         var channel;
         var baseUrl;
@@ -1196,7 +1196,7 @@ module.exports = function (models, event) {
         // TODO: set logs options
         logsOptions = {
             action  : 'exports',
-            category: 'products'
+            category: 'Produits'
         };
 
         if (typeof opts === 'function') {
@@ -1223,7 +1223,7 @@ module.exports = function (models, event) {
             return allCallback(error);
         }
 
-        productsUrl = (urlSettings[versionApi] && urlSettings[versionApi].products && urlSettings[versionApi].products.put) || 'products'
+        ProduitsUrl = (urlSettings[versionApi] && urlSettings[versionApi].Produits && urlSettings[versionApi].Produits.put) || 'Produits'
 
         if (!woo) {
             woo = new WooCommerceApi({
@@ -1239,17 +1239,17 @@ module.exports = function (models, event) {
         async.waterfall([
             function (wCb) {
                 // get changed or created product id from Redis to export
-                redisClient.sMembers(CONSTANTS.REDIS.CHANGED_PRODUCTS, function (err, values) {
+                redisClient.sMembers(CONSTANTS.REDIS.CHANGED_Produits, function (err, values) {
                     if (err) {
                         return wCb(err);
                     }
 
-                    redisClient.sMove(CONSTANTS.REDIS.CHANGED_PRODUCTS, values, function (err) {
+                    redisClient.sMove(CONSTANTS.REDIS.CHANGED_Produits, values, function (err) {
                         if (err) {
                             console.error(err);
                         }
 
-                        console.log('Red is_ChangedProducts cleared!');
+                        console.log('Red is_ChangedProduits cleared!');
                     });
 
                     if (!values || !values.length) {
@@ -1293,28 +1293,28 @@ module.exports = function (models, event) {
             },
 
             function (wCb) {
-                productService.getProductsForChannelWithVariants({
+                Produitservice.getProduitsForChannelWithVariants({
                     dbName : db,
                     channel: channel,
                     query  : {_id: {$in: productObjectIds}}
-                }, function (err, products) {
+                }, function (err, Produits) {
                     if (err) {
                         return wCb(err);
                     }
 
-                    wCb(null, products);
+                    wCb(null, Produits);
                 });
             }
-        ], function (err, products) {
+        ], function (err, Produits) {
             if (err) {
                 return allCallback(err);
             }
 
-            if (!products.length) {
+            if (!Produits.length) {
                 return allCallback();
             }
 
-            async.eachLimit(products, 10, function (product, eCb) {
+            async.eachLimit(Produits, 10, function (product, eCb) {
                 var channelLink = channelLinks.find(function (link) {
                     return link.product.toString() === product._id.toString() && link.channel.toString() === channel;
                 });
@@ -1356,7 +1356,7 @@ module.exports = function (models, event) {
                 }
 
                 if (wooVariationId === '0') {
-                    productsUrl += wooId;
+                    ProduitsUrl += wooId;
 
                     if (product.productImages && product.productImages.length) {
                         images = product.productImages;
@@ -1378,7 +1378,7 @@ module.exports = function (models, event) {
                         model.images = imagesArray;
                     }
 
-                    return woo.put(productsUrl, model, function (err, data, result) {
+                    return woo.put(ProduitsUrl, model, function (err, data, result) {
                         if (err) {
                             // TODO: write critical error
                             logs = syncLogsHelper.addCriticalError(logs, logsOptions, {
@@ -1432,7 +1432,7 @@ module.exports = function (models, event) {
         var consumerSecret;
         var consumerKey;
         var urlSettings;
-        var productsUrl;
+        var ProduitsUrl;
         var versionApi = 'v1';
         var channel;
         var baseUrl;
@@ -1470,7 +1470,7 @@ module.exports = function (models, event) {
             return allCallback(err);
         }
 
-        productsUrl = (urlSettings[versionApi] && urlSettings[versionApi].products && urlSettings[versionApi].products.put) || 'products';
+        ProduitsUrl = (urlSettings[versionApi] && urlSettings[versionApi].Produits && urlSettings[versionApi].Produits.put) || 'Produits';
 
         if (!woo) {
             woo = new WooCommerceApi({
@@ -1498,7 +1498,7 @@ module.exports = function (models, event) {
                     var splittedLinkId = channelLink.linkId.split('|');
                     var productId = splittedLinkId[0];
                     var variationId = splittedLinkId[1];
-                    var updateUrl = 'products/';
+                    var updateUrl = 'Produits/';
                     var model;
 
                     if (err) {
@@ -1522,9 +1522,9 @@ module.exports = function (models, event) {
                     }
 
                     if (variationId === '0') {
-                        productsUrl += productId;
+                        ProduitsUrl += productId;
 
-                        return woo.put(productsUrl, model, function (err, data, res) {
+                        return woo.put(ProduitsUrl, model, function (err, data, res) {
                             if (err) {
 
                                 // TODO: write critical error logs
@@ -1577,9 +1577,9 @@ module.exports = function (models, event) {
     }
 
     function createVariantInWooV1(productId, wooVariant, cb) {
-        var productsUrl = 'products/';
+        var ProduitsUrl = 'Produits/';
 
-        woo.get(productsUrl + productId, function (err, data, result) {
+        woo.get(ProduitsUrl + productId, function (err, data, result) {
             var resultVariations;
             var variantId;
             var wooId;
@@ -1596,7 +1596,7 @@ module.exports = function (models, event) {
                 return cb(null, wooId);
             }
 
-            woo.put(productsUrl + productId, {variations: [wooVariant]}, function (err, data, result) {
+            woo.put(ProduitsUrl + productId, {variations: [wooVariant]}, function (err, data, result) {
                 if (err) {
                     return cb(err);
                 }
@@ -1662,7 +1662,7 @@ module.exports = function (models, event) {
         var productPrices = nativeProduct.productPrices;
         var price = (productPrices && productPrices.prices && productPrices.prices.length && productPrices.prices[0].price) || 0;
         var baseUrl = opts.baseUrl;
-        var productsUrl;
+        var ProduitsUrl;
         var dbName = opts.dbName;
         var channel = opts._id || opts.channel;
         var fullCreateRoute;
@@ -1698,8 +1698,8 @@ module.exports = function (models, event) {
         }
 
         versionApi = getVersionApi(opts.version);
-        fullCreateRoute = putRoute = urlSettings.products && urlSettings.products.create;
-        productsUrl = urlSettings.products && urlSettings.products.get;
+        fullCreateRoute = putRoute = urlSettings.Produits && urlSettings.Produits.create;
+        ProduitsUrl = urlSettings.Produits && urlSettings.Produits.get;
 
         if (!woo) {
             woo = new WooCommerceApi({
@@ -1729,7 +1729,7 @@ module.exports = function (models, event) {
             },
 
             function (wCb) {
-                woo.get(productsUrl + 'attributes', function (err, data, res) {
+                woo.get(ProduitsUrl + 'attributes', function (err, data, res) {
                     var namesAttributes = [];
                     var comparedOptions;
 
@@ -1759,7 +1759,7 @@ module.exports = function (models, event) {
                             return eCb();
                         }
 
-                        woo.post(productsUrl + 'attributes', {
+                        woo.post(ProduitsUrl + 'attributes', {
                             name: option,
                             type: 'select'
                         }, function (err, data, res) {
@@ -1791,22 +1791,22 @@ module.exports = function (models, event) {
             },
 
             function (wCb) {
-                productService.find({
+                Produitservice.find({
                     groupId: nativeProduct.groupId
                 }, {
                     dbName: dbName,
                     _id   : 1
-                }, function (err, products) {
+                }, function (err, Produits) {
                     if (err) {
                         return wCb(err);
                     }
 
-                    wCb(null, products);
+                    wCb(null, Produits);
                 });
             },
 
-            function (products, wCb) {
-                var ids = _.pluck(products, '_id');
+            function (Produits, wCb) {
+                var ids = _.pluck(Produits, '_id');
 
                 channelLinksService.find({
                     product: {$in: ids},
@@ -1860,7 +1860,7 @@ module.exports = function (models, event) {
                             return wCb();
                         }
 
-                        productService.getProductsWithVariants({
+                        Produitservice.getProduitsWithVariants({
                             query: {
                                 _id: channelLinks.product
                             },
@@ -1938,7 +1938,7 @@ module.exports = function (models, event) {
 
             async.waterfall([
                 function (wCb) {
-                    woo.get('products/categories', function (err, data, res) {
+                    woo.get('Produits/categories', function (err, data, res) {
                         res = JSON.parse(res);
 
                         wooCategoriesIds = _.pluck(res, 'id');
@@ -1952,7 +1952,7 @@ module.exports = function (models, event) {
                             }
 
                             function createCategory(category, createSelf, cb) {
-                                woo.post('products/categories', {
+                                woo.post('Produits/categories', {
                                     name: category.name
                                 }, function (err, date, res) {
                                     res = JSON.parse(res);
@@ -2051,7 +2051,7 @@ module.exports = function (models, event) {
                                         });
                                     }
 
-                                    woo.post('products/attributes', objectForCreateOption, function (err, data, res) {
+                                    woo.post('Produits/attributes', objectForCreateOption, function (err, data, res) {
                                         if (err) {
                                             return eCb(err);
                                         }
@@ -2394,14 +2394,14 @@ module.exports = function (models, event) {
             var workflow = statusBuilder(wooOrder.status || '', workflowObj);
             var needPayments = false;
             var needShipping = false;
-            var hasUnlinkedProducts;
+            var hasUnlinkedProduits;
             var unlinkedOrderId;
             var shippingMethods;
             var paymentMethod;
-            var products;
+            var Produits;
             var newOrder;
 
-            function orderRowsBuilder(_order, products, callback) {
+            function orderRowsBuilder(_order, Produits, callback) {
 
                 warehouseService.findOne({_id: ObjectId(warehouse)}, {dbName: db}, function (err, resultWarehouse) {
                     var arrayRows;
@@ -2417,7 +2417,7 @@ module.exports = function (models, event) {
                         return callback(err);
                     }
 
-                    arrayRows = products.map(function (elem) {
+                    arrayRows = Produits.map(function (elem) {
                         var wooVariantId = elem.channelLinks.linkId.split('|')[1];
                         var object = wooOrder.line_items.find(function (el) {
                             return el.variation_id.toString() === wooVariantId;
@@ -2476,22 +2476,22 @@ module.exports = function (models, event) {
 
             async.series([
                 function (sCb) {
-                    productService
-                        .getProductsForOrder({
+                    Produitservice
+                        .getProduitsForOrder({
                             dbName : db,
                             channel: channel,
                             linkIds: linkIds
-                        }, function (err, ourProducts) {
-                            products = ourProducts;
+                        }, function (err, ourProduits) {
+                            Produits = ourProduits;
 
                             if (err) {
                                 return sCb(err);
                             }
 
-                            if (wooOrder.line_items.length !== ourProducts.length) {
+                            if (wooOrder.line_items.length !== ourProduits.length) {
                                 orderBody.workflow = ObjectId(CONSTANTS.DEFAULT_UNLINKED_WORKFLOW_ID);
                                 orderBody.tempWorkflow = workflow;
-                                hasUnlinkedProducts = true;
+                                hasUnlinkedProduits = true;
 
                                 if (orderBody.conflictTypes && orderBody.conflictTypes.length) {
                                     orderBody.conflictTypes.push({
@@ -2634,7 +2634,7 @@ module.exports = function (models, event) {
                                     return sCb();
                                 }
 
-                                products = products.map(function (product) {
+                                Produits = Produits.map(function (product) {
                                     var currentRow = _.findWhere(resultRows, {product: product._id});
 
                                     if (currentRow) {
@@ -2643,7 +2643,7 @@ module.exports = function (models, event) {
                                     }
                                 });
 
-                                orderRowsBuilder(newObject, _.compact(products), sCb);
+                                orderRowsBuilder(newObject, _.compact(Produits), sCb);
                             });
                         });
                     } else {
@@ -2687,7 +2687,7 @@ module.exports = function (models, event) {
 
                             newOrder = _order;
 
-                            orderRowsBuilder(_order, products, sCb);
+                            orderRowsBuilder(_order, Produits, sCb);
                         });
                     }
                 },
@@ -2698,14 +2698,14 @@ module.exports = function (models, event) {
                     var unlinkedIds = _.pluck(unlinked, 'fields.id');
                     var logsOptions = {
                         action  : 'imports',
-                        category: 'products'
+                        category: 'Produits'
                     };
 
-                    if (!hasUnlinkedProducts) {
+                    if (!hasUnlinkedProduits) {
                         return sCb();
                     }
 
-                    nativeIds = _.pluck(products, 'channelLinks.linkId');
+                    nativeIds = _.pluck(Produits, 'channelLinks.linkId');
                     nativeIds = nativeIds.map(function (el) {
                         return el && parseInt(el.split('|')[1], 10);
                     });
@@ -3390,7 +3390,7 @@ module.exports = function (models, event) {
             });
         }
 
-        function getUnlinkedProducts(pCb) {
+        function getUnlinkedProduits(pCb) {
             ConflictService.find({
                 entity          : 'Product',
                 type            : 'unlinked',
@@ -3474,7 +3474,7 @@ module.exports = function (models, event) {
             currencies: getCurrencies,
             warehouse : getWarehouse,
             workflows : getWorkflows,
-            unlinked  : getUnlinkedProducts
+            unlinked  : getUnlinkedProduits
         }, function (err, data) {
             var importData;
             var customers;
@@ -3620,12 +3620,12 @@ module.exports = function (models, event) {
             },
 
             function (sCb) {
-                getProducts(opts, function (err) {
+                getProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
 
-                    console.log('WOO -> products is imported for channel ', channelName, ' id = ', channelId);
+                    console.log('WOO -> Produits is imported for channel ', channelName, ' id = ', channelId);
                     sCb();
                 });
             },
@@ -3691,7 +3691,7 @@ module.exports = function (models, event) {
             },
 
             function (sCb) {
-                exportProducts(opts, function (err) {
+                exportProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
@@ -3713,12 +3713,12 @@ module.exports = function (models, event) {
             },
 
             function (sCb) {
-                getProducts(opts, function (err) {
+                getProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
 
-                    console.log('WOO -> products is imported for channel');
+                    console.log('WOO -> Produits is imported for channel');
                     sCb();
                 });
             },
@@ -3761,7 +3761,7 @@ module.exports = function (models, event) {
         });
     }
 
-    function getOnlyProducts(opts, callback) {
+    function getOnlyProduits(opts, callback) {
         var dbName = opts.dbName;
         var channel = opts._id;
         var user = opts.user;
@@ -3784,12 +3784,12 @@ module.exports = function (models, event) {
                 });
             },
             function (sCb) {
-                getProducts(opts, function (err) {
+                getProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
 
-                    console.log('WOO -> products is imported for channel');
+                    console.log('WOO -> Produits is imported for channel');
                     sCb();
                 });
             }
@@ -3803,7 +3803,7 @@ module.exports = function (models, event) {
                 dbName: opts.dbName
             });
 
-            console.log('WOO -> import products is complete!');
+            console.log('WOO -> import Produits is complete!');
 
             event.emit('getAllDone', {uId: user, dbName: dbName});
 
@@ -3814,9 +3814,9 @@ module.exports = function (models, event) {
     return {
         getCategories  : getCategories,
         getAll         : getAll,
-        getProducts    : getProducts,
+        getProduits    : getProduits,
         getCustomers   : getCustomers,
-        getOnlyProducts: getOnlyProducts,
+        getOnlyProduits: getOnlyProduits,
         getSalesOrders : getSalesOrders,
         createProduct  : createProduct,
         publishProduct : publishProduct,

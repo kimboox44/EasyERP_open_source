@@ -13,7 +13,7 @@
             <thead>
             <tr class="forToggle">
                 <th>Name</th>
-                <th>Products Count</th>
+                <th>Produits Count</th>
                 <th>Product Options</th>
                 <th></th>
             </tr>
@@ -22,7 +22,7 @@
             <% collection.forEach(function(elem,index){ %>
             <tr data-id="<%=elem._id%>">
                 <td><%=elem.name%></td>
-                <td><%=elem.countProducts%></td>
+                <td><%=elem.countProduits%></td>
                 <td>
                     <%elem.options && elem.options.length && elem.options.forEach(function (opt){%>
                     <span><%= opt && opt.name + '| ' || '' %></span>

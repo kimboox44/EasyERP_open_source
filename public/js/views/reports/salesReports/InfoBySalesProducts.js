@@ -25,7 +25,7 @@ define([
         },
 
         initialize: function (options) {
-            this.data = options.data && options.data.products ? options.data.products : [];
+            this.data = options.data && options.data.Produits ? options.data.Produits : [];
             this.datesArray = options.datesArray;
 
             this.render();
@@ -68,11 +68,11 @@ define([
             this.startDate = dateArray[0];
             this.endDate = dateArray[1];
 
-            dataService.getData('/reports/products', {
+            dataService.getData('/reports/Produits', {
                 startDate: this.startDate,
                 endDate: this.endDate
             }, function (resp) {
-                self.data = resp.data && resp.data.products ? resp.data.products : [];
+                self.data = resp.data && resp.data.Produits ? resp.data.Produits : [];
 
                 self.renderChart('in_percents');
                 self.activateTabs();

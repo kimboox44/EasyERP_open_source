@@ -6,7 +6,7 @@ define([
     'text!templates/WriteOff/CreateTemplate.html',
     'models/InvoiceModel',
     'populate',
-    'views/Products/InvoiceOrder/ProductItems',
+    'views/Produits/InvoiceOrder/ProductItems',
     'constants',
     'helpers'
 ], function (Backbone, $, _, ParentView, CreateTemplate, InvoiceModel, populate, ProductItemView, CONSTANTS, helpers) {
@@ -65,9 +65,9 @@ define([
             var mid = 56;
             var $currentEl = this.$el;
 
-            var selectedProducts = $currentEl.find('.productItem');
-            var products = [];
-            var selectedLength = selectedProducts.length;
+            var selectedProduits = $currentEl.find('.productItem');
+            var Produits = [];
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var productId;
             var quantity;
@@ -90,7 +90,7 @@ define([
 
             if (selectedLength) {
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = $(selectedProducts[i]);
+                    targetEl = $(selectedProduits[i]);
                     productId = targetEl.data('id');
                     if (productId) {
                         quantity = targetEl.find('[data-name="quantity"]').text();
@@ -104,7 +104,7 @@ define([
                             });
                         }
 
-                        products.push({
+                        Produits.push({
                             product : productId,
                             jobs    : jobs,
                             quantity: quantity
@@ -133,7 +133,7 @@ define([
                 account       : null,
                 journal       : journal,
                 project       : project,
-                products      : products,
+                Produits      : Produits,
                 paymentInfo   : null,
                 groups        : {
                     owner: this.$el.find('#allUsersSelect').attr('data-id') || null,

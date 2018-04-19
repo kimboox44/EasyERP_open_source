@@ -109,7 +109,7 @@ var FilterMapper = function () {
                     filterValues.forEach(function (el) {
                         filterResObject[filterBackend + '.' + el] = true;
                     });
-                } else if (contentType === 'Products' && filterBackend === 'job') {
+                } else if (contentType === 'Produits' && filterBackend === 'job') {
                     filterResObject.job = {$exists: false};
                 } else if (filterValues && (filterName !== 'startDate' || filterName !== 'endDate')) {
                     if (filterBackend) {

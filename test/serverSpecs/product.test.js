@@ -97,7 +97,7 @@ describe('Product Specs', function () {
             };
 
             aggent
-                .post('products')
+                .post('Produits')
                 .send(body)
                 .expect(201)
                 .end(function (err, res) {
@@ -125,7 +125,7 @@ describe('Product Specs', function () {
             var body = {};
 
             aggent
-                .post('products')
+                .post('Produits')
                 .send(body)
                 .expect(400, done);
         });
@@ -136,7 +136,7 @@ describe('Product Specs', function () {
             };
 
             aggent
-                .patch('products/' + id)
+                .patch('Produits/' + id)
                 .send(body)
                 .expect(200, done);
         });
@@ -145,7 +145,7 @@ describe('Product Specs', function () {
             var body = {};
 
             aggent
-                .patch('products/123cba')
+                .patch('Produits/123cba')
                 .send(body)
                 .expect(500, done);
 
@@ -200,7 +200,7 @@ describe('Product Specs', function () {
                     debitAccount       : null,
                     taxesAccount       : null,
                     externalId         : null,
-                    productsCount      : 0,
+                    ProduitsCount      : 0,
                     main               : false,
                     sequence           : 3,
                     nestingLevel       : 3,
@@ -307,10 +307,10 @@ describe('Product Specs', function () {
             });
         });
 
-        it('should get products Alphabet', function (done) {
+        it('should get Produits Alphabet', function (done) {
 
             aggent
-                .get('products/getProductsAlphabet')
+                .get('Produits/getProduitsAlphabet')
                 .expect(200)
                 .end(function (err, res) {
                     var body = res.body;
@@ -328,13 +328,13 @@ describe('Product Specs', function () {
                 });
         });
 
-        it('should get products all', function (done) {
+        it('should get Produits all', function (done) {
             var query = {
                 canBeSold: true
             };
 
             aggent
-                .get('products')
+                .get('Produits')
                 .query(query)
                 .expect(200)
                 .end(function (err, res) {
@@ -359,10 +359,10 @@ describe('Product Specs', function () {
                 });
         });
 
-        it('should get products images', function (done) {
+        it('should get Produits images', function (done) {
 
             aggent
-                .get('products/getProductsImages')
+                .get('Produits/getProduitsImages')
                 .query({'ids[0]': id})
                 .expect(200)
                 .end(function (err, res) {
@@ -391,10 +391,10 @@ describe('Product Specs', function () {
 
         // todo exportToCsv test
 
-        it('should get productsType for Dd', function (done) {
+        it('should get ProduitsType for Dd', function (done) {
 
             aggent
-                .get('products/getProductsTypeForDd')
+                .get('Produits/getProduitsTypeForDd')
                 .expect(200)
                 .end(function (err, res) {
                     var body = res.body;
@@ -432,7 +432,7 @@ describe('Product Specs', function () {
             };
 
             aggent
-                .post('products/sku')
+                .post('Produits/sku')
                 .send(body)
                 .expect(200)
                 .end(function (err, res) {
@@ -461,7 +461,7 @@ describe('Product Specs', function () {
             };
 
             aggent
-                .post('products/variants/' + id)
+                .post('Produits/variants/' + id)
                 .send(body)
                 .expect(200)
                 .end(function (err, res) {
@@ -480,13 +480,13 @@ describe('Product Specs', function () {
         });
 
         describe('Specs for productOptions and ProductOptions values', function () {
-            it('should create productsOption', function (done) {
+            it('should create ProduitsOption', function (done) {
                 var body = {
                     name: 'New Option'
                 };
 
                 aggent
-                    .post('products/options/')
+                    .post('Produits/options/')
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -506,7 +506,7 @@ describe('Product Specs', function () {
                     });
             });
 
-            it('should update productsOption', function (done) {
+            it('should update ProduitsOption', function (done) {
                 var body = {
                     checkedNow    : ['57f218e6c3d540e222241b3a'],
                     checkedPrTypes: [],
@@ -514,7 +514,7 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .patch('products/options/' + optionId)
+                    .patch('Produits/options/' + optionId)
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -532,10 +532,10 @@ describe('Product Specs', function () {
                     });
             });
 
-            it('should get productsOptions', function (done) {
+            it('should get ProduitsOptions', function (done) {
 
                 aggent
-                    .get('products/options')
+                    .get('Produits/options')
                     .expect(200)
                     .end(function (err, res) {
                         var body = res.body;
@@ -566,7 +566,7 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .post('products/optionsValues')
+                    .post('Produits/optionsValues')
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -593,7 +593,7 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .patch('products/optionsValues')
+                    .patch('Produits/optionsValues')
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -617,7 +617,7 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .get('products/optionsValues')
+                    .get('Produits/optionsValues')
                     .query(query)
                     .expect(200)
                     .end(function (err, res) {
@@ -645,7 +645,7 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .delete('products/optionsValues')
+                    .delete('Produits/optionsValues')
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -663,14 +663,14 @@ describe('Product Specs', function () {
                     });
             });
 
-            it('should delete productsOptions', function (done) {
+            it('should delete ProduitsOptions', function (done) {
                 var body = {
-                    contentType: 'productSettings',
+                    contentType: 'Produitsettings',
                     ids        : [optionId]
                 };
 
                 aggent
-                    .delete('products/options')
+                    .delete('Produits/options')
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -697,7 +697,7 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .post('products/productTypes/')
+                    .post('Produits/productTypes/')
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -722,7 +722,7 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .patch('products/productTypes/' + productTypeId)
+                    .patch('Produits/productTypes/' + productTypeId)
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -743,7 +743,7 @@ describe('Product Specs', function () {
             it('should get productTypes', function (done) {
 
                 aggent
-                    .get('products/productTypes/')
+                    .get('Produits/productTypes/')
                     .expect(200)
                     .end(function (err, res) {
                         var body = res.body;
@@ -771,7 +771,7 @@ describe('Product Specs', function () {
             it('should get productType', function (done) {
 
                 aggent
-                    .get('products/productTypes/' + productTypeId)
+                    .get('Produits/productTypes/' + productTypeId)
                     .expect(200)
                     .end(function (err, res) {
                         var body = res.body;
@@ -795,7 +795,7 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .delete('products/productTypes/')
+                    .delete('Produits/productTypes/')
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -814,7 +814,7 @@ describe('Product Specs', function () {
             });
         });
 
-        /*it('should get products totalCollectionLength', function (done) {
+        /*it('should get Produits totalCollectionLength', function (done) {
          var query = {
          filter: {
          canBeSold: {
@@ -824,7 +824,7 @@ describe('Product Specs', function () {
          };
 
          aggent
-         .get('products/totalCollectionLength')
+         .get('Produits/totalCollectionLength')
          .query(query)
          .query({'filter[canBeSold][value][0]': true})
          .expect(200)
@@ -926,7 +926,7 @@ describe('Product Specs', function () {
 
             it('should bulk delete priceLists', function (done) {
                 var body = {
-                    contentType: 'productSettings',
+                    contentType: 'Produitsettings',
                     ids        : [priceListId]
                 };
 
@@ -956,7 +956,7 @@ describe('Product Specs', function () {
             };
 
             aggent
-                .get('products/')
+                .get('Produits/')
                 .query(query)
                 .expect(200)
                 .end(function (err, res) {
@@ -981,7 +981,7 @@ describe('Product Specs', function () {
             };
 
             aggent
-                .get('products/')
+                .get('Produits/')
                 .query(query)
                 .expect(400, done);
 
@@ -989,13 +989,13 @@ describe('Product Specs', function () {
 
         it('should delete product', function (done) {
             aggent
-                .delete('products/' + id)
+                .delete('Produits/' + id)
                 .expect(200, done);
         });
 
         it('should fail delete product', function (done) {
             aggent
-                .delete('products/123cba')
+                .delete('Produits/123cba')
                 .expect(500, done);
         });
 
@@ -1006,13 +1006,13 @@ describe('Product Specs', function () {
             var optionId;
             var optionValueId;
 
-            it('should create productsOption', function (done) {
+            it('should create ProduitsOption', function (done) {
                 var body = {
                     name: 'Creatures clothes'
                 };
 
                 aggent
-                    .post('products/options/')
+                    .post('Produits/options/')
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -1038,7 +1038,7 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .post('products/optionsValues')
+                    .post('Produits/optionsValues')
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -1065,7 +1065,7 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .post('products/productTypes/')
+                    .post('Produits/productTypes/')
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -1144,7 +1144,7 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .post('products')
+                    .post('Produits')
                     .send(body)
                     .expect(201)
                     .end(function (err, res) {
@@ -1180,7 +1180,7 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .post('products/variants/' + id)
+                    .post('Produits/variants/' + id)
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -1206,26 +1206,26 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .delete('products/optionsValues')
+                    .delete('Produits/optionsValues')
                     .send(body)
                     .expect(400, done);
             });
 
-            it('should fail delete productsOptions', function (done) {
+            it('should fail delete ProduitsOptions', function (done) {
                 var body = {
-                    contentType: 'productSettings',
+                    contentType: 'Produitsettings',
                     ids        : [optionId]
                 };
 
                 aggent
-                    .delete('products/options')
+                    .delete('Produits/options')
                     .send(body)
                     .expect(400, done);
             });
 
             it('should delete product', function (done) {
                 aggent
-                    .delete('products/' + id)
+                    .delete('Produits/' + id)
                     .expect(200, done);
             });
 
@@ -1235,7 +1235,7 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .delete('products/optionsValues')
+                    .delete('Produits/optionsValues')
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -1253,14 +1253,14 @@ describe('Product Specs', function () {
                     });
             });
 
-            it('should delete productsOptions', function (done) {
+            it('should delete ProduitsOptions', function (done) {
                 var body = {
-                    contentType: 'productSettings',
+                    contentType: 'Produitsettings',
                     ids        : [optionId]
                 };
 
                 aggent
-                    .delete('products/options')
+                    .delete('Produits/options')
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -1285,7 +1285,7 @@ describe('Product Specs', function () {
                 };
 
                 aggent
-                    .delete('products/productTypes/')
+                    .delete('Produits/productTypes/')
                     .send(body)
                     .expect(200)
                     .end(function (err, res) {
@@ -1389,7 +1389,7 @@ describe('Product Specs', function () {
             };
 
             aggent
-                .post('products')
+                .post('Produits')
                 .send(body)
                 .expect(403, done);
         });
@@ -1400,7 +1400,7 @@ describe('Product Specs', function () {
         it('should fail get Product for View', function (done) {
 
             aggent
-                .get('products')
+                .get('Produits')
                 .expect(404, done);
         });
 

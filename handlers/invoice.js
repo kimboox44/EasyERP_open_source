@@ -14,7 +14,7 @@ var Module = function (models, event) {
     var InvoiceSchema = mongoose.Schemas.Invoice;
     var wTrackInvoiceSchema = mongoose.Schemas.wTrackInvoice;
     var OrderSchema = mongoose.Schemas.Quotation;
-    var ProductSchema = mongoose.Schemas.Products;
+    var Produitschema = mongoose.Schemas.Produits;
     var ProformaSchema = mongoose.Schemas.Proforma;
     var WriteOffSchema = mongoose.Schemas.writeOff;
     var ExpensesInvoiceSchema = mongoose.Schemas.expensesInvoice;
@@ -325,8 +325,8 @@ var Module = function (models, event) {
             var query = Order.findById(id).lean();
 
             query
-                .populate('products.info')
-                .populate('products.jobs')
+                .populate('Produits.info')
+                .populate('Produits.jobs')
                 .populate('currency._id')
                 .populate('project', '_id name salesmanager');
 
@@ -663,7 +663,7 @@ var Module = function (models, event) {
         var data = req.body;
         var Invoice = models.get(db, wTrackInvoiceCT, wTrackInvoiceSchema);
         var JobsModel = models.get(db, 'jobs', JobsSchema);
-        var ProductModel = models.get(db, 'Product', ProductSchema);
+        var ProductModel = models.get(db, 'Product', Produitschema);
         var Customer = models.get(db, 'Customers', CustomerSchema);
         var date;
         var query;
@@ -678,7 +678,7 @@ var Module = function (models, event) {
         var osType;
         var path;
         var dir;
-        var invoiceProducts;
+        var invoiceProduits;
         var invoiceJobs;
         var newDirname;
         var obj;
@@ -779,7 +779,7 @@ var Module = function (models, event) {
                 }
 
                 Invoice.findByIdAndUpdate(id, {$set: data}, {new: true}, function (err, invoice) {
-                    var products = data.products;
+                    var Produits = data.Produits;
                     var historyOptions;
 
                     if (err) {
@@ -792,8 +792,8 @@ var Module = function (models, event) {
                         contentId  : invoice._id
                     };
 
-                    if (products) {
-                        async.each(products, function (result, cb) {
+                    if (Produits) {
+                        async.each(Produits, function (result, cb) {
                             var jobs = result.jobs;
                             var productId = result.product;
                             var editedBy = {
@@ -840,11 +840,11 @@ var Module = function (models, event) {
                                 dateForJobs = moment(new Date(data.invoiceDate)).subtract(1, 'seconds');
                                 dateForJobsFinished = moment(new Date(data.invoiceDate)).subtract(2, 'seconds');
 
-                                invoiceProducts = invoice.products;
+                                invoiceProduits = invoice.Produits;
 
                                 invoiceJobs = [];
 
-                                invoiceProducts.forEach(function (prod) {
+                                invoiceProduits.forEach(function (prod) {
                                     invoiceJobs.push(prod.jobs);
                                 });
 
@@ -884,8 +884,8 @@ var Module = function (models, event) {
                                         .populate('payments', '_id name date paymentRef paidAmount createdBy currency')
                                         .populate('department', '_id name')
                                         .populate('currency._id', 'name symbol')
-                                        .populate('products.jobs', 'name description')
-                                        .populate('products.product', 'name info')
+                                        .populate('Produits.jobs', 'name description')
+                                        .populate('Produits.product', 'name info')
                                         .populate('paymentTerms', function (err) {
                                             if (err) {
                                                 return next(err);
@@ -928,11 +928,11 @@ var Module = function (models, event) {
                             dateForJobs = moment(new Date(data.invoiceDate)).subtract(1, 'seconds');
                             dateForJobsFinished = moment(new Date(data.invoiceDate)).subtract(2, 'seconds');
 
-                            invoiceProducts = invoice.products;
+                            invoiceProduits = invoice.Produits;
 
                             invoiceJobs = [];
 
-                            invoiceProducts.forEach(function (prod) {
+                            invoiceProduits.forEach(function (prod) {
                                 invoiceJobs.push(prod.jobs);
                             });
 
@@ -971,8 +971,8 @@ var Module = function (models, event) {
                                     .populate('payments', '_id name date paymentRef paidAmount createdBy currency')
                                     .populate('department', '_id name')
                                     .populate('currency._id', 'name symbol')
-                                    .populate('products.jobs', 'name description')
-                                    .populate('products.product', 'name info')
+                                    .populate('Produits.jobs', 'name description')
+                                    .populate('Produits.product', 'name info')
                                     .populate('paymentTerms', function (err, invoice) {
                                         if (err) {
                                             return next(err);
@@ -1050,7 +1050,7 @@ var Module = function (models, event) {
         var id = req.body.invoiceId;
         var invoiceDate = req.body.invoiceDate;
         var JobsModel = models.get(db, 'jobs', JobsSchema);
-        var products;
+        var Produits;
         var project;
 
         var Invoice = models.get(db, wTrackInvoiceCT, wTrackInvoiceSchema);
@@ -1082,7 +1082,7 @@ var Module = function (models, event) {
             };
 
             HistoryService.addEntry(historyOptions, function () {
-                products = resp.products;
+                Produits = resp.Produits;
 
                 if (resp._type !== 'Proforma') {
                     setWorkflow = function (callback) {
@@ -1116,8 +1116,8 @@ var Module = function (models, event) {
                     };
 
                     updateJobs = function (callback) {
-                        if (products) {
-                            async.each(products, function (result, cb) {
+                        if (Produits) {
+                            async.each(Produits, function (result, cb) {
                                 var jobs = result.jobs;
                                 var editedBy = {
                                     user: req.session.uId,
@@ -1776,8 +1776,8 @@ var Module = function (models, event) {
 
             query = Invoice.findOne(optionsObject);
             query
-                .populate('products.jobs', '_id name description')
-                .populate('products.product', '_id name info')
+                .populate('Produits.jobs', '_id name description')
+                .populate('Produits.product', '_id name info')
                 .populate('project', '_id name paymentMethod paymentTerms')
                 .populate('currency._id')
                 .populate('journal', '_id name')
@@ -1886,7 +1886,7 @@ var Module = function (models, event) {
                     }
                 });
 
-            async.each(invoiceDeleted.products, function (product) {
+            async.each(invoiceDeleted.Produits, function (product) {
                 jobs.push(product.jobs);
             });
             async.each(invoiceDeleted.payments, function (payment) {

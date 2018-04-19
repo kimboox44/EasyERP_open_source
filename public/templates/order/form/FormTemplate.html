@@ -50,11 +50,11 @@
                 <%}%>
                 <%} else {%>
                 <% var filter = {order: {key: 'fields.order', value: [model._id]}};%>
-                <% var href = '#easyErp/unlinkedProducts/filter=' +
+                <% var href = '#easyErp/unlinkedProduits/filter=' +
                 encodeURIComponent(JSON.stringify(filter)) + '?fromForm=true';%>
                 <%model.conflictTypes && model.conflictTypes.forEach(function (el){%>
                 <%if (el.type === 'product') {%>
-                <a class="btn slim" href="<%= href%>">Go to unlinked products</a>
+                <a class="btn slim" href="<%= href%>">Go to unlinked Produits</a>
                 <% }%>
                 <%if (el.type === 'paymentMethod') {%>
                 <a class="btn slim" href="javascript:;" id="createPaymentMethod">Create Payment Method</a>

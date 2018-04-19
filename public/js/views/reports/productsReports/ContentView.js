@@ -3,20 +3,20 @@ define([
     'jQuery',
     'Underscore',
     'views/dialogViewBase',
-    'text!templates/reports/productsReports/IndexTemplate.html',
-    'views/reports/productsReports/IncomingStock',
-    'views/reports/productsReports/InfoBySalesProducts',
-    'views/reports/productsReports/ScarceProducts',
-    'views/reports/productsReports/ProductListing',
-    'views/reports/productsReports/SalesInfoByMonth',
-    'views/reports/productsReports/SalesInfoByChannel',
+    'text!templates/reports/ProduitsReports/IndexTemplate.html',
+    'views/reports/ProduitsReports/IncomingStock',
+    'views/reports/ProduitsReports/InfoBySalesProduits',
+    'views/reports/ProduitsReports/ScarceProduits',
+    'views/reports/ProduitsReports/ProductListing',
+    'views/reports/ProduitsReports/SalesInfoByMonth',
+    'views/reports/ProduitsReports/SalesInfoByChannel',
     'dataService',
     'moment'
-], function (Backbone, $, _, Parent, mainTemplate, IncomingStock, InfoBySalesProducts, ScarceProducts, ProductListing, SalesInfoByMonth, SalesInfoByChannel, dataService, moment) {
+], function (Backbone, $, _, Parent, mainTemplate, IncomingStock, InfoBySalesProduits, ScarceProduits, ProductListing, SalesInfoByMonth, SalesInfoByChannel, dataService, moment) {
     'use strict';
 
     var ContentView = Parent.extend({
-        contentType: 'productsReports',
+        contentType: 'ProduitsReports',
         actionType : 'Content',
         template   : _.template(mainTemplate),
         el         : '#content-holder',
@@ -37,11 +37,11 @@ define([
 
             datesArray = [this.startDate, this.endDate];
 
-            dataService.getData('/reports/products', {
+            dataService.getData('/reports/Produits', {
                 startDate: this.startDate.toString(),
                 endDate  : this.endDate.toString()
             }, function (resp) {
-                return new InfoBySalesProducts({data: resp.data, datesArray: datesArray});
+                return new InfoBySalesProduits({data: resp.data, datesArray: datesArray});
             });
 
             dataService.getData('/reports/incomingStock', {
@@ -51,8 +51,8 @@ define([
                 return new IncomingStock({data: resp.data, datesArray: datesArray});
             });
 
-            dataService.getData('/reports/scarceProducts', {}, function (resp) {
-                return new ScarceProducts({data: resp.data, datesArray: datesArray});
+            dataService.getData('/reports/scarceProduits', {}, function (resp) {
+                return new ScarceProduits({data: resp.data, datesArray: datesArray});
             });
 
             dataService.getData('/reports/getProductListingReport', {}, function (resp) {

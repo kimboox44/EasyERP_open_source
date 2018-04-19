@@ -3,9 +3,9 @@ define([
     'Underscore',
     'jQuery',
     'views/dialogViewBase',
-    'views/Products/orderRows/ProductItems',
+    'views/Produits/orderRows/ProductItems',
     'models/ManufacturingOrderModel',
-    'collections/Products/products',
+    'collections/Produits/Produits',
     'text!templates/manufacturingOrders/CreateTemplate.html',
     'text!templates/manufacturingOrders/ConsumedTemplate.html',
     'constants',
@@ -26,7 +26,7 @@ define([
         initialize: function (options) {
             this.model = new Model();
             this.responseObj = options && options.responseObj || {};
-            this.products = options && options.products || [];
+            this.Produits = options && options.Produits || [];
             this.components = [];
 
             this.render();
@@ -60,9 +60,9 @@ define([
 
             $target.parents('ul').closest('.current-selected').text($target.text()).attr('data-id', $targetId);
 
-            if (id === 'productsDd' || id === 'warehouseDd') {
+            if (id === 'ProduitsDd' || id === 'warehouseDd') {
                 warehouse = this.$el.find('#warehouseDd').attr('data-id');
-                productId = this.$el.find('#productsDd').attr('data-id');
+                productId = this.$el.find('#ProduitsDd').attr('data-id');
                 dataService.getData('/billOfMaterials/byProduct', {
                     _id      : productId,
                     warehouse: warehouse
@@ -74,7 +74,7 @@ define([
 
                             self.currentBillObject = resp.data[0];
 
-                            if (id === 'productsDd') {
+                            if (id === 'ProduitsDd') {
                                 self.$el.find('#billOfMaterial').html(resp.data[0].name).attr('data-id', resp.data[0]._id);
                             }
 
@@ -128,7 +128,7 @@ define([
             var warehouseDd = _.escape($.trim($el.find('#warehouseDd').attr('data-id')));
             var warehouseTo = _.escape($.trim($el.find('#warehouseToDd').attr('data-id')));
             var workflowsDd = _.escape($.trim($el.find('#workflowsDd').attr('data-id')));
-            var product = _.escape($.trim($el.find('#productsDd').attr('data-id')));
+            var product = _.escape($.trim($el.find('#ProduitsDd').attr('data-id')));
             var quantityToProduce = _.escape($el.find('#quantityToProduce').val());
             var routing = _.escape($.trim($el.find('#routing').attr('data-id')));
             var billOfMaterial = _.escape($.trim($el.find('#billOfMaterial').attr('data-id')));
@@ -218,7 +218,7 @@ define([
                 }
             });
 
-            populate.get('#productsDd', '/products/getProductsNames', {}, 'name', this);
+            populate.get('#ProduitsDd', '/Produits/getProduitsNames', {}, 'name', this);
             populate.get('#source', '/manufacturingOrders', {}, 'name', this, true, true, null);
             dataService.getData('/employees/getForDD', {isEmployee: true}, function (employees) {
                 employees = _.map(employees.data, function (employee) {

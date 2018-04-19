@@ -5,11 +5,11 @@ var _ = require('lodash');
 var reportConst = require('../public/js/constants/customReports');
 var REPORT_CONSTANTS = reportConst.reports;
 var TOTAL_CONSTANTS = reportConst.total;
-var ProductSchema = mongoose.Schemas.Products;
+var Produitschema = mongoose.Schemas.Produits;
 
 var InvoiceSchema = mongoose.Schemas.Invoice;
 var OrderSchema = mongoose.Schemas.Order;
-var AvailabilitySchema = mongoose.Schemas.productsAvailability;
+var AvailabilitySchema = mongoose.Schemas.ProduitsAvailability;
 var exporter = require('../helpers/exporter/exportDecorator');
 
 var Module = function (models) {
@@ -63,7 +63,7 @@ var Module = function (models) {
             return callback(error);
         }
 
-        Product = models.get(dbName, 'Product', ProductSchema);
+        Product = models.get(dbName, 'Product', Produitschema);
         Invoice = models.get(dbName, 'Invoices', InvoiceSchema);
         Order = models.get(dbName, 'Order', OrderSchema);
 
@@ -157,7 +157,7 @@ var Module = function (models) {
             }
         }, {
             $lookup: {
-                from        : 'Products',
+                from        : 'Produits',
                 localField  : '_id',
                 foreignField: '_id',
                 as          : 'product'
@@ -214,7 +214,7 @@ var Module = function (models) {
         aggregation.exec(function (err, result) {
             var reportData = {};
             var topProductPercentSales;
-            var topProductSales;
+            var topProduitsales;
             var topProductPercentUnits;
             var topProductUnits;
 
@@ -223,18 +223,18 @@ var Module = function (models) {
             }
 
             topProductPercentSales = _.max(result, 'productPercentSales');
-            topProductSales = _.max(result, 'total');
+            topProduitsales = _.max(result, 'total');
             topProductPercentUnits = _.max(result, 'productPercentUnits');
             topProductUnits = _.max(result, 'units');
 
             if (!result.length) {
-                reportData.products = result;
+                reportData.Produits = result;
                 reportData.topProductPercentSales = {};
-                reportData.topProductSales = {};
+                reportData.topProduitsales = {};
                 reportData.topProductPercentUnits = {};
                 reportData.topProductUnits = {};
 
-                return callback(null, {data: reportData.products});
+                return callback(null, {data: reportData.Produits});
             }
 
             reportData.topProductPercentSales = {
@@ -243,10 +243,10 @@ var Module = function (models) {
                 value: topProductPercentSales.productPercentSales
             };
 
-            reportData.topProductSales = {
-                _id  : topProductSales._id,
-                name : topProductSales.product,
-                value: topProductSales.total
+            reportData.topProduitsales = {
+                _id  : topProduitsales._id,
+                name : topProduitsales.product,
+                value: topProduitsales.total
             };
 
             reportData.topProductPercentUnits = {
@@ -261,10 +261,10 @@ var Module = function (models) {
                 value: topProductUnits.units
             };
 
-            reportData.products = result;
+            reportData.Produits = result;
 
             callback(null, {
-                data: reportData.products
+                data: reportData.Produits
             });
         });
     }
@@ -720,38 +720,38 @@ var Module = function (models) {
             }
         }, {
             $lookup: {
-                from        : 'Products',
+                from        : 'Produits',
                 localField  : 'orderRows.product',
                 foreignField: '_id',
-                as          : 'products'
+                as          : 'Produits'
             }
         }, {
             $unwind: {
-                path: '$products'
+                path: '$Produits'
             }
         }, {
             $lookup: {
-                from        : 'productsAvailability',
-                localField  : 'products._id',
+                from        : 'ProduitsAvailability',
+                localField  : 'Produits._id',
                 foreignField: 'product',
-                as          : 'productsAvailability'
+                as          : 'ProduitsAvailability'
             }
         }, {
             $project: {
-                _id          : '$products._id',
-                products     : '$products.name',
-                variants     : '$products.variants',
-                sku          : '$products.info.SKU',
+                _id          : '$Produits._id',
+                Produits     : '$Produits.name',
+                variants     : '$Produits.variants',
+                sku          : '$Produits.info.SKU',
                 supplier     : '$customer.name',
                 purchaseOrder: '$name',
-                onHand       : {$sum: '$productsAvailability.onHand'},
+                onHand       : {$sum: '$ProduitsAvailability.onHand'},
                 incomingStock: '$orderRows.quantity',
                 total        : {$divide: [{$add: ['$orderRows.unitPrice', {$sum: '$orderRows.taxes.tax'}]}, '$currency.rate']}
             }
         }, {
             $group: {
                 _id          : '$_id',
-                product      : {$first: '$products'},
+                product      : {$first: '$Produits'},
                 variants     : {$first: '$variants'},
                 sku          : {$first: '$sku'},
                 supplier     : {$first: '$supplier'},
@@ -762,7 +762,7 @@ var Module = function (models) {
             }
         }, {
             $project: {
-                products     : '$product',
+                Produits     : '$product',
                 variants     : 1,
                 sku          : '$sku',
                 supplier     : '$supplier',
@@ -785,7 +785,7 @@ var Module = function (models) {
             }
         }, {
             $project: {
-                products     : 1,
+                Produits     : 1,
                 variants     : {$arrayElemAt: ['$variants', 0]},
                 sku          : 1,
                 supplier     : 1,
@@ -876,7 +876,7 @@ var Module = function (models) {
             return callback(error);
         }
 
-        Product = models.get(dbName, 'Product', ProductSchema);
+        Product = models.get(dbName, 'Product', Produitschema);
 
         aggregationPipeline = [{
             $match: {
@@ -884,19 +884,19 @@ var Module = function (models) {
             }
         }, {
             $lookup: {
-                from        : 'productsAvailability',
+                from        : 'ProduitsAvailability',
                 localField  : '_id',
                 foreignField: 'product',
-                as          : 'productsAvailabilities'
+                as          : 'ProduitsAvailabilities'
             }
         }, {
             $unwind: {
-                path                      : '$productsAvailabilities',
+                path                      : '$ProduitsAvailabilities',
                 preserveNullAndEmptyArrays: true
             }
         }, {
             $project: {
-                onHand       : {$ifNull: ['$productsAvailabilities.onHand', 0]},
+                onHand       : {$ifNull: ['$ProduitsAvailabilities.onHand', 0]},
                 sku          : '$info.SKU',
                 name         : '$name',
                 minStockLevel: '$inventory.minStockLevel'
@@ -1030,7 +1030,7 @@ var Module = function (models) {
 
     function getProductListingReport(options, callback) {
         var dbName = options.dbName;
-        var Product = models.get(dbName, 'Product', ProductSchema);
+        var Product = models.get(dbName, 'Product', Produitschema);
         var sort = {
             name: 1
         };
@@ -1186,7 +1186,7 @@ var Module = function (models) {
             $project: rowsMapper
         }, sortStage);
 
-        Product = models.get(dbName, 'Product', ProductSchema);
+        Product = models.get(dbName, 'Product', Produitschema);
         Product.aggregate(aggregationPipeline, function (err, result) {
             if (err) {
                 return callback(err);
@@ -1461,7 +1461,7 @@ var Module = function (models) {
         var dateRange = req.query.dateRange || req.query.filter.date.value;
 
         console.log(dateRange);
-        getProductsAvailability({
+        getProduitsAvailability({
             dbName   : req.session.lastDb,
             dateRange: dateRange,
             sort     : req.query.sort
@@ -1474,7 +1474,7 @@ var Module = function (models) {
         });
     };
 
-    function getProductsAvailability(options, callback) {
+    function getProduitsAvailability(options, callback) {
         var dbName = options.dbName;
         var startDate = options.dateRange && options.dateRange.from ? moment(new Date(options.dateRange.from)).startOf('day') : moment(new Date(options.dateRange[0])).startOf('day');
         var endDate = options.dateRange && options.dateRange.to ? moment(new Date(options.dateRange.to)).endOf('day') : moment(new Date(options.dateRange[1])).endOf('day');
@@ -1720,7 +1720,7 @@ var Module = function (models) {
         salesByChannelReport        : getSalesByChannel,
         lowStockReport              : getLowStockReport,
         incomingStockReport         : getIncomingStockReport,
-        warehouseMovementReport     : getProductsAvailability,
+        warehouseMovementReport     : getProduitsAvailability,
         productListingReport        : getProductListingReport,
         stockDetailsReport          : getStockDetailsReport,
         employeesByDepartment       : sortByEmployees,

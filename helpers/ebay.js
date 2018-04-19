@@ -14,7 +14,7 @@ var ebay = require('ebay-api');
 module.exports = function (models, event) {
     var customerService = require('../services/customer')(models);
     var currencyService = require('../services/currency')(models);
-    var productService = require('../services/products')(models);
+    var Produitservice = require('../services/Produits')(models);
     var paymentMethodService = require('../services/paymentMethod')(models);
     var AvailabilityService = require('../services/productAvailability')(models);
     var ConflictService = require('../services/conflict')(models);
@@ -403,7 +403,7 @@ module.exports = function (models, event) {
                             },
 
                             function (wCb) {
-                                productService.createProduct(options, function (err, product) {
+                                Produitservice.createProduct(options, function (err, product) {
                                     if (err) {
                                         return wCb(err);
                                     }
@@ -459,7 +459,7 @@ module.exports = function (models, event) {
         });
     }
 
-    function getProducts(opts, allCallback) {
+    function getProduits(opts, allCallback) {
         var db = opts.dbName;
         var uId = opts.userId || opts.user;
         var appId = opts.appId;
@@ -470,7 +470,7 @@ module.exports = function (models, event) {
         var channel = opts._id || opts.channel;
         var userToken = opts.token;
         var internalProds = [];
-        var products;
+        var Produits;
         var err;
 
         if (typeof opts === 'function') {
@@ -511,9 +511,9 @@ module.exports = function (models, event) {
                 allCallback(error);
             }
 
-            products = results && results.Items;
+            Produits = results && results.Items;
 
-            productService.find({}, {
+            Produitservice.find({}, {
                 'info.SKU': 1,
                 dbName    : db
             }, function (err, result) {
@@ -529,7 +529,7 @@ module.exports = function (models, event) {
                     });
                 }
 
-                async.eachLimit(products, 1, function (ebayProduct, eachCb) {
+                async.eachLimit(Produits, 1, function (ebayProduct, eachCb) {
                     var options = {
                         dbName: db
                     };
@@ -697,12 +697,12 @@ module.exports = function (models, event) {
             },
 
             function (sCb) {
-                getProducts(opts, function (err) {
+                getProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
 
-                    console.log('Ebay -> Products is imported for channel ', channelName, ' id = ', channelId);
+                    console.log('Ebay -> Produits is imported for channel ', channelName, ' id = ', channelId);
                     sCb();
                 });
             }
@@ -732,12 +732,12 @@ module.exports = function (models, event) {
             },
 
             function (sCb) {
-                getProducts(opts, function (err) {
+                getProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
 
-                    console.log('Ebay -> Products is imported for channel');
+                    console.log('Ebay -> Produits is imported for channel');
                     sCb();
                 });
             }
@@ -755,7 +755,7 @@ module.exports = function (models, event) {
     return {
         getCategories : getCategories,
         getAll        : getAll,
-        getProducts   : getProducts,
+        getProduits   : getProduits,
         //getCustomers  : getCustomers,
         getSalesOrders: getSalesOrders,
         //createProduct : createProduct,

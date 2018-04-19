@@ -35,13 +35,13 @@
                         </th>
                     </tr>
                     </thead>
-                    <tbody id="tbodyProducts">
+                    <tbody id="tbodyProduits">
                     <tr></tr>
 
                     <tr class="productItem deleteRow" id="<%=elem._id%>" data-id="<%=elem.warehouse ? elem.warehouse._id : ''%>">
 
                         <td data-name="productName">
-                            <span  id="productsDd"  data-id="<%= elem.product ? elem.product._id : ''%>">
+                            <span  id="ProduitsDd"  data-id="<%= elem.product ? elem.product._id : ''%>">
 
                                 <%=elem.product && elem.product.info ? elem.product.info.SKU : 'Select' %>
                             </span>

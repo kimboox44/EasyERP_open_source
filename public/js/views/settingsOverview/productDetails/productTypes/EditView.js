@@ -31,7 +31,7 @@ define([
 
             this.responseObj = {};
 
-            dataService.getData('/products/options', {ids: this.currentModel.get('options')}, function (resp) {
+            dataService.getData('/Produits/options', {ids: this.currentModel.get('options')}, function (resp) {
                 self.options = resp ? resp.data : [];
                 self.render(options);
             });

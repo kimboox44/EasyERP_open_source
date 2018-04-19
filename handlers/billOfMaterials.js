@@ -108,7 +108,7 @@ var Module = function (models, event) {
             },
             {
                 $lookup: {
-                    from        : 'Products',
+                    from        : 'Produits',
                     localField  : 'product',
                     foreignField: '_id',
                     as          : 'product'
@@ -176,7 +176,7 @@ var Module = function (models, event) {
             },
             {
                 $lookup: {
-                    from        : 'Products',
+                    from        : 'Produits',
                     localField  : 'product',
                     foreignField: '_id',
                     as          : 'product'
@@ -206,7 +206,7 @@ var Module = function (models, event) {
             },
             {
                 $lookup: {
-                    from        : 'Products',
+                    from        : 'Produits',
                     localField  : 'components.component',
                     foreignField: '_id',
                     as          : 'component'
@@ -294,7 +294,7 @@ var Module = function (models, event) {
                 }
             }, {
                 $lookup: {
-                    from        : 'Products',
+                    from        : 'Produits',
                     localField  : 'product',
                     foreignField: '_id',
                     as          : 'product'
@@ -313,7 +313,7 @@ var Module = function (models, event) {
                 }
             }, {
                 $lookup: {
-                    from        : 'productsAvailability',
+                    from        : 'ProduitsAvailability',
                     localField  : 'components.component',
                     foreignField: 'product',
                     as          : 'components.availability'
@@ -343,7 +343,7 @@ var Module = function (models, event) {
                 }
             }, {
                 $lookup: {
-                    from        : 'Products',
+                    from        : 'Produits',
                     localField  : 'components.component',
                     foreignField: '_id',
                     as          : 'component'

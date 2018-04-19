@@ -4,12 +4,12 @@ define([
     'Underscore',
     'views/dialogViewBase',
     'text!templates/reports/salesReports/IndexTemplate.html',
-    'views/reports/salesReports/InfoBySalesProducts',
+    'views/reports/salesReports/InfoBySalesProduits',
     'views/reports/salesReports/SalesInfoByMonth',
     'views/reports/salesReports/SalesInfoByChannel',
     'dataService',
     'moment'
-], function (Backbone, $, _, Parent, mainTemplate, InfoBySalesProducts, SalesInfoByMonth, SalesInfoByChannel, dataService, moment) {
+], function (Backbone, $, _, Parent, mainTemplate, InfoBySalesProduits, SalesInfoByMonth, SalesInfoByChannel, dataService, moment) {
     'use strict';
 
     var ContentView = Parent.extend({
@@ -37,11 +37,11 @@ define([
 
             datesArray = [this.startDate, this.endDate];
 
-            dataService.getData('/reports/products', {
+            dataService.getData('/reports/Produits', {
                 startDate: this.startDate.toString(),
                 endDate  : this.endDate.toString()
             }, function (resp) {
-                return new InfoBySalesProducts({data: resp.data, datesArray: datesArray});
+                return new InfoBySalesProduits({data: resp.data, datesArray: datesArray});
             });
 
             dataService.getData('/reports/getInfoSalesByMonth', {}, function (resp) {

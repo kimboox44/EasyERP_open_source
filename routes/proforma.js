@@ -163,7 +163,7 @@ HTTP/1.1 201 Created
 {
       "__v": 0,
       "_type": "Proforma",
-      "products": [
+      "Produits": [
         {
           "unitPrice": 100000,
           "subTotal": 100000,
@@ -252,7 +252,7 @@ HTTP/1.1 200 OK
         "_id": "57874dc5664ba9a8225cbec1",
         "_type": "Proforma",
         "__v": 0,
-        "products": [
+        "Produits": [
           {
             "unitPrice": 92500,
             "subTotal": 92500,

@@ -1,7 +1,7 @@
 define([
     'Underscore',
     'views/topBarViewBase',
-    'text!templates/Products/TopBarTemplate.html',
+    'text!templates/Produits/TopBarTemplate.html',
     'text!templates/Notes/importTemplate.html',
     'views/Notes/AttachView',
     'custom',
@@ -12,7 +12,7 @@ define([
 ], function (_, BaseView, ContentTopBarTemplate, importTemplate, attachView, Custom, Common, CONSTANTS, ga, GA) {
     var TopBarView = BaseView.extend({
         el            : '#top-bar',
-        contentType   : CONSTANTS.PRODUCTS,
+        contentType   : CONSTANTS.Produits,
         actionType    : null, // Content, Edit, Create
         template      : _.template(ContentTopBarTemplate),
         importTemplate: _.template(importTemplate),

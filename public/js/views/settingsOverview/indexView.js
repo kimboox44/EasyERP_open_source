@@ -32,9 +32,9 @@ define([
                 redirectRef: '#easyErp/Accounts'
             };
 
-            this.views.productsView = {
+            this.views.ProduitsView = {
                 view       : productDetailsView,
-                redirectRef: '#easyErp/productsSettings'
+                redirectRef: '#easyErp/ProduitsSettings'
             };
 
             this.views.employeesView = {
@@ -119,8 +119,8 @@ define([
                     _id : 'accountingView',
                     name: 'Accounting'
                 }, {
-                    _id : 'productsView',
-                    name: 'Products Configurations'
+                    _id : 'ProduitsView',
+                    name: 'Produits Configurations'
                 }, {
                     _id : 'employeesView',
                     name: 'Employees Details'

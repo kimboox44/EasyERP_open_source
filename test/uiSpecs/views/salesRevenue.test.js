@@ -699,7 +699,7 @@ define([
             link: true,
             visible: true,
             ancestors: [ ],
-            href: "productSettings"
+            href: "Produitsettings"
         }
     ];
     var fakeBonusSalesManager = {

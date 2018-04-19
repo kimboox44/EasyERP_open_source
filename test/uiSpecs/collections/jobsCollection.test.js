@@ -637,7 +637,7 @@ define([
                 },
                 whoCanRW: "everyOne",
                 workflow: "55647b962e4aa3804a765ec6",
-                products: [
+                Produits: [
                     {
                         scheduledDate: "2015-09-03T22:00:00.000Z",
                         taxes: 0,
@@ -692,7 +692,7 @@ define([
                 },
                 whoCanRW: "everyOne",
                 workflow: "55647d982e4aa3804a765ecb",
-                products: [
+                Produits: [
                     {
                         subTotal: 5696900,
                         unitPrice: 5696900,
@@ -1388,7 +1388,7 @@ define([
                     },
                     whoCanRW: "everyOne",
                     workflow: "55647b962e4aa3804a765ec6",
-                    products: [
+                    Produits: [
                         {
                             unitPrice: 12020,
                             subTotal: 12020,
@@ -1443,7 +1443,7 @@ define([
                     },
                     whoCanRW: "everyOne",
                     workflow: "55647d982e4aa3804a765ecb",
-                    products: [
+                    Produits: [
                         {
                             subTotal: 1202000,
                             unitPrice: 1202000,

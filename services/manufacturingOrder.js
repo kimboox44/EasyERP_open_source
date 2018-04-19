@@ -6,7 +6,7 @@ var _ = require('lodash');
 var async = require('async');
 
 var ManufacturingOrderSchema = mongoose.Schemas.manufacturingOrder;
-var AvailabilitySchema = mongoose.Schemas.productsAvailability;
+var AvailabilitySchema = mongoose.Schemas.ProduitsAvailability;
 var GoodsOutSchema = mongoose.Schemas.GoodsOutNote;
 var GoodsInSchema = mongoose.Schemas.GoodsInNote;
 var PrepaymentSchema = mongoose.Schemas.Prepayment;
@@ -67,7 +67,7 @@ module.exports = function (models) {
         }
 
         function getAvailableForRows(req, docs, forSales, cb) {
-            var Availability = models.get(req.session.lastDb, 'productsAvailability', AvailabilitySchema);
+            var Availability = models.get(req.session.lastDb, 'ProduitsAvailability', AvailabilitySchema);
             var GoodsOutNote = models.get(req.session.lastDb, 'GoodsOutNote', GoodsOutSchema);
             var GoodsInNote = models.get(req.session.lastDb, 'GoodsInNote', GoodsInSchema);
             var populateDocs = [];
@@ -203,7 +203,7 @@ module.exports = function (models) {
                                 }
                             }, {
                                 $lookup: {
-                                    from        : 'productsAvailability',
+                                    from        : 'ProduitsAvailability',
                                     localField  : '_id',
                                     foreignField: 'goodsInNote',
                                     as          : 'goodsInNote'
@@ -387,9 +387,9 @@ module.exports = function (models) {
                 delete data.orderRows;
             }
 
-            if (data.deletedProducts) {
-                deletedOrderRows = data.deletedProducts;
-                delete data.deletedProducts;
+            if (data.deletedProduits) {
+                deletedOrderRows = data.deletedProduits;
+                delete data.deletedProduits;
             }
 
             if (data.notes && data.notes.length !== 0) {
@@ -583,7 +583,7 @@ module.exports = function (models) {
                 }
             }, {
                 $lookup: {
-                    from        : 'Products',
+                    from        : 'Produits',
                     localField  : 'product',
                     foreignField: '_id',
                     as          : 'product'
@@ -819,7 +819,7 @@ module.exports = function (models) {
                     .populate('creditAccount', 'name')
                     .populate('taxes.taxCode', 'fullName rate')
                     .populate('warehouse', 'name')
-                    .sort('products')
+                    .sort('Produits')
                     .exec(function (err, docs) {
                         if (err) {
                             return waterfallCallback(err);
@@ -832,7 +832,7 @@ module.exports = function (models) {
                                 return waterfallCallback(err);
                             }
 
-                            order.products = docs;
+                            order.Produits = docs;
                             order.account = docs && docs.length ? docs[0].debitAccount : {};
 
                             if (!order.forSales) {
@@ -1004,7 +1004,7 @@ module.exports = function (models) {
          }
          }, {
          $lookup: {
-         from        : 'Products',
+         from        : 'Produits',
          localField  : 'product',
          foreignField: '_id',
          as          : 'product'
@@ -1055,7 +1055,7 @@ module.exports = function (models) {
          }
          }, {
          $lookup: {
-         from        : 'productsAvailability',
+         from        : 'ProduitsAvailability',
          localField  : 'billOfMaterial.components.component',
          foreignField: 'product',
          as          : 'billOfMaterial.components.availability'
@@ -1102,7 +1102,7 @@ module.exports = function (models) {
          },
          {
          $lookup: {
-         from        : 'Products',
+         from        : 'Produits',
          localField  : 'billOfMaterial.components.component',
          foreignField: '_id',
          as          : 'component'

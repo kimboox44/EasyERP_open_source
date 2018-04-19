@@ -777,7 +777,7 @@ define([
                 self.responseObj['#department'] = response.data;
             });
 
-            populate.get('#productType', '/products/getProductsTypeForDd', {}, 'name', self, true);
+            populate.get('#productType', '/Produits/getProduitsTypeForDd', {}, 'name', self, true);
             populate.get('#warehouse', '/warehouse/getForDD', {}, 'name', self, true);
 
             productCategoriesService.renderProductCategories.call(self);

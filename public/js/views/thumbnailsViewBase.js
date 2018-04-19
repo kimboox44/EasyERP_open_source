@@ -153,7 +153,7 @@
             $created.replaceWith(createdInTag);
             this.asyncLoadImgs(newModels);
 
-            if (this.contentType === 'Products') {
+            if (this.contentType === 'Produits') {
                 this.$el.find('.product').draggable({
                     revert: true
                 });

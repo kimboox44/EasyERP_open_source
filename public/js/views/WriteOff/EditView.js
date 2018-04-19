@@ -5,7 +5,7 @@ define([
     'views/dialogViewBase',
     'text!templates/WriteOff/EditTemplate.html',
     'views/Notes/NoteView',
-    'views/Products/InvoiceOrder/ProductItems',
+    'views/Produits/InvoiceOrder/ProductItems',
     'views/salesInvoices/wTrack/wTrackRows',
     'views/Payment/CreateView',
     'views/salesInvoices/EmailView',
@@ -135,9 +135,9 @@ define([
             var $thisEl = this.$el;
 
             var errors = $thisEl.find('.errorContent');
-            var selectedProducts = $thisEl.find('.productItem');
-            var products = [];
-            var selectedLength = selectedProducts.length;
+            var selectedProduits = $thisEl.find('.productItem');
+            var Produits = [];
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var productId;
             var quantity;
@@ -180,7 +180,7 @@ define([
 
             if (selectedLength) {
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = $(selectedProducts[i]);
+                    targetEl = $(selectedProduits[i]);
                     productId = targetEl.data('id');
 
                     if (productId) {
@@ -190,7 +190,7 @@ define([
                         taxes = targetEl.find('.taxes').text();
                         amount = targetEl.find('.amount').text();
 
-                        products.push({
+                        Produits.push({
                             product    : productId,
                             description: description,
                             unitPrice  : price,
@@ -410,7 +410,7 @@ define([
             this.notAddItem = true;
 
             if (this.isWtrack) {
-                wTracks = _.map(model.products, function (product) {
+                wTracks = _.map(model.Produits, function (product) {
                     return product.product;
                 });
                 project = model.project;

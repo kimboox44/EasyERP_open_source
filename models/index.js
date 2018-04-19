@@ -29,8 +29,8 @@ module.exports = (function () {
     require('./period.js');
     require('./product.js');
     require('./productCategory.js');
-    require('./productsOptions.js');
-    require('./productsOptionsValues.js');
+    require('./ProduitsOptions.js');
+    require('./ProduitsOptionsValues.js');
     require('./productTypes.js');
     require('./profile.js');
     require('./ProductAvailability.js');

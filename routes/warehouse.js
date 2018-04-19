@@ -23,7 +23,7 @@ module.exports = function (models, events) {
 
     router.get('/stockCorrection', stockHandler.getCorrections);
     router.get('/stockCorrection/:id', stockHandler.getById);
-    router.get('/getAvailability', stockHandler.getProductsAvailable);
+    router.get('/getAvailability', stockHandler.getProduitsAvailable);
 
     router.patch('/location/:id', handler.updateLocation);
     router.patch('/zone/:id', handler.updateZone);

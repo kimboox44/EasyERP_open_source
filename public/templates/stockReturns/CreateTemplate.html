@@ -49,8 +49,8 @@
                             <th class="deleteCell"></th>
                         </tr>
                         </thead>
-                        <tbody id="tbodyProducts">
-                        <%model.products.forEach(function (product){ %>
+                        <tbody id="tbodyProduits">
+                        <%model.Produits.forEach(function (product){ %>
                         <%product.goodsNotes.forEach(function (note){ %>
                         <tr id="<%=note._id%>" data-id="<%=product._id%>">
                             <td class="product _whiteSpaceNormal" data-id="<%=product.product._id%>">
@@ -104,7 +104,7 @@
                 <%if (!cancel) {%>
                 <h3 class="fontBold textGrey">Items will be written-off from warehouse</h3>
                 <%} else {%>
-                <h3 class="fontBold textGrey">To cancel Order you have to write-off maximum available products, that are on Hand in Warehouse from this Purchase</h3>
+                <h3 class="fontBold textGrey">To cancel Order you have to write-off maximum available Produits, that are on Hand in Warehouse from this Purchase</h3>
                 <%}%>
                 <%}%>
                 <!-- <div class="_circleRadioRadianceWrap">

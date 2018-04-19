@@ -6,7 +6,7 @@ define([
     'collections/Persons/PersonsCollection',
     'collections/Departments/DepartmentsCollection',
     'views/dialogViewBase',
-    'views/Products/orderRows/ProductItems',
+    'views/Produits/orderRows/ProductItems',
     'models/orderModel',
     'common',
     'populate',
@@ -46,7 +46,7 @@ define([
             this.model = new QuotationModel();
             this.responseObj = {};
             this.currencySymbol = '$';
-            this.deletedProducts = [];
+            this.deletedProduits = [];
 
             this.render();
         },
@@ -70,7 +70,7 @@ define([
             e.preventDefault();
 
             rowId.each(function () {
-                var product = $(this).find('.productsDd').attr('data-id');
+                var product = $(this).find('.ProduitsDd').attr('data-id');
                 var quantity = $(this).find('input#quantity').val();
 
                 rows.push({
@@ -124,9 +124,9 @@ define([
 
                         $(this).find('.accountDd').text(accountObj.name).attr('data-id', accountObj._id);
 
-                        if ($(this).find('.productsDd').attr('data-id')) {
-                            dataService.getData('/products/productAvalaible', {
-                                product  : $(this).find('.productsDd').attr('data-id'),
+                        if ($(this).find('.ProduitsDd').attr('data-id')) {
+                            dataService.getData('/Produits/productAvalaible', {
+                                product  : $(this).find('.ProduitsDd').attr('data-id'),
                                 warehouse: warehouse._id
                             }, function (data) {
                                 var itemsStock = data.onHand ? 'green' : 'red';
@@ -160,10 +160,10 @@ define([
             var self = this;
             var mid = 55;
             var thisEl = this.$el;
-            var selectedProducts = thisEl.find('.productItem');
-            var products = [];
+            var selectedProduits = thisEl.find('.productItem');
+            var Produits = [];
             var data;
-            var selectedLength = selectedProducts.length;
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var productId;
             var quantity;
@@ -228,7 +228,7 @@ define([
             if (!selectedLength) {
                 return App.render({
                     type   : 'error',
-                    message: "Products can't be empty."
+                    message: "Produits can't be empty."
                 });
             }
 
@@ -251,13 +251,13 @@ define([
             }
 
             for (i = selectedLength - 1; i >= 0; i--) {
-                targetEl = selectedProducts.length === i ? this.$el.find('#shippingRow') : $(selectedProducts[i]);
-                productId = targetEl.find('.productsDd').attr('data-id') || null;
+                targetEl = selectedProduits.length === i ? this.$el.find('#shippingRow') : $(selectedProduits[i]);
+                productId = targetEl.find('.ProduitsDd').attr('data-id') || null;
 
                 if (!productId && !shippingAccount) {
                     return App.render({
                         type   : 'error',
-                        message: "Products can't be empty."
+                        message: "Produits can't be empty."
                     });
                 }
 
@@ -310,7 +310,7 @@ define([
                     });
                 }
 
-                products.push({
+                Produits.push({
                     product  : productId,
                     unitPrice: price,
                     costPrice: cost,
@@ -329,7 +329,7 @@ define([
                 });
             }
 
-            if (products.length) {
+            if (Produits.length) {
                 status.allocateStatus = 'NOT';
                 status.fulfillStatus = 'NOT';
                 status.shippingStatus = 'NOT';
@@ -345,7 +345,7 @@ define([
                 priceList       : priceList,
                 salesPerson     : assignedTo,
                 warehouse       : warehouse,
-                products        : products,
+                Produits        : Produits,
                 orderDate       : helpers.setTimeToDate(orderDate),
                 expectedDate    : expectedDate,
                 destination     : destination,
@@ -422,7 +422,7 @@ define([
                     responseObj     : this.responseObj,
                     discountVisible : true,
                     forSales        : true,
-                    deletedProducts : this.deletedProducts,
+                    deletedProduits : this.deletedProduits,
                     account         : this.warehouse.account
                 }).render().el
             );

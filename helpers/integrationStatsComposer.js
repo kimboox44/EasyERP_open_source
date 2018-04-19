@@ -8,8 +8,8 @@ module.exports = function (models) {
 
     return function (db, callback) {
         async.parallel({
-            importedProducts: function (pCb) {
-                ChannelLinksService.importedProducts(db, function (err, result) {
+            importedProduits: function (pCb) {
+                ChannelLinksService.importedProduits(db, function (err, result) {
                     if (err) {
                         return pCb(err);
                     }
@@ -28,7 +28,7 @@ module.exports = function (models) {
                 });
             },
 
-            conflictProducts: function (pCb) {
+            conflictProduits: function (pCb) {
                 ConflictService.importedConflicts(db, function (err, result) {
                     if (err) {
                         return pCb(err);

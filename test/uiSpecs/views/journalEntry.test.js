@@ -31,7 +31,7 @@ define([
                         _type: "wTrackInvoice",
                         __v  : 0,
                         project: "55b92ad621e4b7c40f000684",
-                        products: [
+                        Produits: [
                             {
                                 subTotal   : 202500,
                                 unitPrice: 202500,
@@ -142,7 +142,7 @@ define([
                         _type: "wTrackInvoice",
                         __v  : 0,
                         project: "55b92ad621e4b7c40f00067d",
-                        products: [
+                        Produits: [
                             {
                                 unitPrice  : 3500,
                                 subTotal : 3500,
@@ -253,7 +253,7 @@ define([
                         _type: "wTrackInvoice",
                         __v  : 0,
                         project: "5721d21871d367e52185bd3c",
-                        products: [
+                        Produits: [
                             {
                                 unitPrice  : 48000,
                                 subTotal : 48000,
@@ -363,7 +363,7 @@ define([
         project: {
             _id: "55b92ad621e4b7c40f00068c"
         },
-        products: [
+        Produits: [
             {
                 subTotal   : 13300,
                 unitPrice: 13300,
@@ -734,7 +734,7 @@ define([
             },
             whoCanRW    : "everyOne",
             workflow    : "55647b962e4aa3804a765ec6",
-            products    : [
+            Produits    : [
                 {
                     scheduledDate: "2016-01-04T23:00:00.000Z",
                     jobs         : "568bb6047c0383e04c60e88b",

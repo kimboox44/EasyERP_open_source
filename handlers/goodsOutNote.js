@@ -4,7 +4,7 @@ var GoodsOutNotes = function (models, event) {
     var mongoose = require('mongoose');
     var objectId = mongoose.Types.ObjectId;
 
-    var ProductSchema = mongoose.Schemas.Products;
+    var Produitschema = mongoose.Schemas.Produits;
     var GoodsOutSchema = mongoose.Schemas.GoodsOutNote;
     var OrgSettingsSchema = mongoose.Schemas.orgSettingsSchema;
     var Mailer = require('../helpers/mailer');
@@ -73,7 +73,7 @@ var GoodsOutNotes = function (models, event) {
                 }
 
                 if (data['status.shipped'] && goodsOutNote.order && goodsOutNote.order._id) {
-                    AvailabilityHelper.deliverProducts({
+                    AvailabilityHelper.deliverProduits({
                         dbName      : dbName,
                         uId         : uId,
                         goodsOutNote: goodsOutNote.toJSON()
@@ -87,7 +87,7 @@ var GoodsOutNotes = function (models, event) {
                         res.status(200).send({status: goodsOutNote.status});
                     });
                 } else if (data['status.shipped'] && goodsOutNote.manufacturingOrder && goodsOutNote.manufacturingOrder._id) {
-                    AvailabilityHelper.deliverProducts({
+                    AvailabilityHelper.deliverProduits({
                         dbName      : dbName,
                         uId         : uId,
                         goodsOutNote: goodsOutNote.toJSON()
@@ -173,7 +173,7 @@ var GoodsOutNotes = function (models, event) {
     }
 
     function remove(req, res, next, id) {
-        var Products = models.get(req.session.lastDb, 'Products', ProductSchema);
+        var Produits = models.get(req.session.lastDb, 'Produits', Produitschema);
         var GoodsOutNote = models.get(req.session.lastDb, 'GoodsOutNote', GoodsOutSchema);
 
         GoodsOutNote.findOneAndRemove({_id: id}, function (err, goodsOutNote) {
@@ -183,7 +183,7 @@ var GoodsOutNotes = function (models, event) {
                 return next(err);
             }
 
-            /* Products.update({_id: categoryId}, {$inc: {productsCount: -1}}, function () {
+            /* Produits.update({_id: categoryId}, {$inc: {ProduitsCount: -1}}, function () {
              if (err) {
              return next(err);
              }*/
@@ -250,7 +250,7 @@ var GoodsOutNotes = function (models, event) {
     }
 
     function getAll(req, res, next) {
-        var Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+        var Product = models.get(req.session.lastDb, 'Product', Produitschema);
         var queryObject = {};
         var query = req.query;
         var projection = query.projection || {};
@@ -267,12 +267,12 @@ var GoodsOutNotes = function (models, event) {
             queryObject.canBePurchased = true;
         }
 
-        Product.find(queryObject, projection, function (err, products) {
+        Product.find(queryObject, projection, function (err, Produits) {
             if (err) {
                 return next(err);
             }
 
-            res.status(200).send({success: products});
+            res.status(200).send({success: Produits});
         });
     }
 
@@ -607,7 +607,7 @@ var GoodsOutNotes = function (models, event) {
                     return wCb(error);
                 }
 
-                AvailabilityHelper.updateAvailableProducts({
+                AvailabilityHelper.updateAvailableProduits({
                     dbName: dbName,
                     doc   : result.toJSON()
                 }, function (err, rows) {
@@ -668,7 +668,7 @@ var GoodsOutNotes = function (models, event) {
                 }
 
                 if (!isManufacturing) {
-                    AvailabilityHelper.deliverProducts({
+                    AvailabilityHelper.deliverProduits({
                         dbName      : dbName,
                         uId         : user,
                         goodsOutNote: result.toJSON()
@@ -685,7 +685,7 @@ var GoodsOutNotes = function (models, event) {
                         wCb();
                     });
                 } else {
-                    AvailabilityHelper.deliverProducts({
+                    AvailabilityHelper.deliverProduits({
                         dbName      : dbName,
                         uId         : user,
                         goodsOutNote: result.toJSON()
@@ -859,7 +859,7 @@ var GoodsOutNotes = function (models, event) {
                         }
 
                         if (!resultChannelLink || !resultChannelLink.length) {
-                            error = new Error('Listed products not found');
+                            error = new Error('Listed Produits not found');
                             error.status = 404;
 
                             return wCb(error);
@@ -1114,10 +1114,10 @@ var GoodsOutNotes = function (models, event) {
     };
 
     this.uploadFile = function (req, res, next) {
-        var Model = models.get(req.session.lastDb, 'Product', ProductSchema);
+        var Model = models.get(req.session.lastDb, 'Product', Produitschema);
         var headers = req.headers;
         var id = headers.modelid || 'empty';
-        var contentType = headers.modelname || 'products';
+        var contentType = headers.modelname || 'Produits';
         var files = req.files && req.files.attachfile ? req.files.attachfile : null;
         var dir;
         var err;

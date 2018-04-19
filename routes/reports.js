@@ -29,9 +29,9 @@ module.exports = function (models, event) {
 
     router.get('/data', handler.getById);
 
-    /* router.get('/products', handler.getInfoBySalesProducts);
+    /* router.get('/Produits', handler.getInfoBySalesProduits);
      router.get('/incomingStock', handler.getIncomingStockReport);
-     router.get('/scarceProducts', handler.getScarceProducts);
+     router.get('/scarceProduits', handler.getScarceProduits);
      router.get('/getProductListingReport', handler.getProductListingReport);
      router.get('/getInfoSalesByMonth', handler.getInfoSalesByMonth);
      router.get('/getInfoSalesByChannel', handler.getInfoSalesByChannel);*/

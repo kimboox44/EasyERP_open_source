@@ -7,7 +7,7 @@ define([
     'views/Assignees/AssigneesView',
     'views/Notes/NoteView',
     'views/Proforma/InvoiceProductItems',
-    'views/Products/InvoiceOrder/ProductItems',
+    'views/Produits/InvoiceOrder/ProductItems',
     'views/salesInvoices/wTrack/wTrackRows',
     'views/Payment/ProformaCreateView',
     'views/Payment/list/ListHeaderInvoice',
@@ -280,9 +280,9 @@ define([
             var $thisEl = this.$el;
 
             var errors = $thisEl.find('.errorContent');
-            var selectedProducts = $thisEl.find('.productItem');
-            var products = [];
-            var selectedLength = selectedProducts.length;
+            var selectedProduits = $thisEl.find('.productItem');
+            var Produits = [];
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var jobDescription;
             var productId;
@@ -293,7 +293,7 @@ define([
             var subTotal;
             var data;
             var workflow = this.currentModel.workflow ? this.currentModel.workflow : this.currentModel.get('workflow');
-            var productsOld = this.currentModel.products ? this.currentModel.products : this.currentModel.get('products');
+            var ProduitsOld = this.currentModel.Produits ? this.currentModel.Produits : this.currentModel.get('Produits');
             var currency = {
                 _id : $thisEl.find('#currencyDd').attr('data-id'),
                 name: $.trim($thisEl.find('#currencyDd').text())
@@ -342,7 +342,7 @@ define([
 
             if (selectedLength) {
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = $(selectedProducts[i]);
+                    targetEl = $(selectedProduits[i]);
                     productId = targetEl.data('id');
 
                     if (productId) {
@@ -368,7 +368,7 @@ define([
 
                         subTotal = parseFloat(subTotal) * 100;
 
-                        products.push({
+                        Produits.push({
                             product       : productId,
                             jobs          : jobs,
                             unitPrice     : price,
@@ -406,7 +406,7 @@ define([
                 journal              : journalId,
                 paymentTerms         : paymentTermId,
 
-                products   : products,
+                Produits   : Produits,
                 paymentInfo: payments,
 
                 groups: {
@@ -420,7 +420,7 @@ define([
             };
 
             if (this.model.get('approved')) {
-                delete data.products;
+                delete data.Produits;
             }
 
             if (supplier) {
@@ -554,7 +554,7 @@ define([
             this.notAddItem = true;
 
             if (this.isWtrack) {
-                wTracks = _.map(model.products, function (product) {
+                wTracks = _.map(model.Produits, function (product) {
                     return product.product;
                 });
                 project = model.project;

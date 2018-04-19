@@ -1,6 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
-var ProductsOptionsSchema = mongoose.Schemas.ProductOptions;
+var ProduitsOptionsSchema = mongoose.Schemas.ProductOptions;
 var _ = require('lodash');
 
 module.exports = function (models) {
@@ -30,7 +30,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            ProductOption = models.get(dbName, 'ProductOptions', ProductsOptionsSchema);
+            ProductOption = models.get(dbName, 'ProductOptions', ProduitsOptionsSchema);
 
             ProductOption.find(query, options, function (err, productOptions) {
                 if (err) {
@@ -78,7 +78,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            ProductOption = models.get(dbName, 'ProductOptions', ProductsOptionsSchema);
+            ProductOption = models.get(dbName, 'ProductOptions', ProduitsOptionsSchema);
             ProductOption.findOneAndUpdate(query, updateObject, _options, function (err, updated) {
                 if (err) {
                     return callback(err);
@@ -113,7 +113,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            ProductOption = models.get(dbName, 'ProductOptions', ProductsOptionsSchema);
+            ProductOption = models.get(dbName, 'ProductOptions', ProduitsOptionsSchema);
 
             ProductOption.findOne(query, options, function (err, productOption) {
                 if (err) {
@@ -150,7 +150,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            ProductOption = models.get(dbName, 'ProductOptions', ProductsOptionsSchema);
+            ProductOption = models.get(dbName, 'ProductOptions', ProduitsOptionsSchema);
 
             productOption = new ProductOption(body);
 

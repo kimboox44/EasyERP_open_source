@@ -163,7 +163,7 @@ define([
             name  : "Not Invoiced",
             status: "New"
         },
-        products       : [
+        Produits       : [
             {
                 scheduledDate: "",
                 jobs         : {
@@ -927,7 +927,7 @@ define([
                             },
                             "whoCanRW"      : "everyOne",
                             "workflow"      : "55647b962e4aa3804a765ec6",
-                            "products"      : [{
+                            "Produits"      : [{
                                 "scheduledDate": "2016-03-31T00:00:00.000Z",
                                 "subTotal"     : 3000,
                                 "taxes"        : 0,
@@ -1038,7 +1038,7 @@ define([
                             "attachments"    : [],
                             "whoCanRW"       : "everyOne",
                             "workflow"       : "55647b932e4aa3804a765ec5",
-                            "products"       : [{
+                            "Produits"       : [{
                                 "scheduledDate": "",
                                 "jobs"         : "56afda4cf5c2bcd4555cb2f1",
                                 "description"  : "",

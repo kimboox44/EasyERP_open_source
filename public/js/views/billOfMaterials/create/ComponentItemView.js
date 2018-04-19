@@ -24,7 +24,7 @@ define([
             'click .addProductItem a'                                        : 'getComponents',
             'click .removeJob'                                               : 'deleteRow',
             'click .newSelectList li:not(.miniStylePagination, #createNewEl)': 'chooseOption',
-            'click .current-selected.componentsDd'                           : 'showProductsSelect',
+            'click .current-selected.componentsDd'                           : 'showProduitsSelect',
             'keypress .forNum'                                               : 'keypressHandler'
         },
 
@@ -32,7 +32,7 @@ define([
 
         initialize: function (options) {
             this.responseObj = options.responseObj || {};
-            this.products = options.products;
+            this.Produits = options.Produits;
 
             this.context = options.context;
         },
@@ -46,11 +46,11 @@ define([
             var $parrent;
             var product = this.context.$el.find('#product').attr('data-id');
 
-            if (!this.products.length && product) {
-                this.products = [product];
+            if (!this.Produits.length && product) {
+                this.Produits = [product];
             }
 
-            if (!this.products.length) {
+            if (!this.Produits.length) {
                 return App.render({
                     type   : 'error',
                     message: 'Please choose product at first'
@@ -94,16 +94,16 @@ define([
             var $targetId = $target.attr('id');
             var dataId = $target.closest('a').attr('data-id');
 
-            if (this.products.indexOf($targetId) > -1) {
+            if (this.Produits.indexOf($targetId) > -1) {
                 return App.render({
                     type   : 'error',
                     message: 'Please choose another component'
                 });
             }
 
-            this.products.push($targetId);
-            if (this.products.indexOf(dataId) > -1) {
-                this.products.splice(this.products.indexOf(dataId), 1);
+            this.Produits.push($targetId);
+            if (this.Produits.indexOf(dataId) > -1) {
+                this.Produits.splice(this.Produits.indexOf(dataId), 1);
             }
 
             $target.parents('ul').closest('.current-selected').text($target.text()).attr('data-id', $targetId);
@@ -117,7 +117,7 @@ define([
             $('.newSelectList').remove();
         },
 
-        showProductsSelect: function (e) {
+        showProduitsSelect: function (e) {
             var $target = $(e.target);
             var self = this;
 

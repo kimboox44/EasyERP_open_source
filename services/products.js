@@ -1,6 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
-var ProductSchema = mongoose.Schemas.Products;
+var Produitschema = mongoose.Schemas.Produits;
 var objectId = mongoose.Types.ObjectId;
 var populateWrapper = require('../helpers/callbackWrapper').populate;
 
@@ -31,7 +31,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Product = models.get(dbName, 'Product', ProductSchema);
+            Product = models.get(dbName, 'Product', Produitschema);
 
             _query = Product.find(query, options);
 
@@ -39,12 +39,12 @@ module.exports = function (models) {
                 return _query;
             }
 
-            _query.exec(function (err, products) {
+            _query.exec(function (err, Produits) {
                 if (err) {
                     return callback(err);
                 }
 
-                callback(null, products);
+                callback(null, Produits);
             });
         };
 
@@ -73,7 +73,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Product = models.get(dbName, 'Product', ProductSchema);
+            Product = models.get(dbName, 'Product', Produitschema);
 
             Product.findOne(query, options, function (err, product) {
                 if (err) {
@@ -112,7 +112,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Product = models.get(dbName, 'Product', ProductSchema);
+            Product = models.get(dbName, 'Product', Produitschema);
 
             product = new Product(body);
 
@@ -160,7 +160,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            ProductModel = models.get(dbName, 'Product', ProductSchema);
+            ProductModel = models.get(dbName, 'Product', Produitschema);
             ProductModel.findOneAndUpdate(query, updateObject, options, function (err, result) {
                 if (err) {
                     return callback(err);
@@ -202,7 +202,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            ProductModel = models.get(dbName, 'Product', ProductSchema);
+            ProductModel = models.get(dbName, 'Product', Produitschema);
             ProductModel.update(query, updateObject, options, function (err) {
                 if (err) {
                     return callback(err);
@@ -240,7 +240,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Product = models.get(dbName, 'Product', ProductSchema);
+            Product = models.get(dbName, 'Product', Produitschema);
 
             Product.aggregate([{
                 $match: {
@@ -248,7 +248,7 @@ module.exports = function (models) {
                 }
             }, {
                 $lookup: {
-                    from        : 'productsAvailability',
+                    from        : 'ProduitsAvailability',
                     localField  : '_id',
                     foreignField: 'product',
                     as          : 'availability'
@@ -312,7 +312,7 @@ module.exports = function (models) {
 
             query = options.query;
 
-            Product = models.get(dbName, 'Product', ProductSchema);
+            Product = models.get(dbName, 'Product', Produitschema);
 
             Product.findOneAndRemove(query, function (err, product) {
                 var categoriesIds;
@@ -353,7 +353,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Model = models.get(dbName, 'Product', ProductSchema);
+            Model = models.get(dbName, 'Product', Produitschema);
             Model.count(options, function (err, count) {
                 if (err) {
                     return callback(err);
@@ -363,7 +363,7 @@ module.exports = function (models) {
             });
         };
 
-        this.getProductsForSyncToChannel = function (options, callback) {
+        this.getProduitsForSyncToChannel = function (options, callback) {
             var populateCategories = options.populateCategories;
             var channel = options.channel;
             var dbName = options.dbName;
@@ -465,17 +465,17 @@ module.exports = function (models) {
                 });
             }
 
-            Model = models.get(dbName, 'Product', ProductSchema);
-            Model.aggregate(aggregationQuery, function (err, products) {
+            Model = models.get(dbName, 'Product', Produitschema);
+            Model.aggregate(aggregationQuery, function (err, Produits) {
                 if (err) {
                     return callback(err);
                 }
 
-                callback(null, products);
+                callback(null, Produits);
             });
         };
 
-        this.getProductsForOrder = function (options, callback) {
+        this.getProduitsForOrder = function (options, callback) {
             var channel = options.channel;
             var linkIds = options.linkIds;
             var dbName = options.dbName;
@@ -530,13 +530,13 @@ module.exports = function (models) {
                 });
             }
 
-            Model = models.get(dbName, 'Product', ProductSchema);
-            Model.aggregate(aggregationQuery, function (err, products) {
+            Model = models.get(dbName, 'Product', Produitschema);
+            Model.aggregate(aggregationQuery, function (err, Produits) {
                 if (err) {
                     return callback(err);
                 }
 
-                callback(null, products);
+                callback(null, Produits);
             });
         };
 
@@ -568,7 +568,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Model = models.get(dbName, 'Product', ProductSchema);
+            Model = models.get(dbName, 'Product', Produitschema);
             Model.aggregate([
                 {
                     $match: {
@@ -577,20 +577,20 @@ module.exports = function (models) {
                     }
                 }, {
                     $lookup: {
-                        from        : 'productsAvailability',
+                        from        : 'ProduitsAvailability',
                         localField  : '_id',
                         foreignField: 'product',
-                        as          : 'productsAvailabilities'
+                        as          : 'ProduitsAvailabilities'
                     }
                 }, {
                     $unwind: {
-                        path                      : '$productsAvailabilities',
+                        path                      : '$ProduitsAvailabilities',
                         preserveNullAndEmptyArrays: true
                     }
                 }, {
                     $lookup: {
                         from        : 'warehouse',
-                        localField  : 'productsAvailabilities.warehouse',
+                        localField  : 'ProduitsAvailabilities.warehouse',
                         foreignField: '_id',
                         as          : 'warehouse'
                     }
@@ -598,7 +598,7 @@ module.exports = function (models) {
                 {
                     $lookup: {
                         from        : 'locations',
-                        localField  : 'productsAvailabilities.location',
+                        localField  : 'ProduitsAvailabilities.location',
                         foreignField: '_id',
                         as          : 'location'
                     }
@@ -607,20 +607,20 @@ module.exports = function (models) {
                     $project: {
                         location : {$arrayElemAt: ['$location', 0]},
                         warehouse: {$arrayElemAt: ['$warehouse', 0]},
-                        available: '$productsAvailabilities.onHand',
+                        available: '$ProduitsAvailabilities.onHand',
                         allocated: {
                             $add: [{
-                                $sum: '$productsAvailabilities.orderRows.quantity'
+                                $sum: '$ProduitsAvailabilities.orderRows.quantity'
                             }, {
-                                $sum: '$productsAvailabilities.goodsOutNotes.quantity'
+                                $sum: '$ProduitsAvailabilities.goodsOutNotes.quantity'
                             }]
                         },
 
                         onHand: {
-                            $add: ['$productsAvailabilities.onHand', {
-                                $sum: '$productsAvailabilities.orderRows.quantity'
+                            $add: ['$ProduitsAvailabilities.onHand', {
+                                $sum: '$ProduitsAvailabilities.orderRows.quantity'
                             }, {
-                                $sum: '$productsAvailabilities.goodsOutNotes.quantity'
+                                $sum: '$ProduitsAvailabilities.goodsOutNotes.quantity'
                             }]
                         }
                     }
@@ -841,7 +841,7 @@ module.exports = function (models) {
 
         };
 
-        this.getProductsWithVariants = function (options, callback) {
+        this.getProduitsWithVariants = function (options, callback) {
             var dbName = options.dbName;
             var query = options.query;
             var aggregationQuery;
@@ -924,17 +924,17 @@ module.exports = function (models) {
                 });
             }
 
-            Model = models.get(dbName, 'Product', ProductSchema);
-            Model.aggregate(aggregationQuery, function (err, products) {
+            Model = models.get(dbName, 'Product', Produitschema);
+            Model.aggregate(aggregationQuery, function (err, Produits) {
                 if (err) {
                     return callback(err);
                 }
 
-                callback(null, products);
+                callback(null, Produits);
             });
         };
 
-        this.getProductsForChannelWithVariants = function (options, callback) {
+        this.getProduitsForChannelWithVariants = function (options, callback) {
             var channel = options.channel;
             var dbName = options.dbName;
             var query = options.query;
@@ -1029,13 +1029,13 @@ module.exports = function (models) {
                 });
             }
 
-            Model = models.get(dbName, 'Product', ProductSchema);
-            Model.aggregate(aggregationQuery, function (err, products) {
+            Model = models.get(dbName, 'Product', Produitschema);
+            Model.aggregate(aggregationQuery, function (err, Produits) {
                 if (err) {
                     return callback(err);
                 }
 
-                callback(null, products);
+                callback(null, Produits);
             });
         };
 
@@ -1064,7 +1064,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Product = models.get(dbName, 'Product', ProductSchema);
+            Product = models.get(dbName, 'Product', Produitschema);
             Product.aggregate([{
                 $match: query
             }, {

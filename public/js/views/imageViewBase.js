@@ -254,7 +254,7 @@ define([
         },
 
         doSlide: function () {
-            var $slider = this.$el.find('.productSlider');
+            var $slider = this.$el.find('.Produitslider');
             var $backgroundSlide = $slider.find('.bgSlide');
             var $activeSlide = $slider.find('.activeSlide');
 
@@ -271,7 +271,7 @@ define([
 
                 this.currentIndex = this.slideIndex;
 
-                this.$el.find('._productSliderThumbnails').find('.active').removeClass('active');
+                this.$el.find('._ProduitsliderThumbnails').find('.active').removeClass('active');
                 $(this.$el.find('.slideThumbnail')[this.slideIndex]).addClass('active');
 
             }
@@ -317,7 +317,7 @@ define([
             }
 
             isSlideBtn = $target.parent().hasClass('currentSlideActions');
-            id = isSlideBtn ? $target.closest('.productSliderWrap').find('.activeSlide').attr('data-id') : $target.closest('.slideThumbnail').attr('data-id');
+            id = isSlideBtn ? $target.closest('.ProduitsliderWrap').find('.activeSlide').attr('data-id') : $target.closest('.slideThumbnail').attr('data-id');
             url = '/image/avatar/' + this.formModel._id + '/' + id;
             imageObj = _.find(self.groupImages, function (el) {
                 return el._id === id;
@@ -358,7 +358,7 @@ define([
         deleteImage: function (e) {
             var $target = $(e.target);
             var isSlideBtn = $target.parent().hasClass('currentSlideActions');
-            var id = isSlideBtn ? $target.closest('.productSliderWrap').find('.activeSlide').attr('data-id') : $target.closest('.slideThumbnail').attr('data-id');
+            var id = isSlideBtn ? $target.closest('.ProduitsliderWrap').find('.activeSlide').attr('data-id') : $target.closest('.slideThumbnail').attr('data-id');
             var url = 'image/' + id;
             var self = this;
             var isConfirm = confirm('you sure that you want delete this image?');

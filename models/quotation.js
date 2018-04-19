@@ -5,7 +5,7 @@ module.exports = (function () {
     var ObjectId = mongoose.Schema.Types.ObjectId;
     var Schema = mongoose.Schema;
     var payments;
-    var products;
+    var Produits;
     var quotationSchema;
 
     payments = {
@@ -17,7 +17,7 @@ module.exports = (function () {
         taxes   : {type: Number, default: 0}
     };
 
-    products = {
+    Produits = {
         _id          : false,
         id           : false,
         scheduledDate: {type: Date},
@@ -51,7 +51,7 @@ module.exports = (function () {
         invoiceRecived: {type: Boolean, default: false},
         paymentTerm   : {type: ObjectId, ref: 'PaymentTerm', default: null},
         paymentInfo   : payments,
-        products      : [products],
+        Produits      : [Produits],
         workflow      : {type: ObjectId, ref: 'workflows', default: null},
         whoCanRW      : {type: String, enum: ['owner', 'group', 'everyOne'], default: 'everyOne'},
         attachments: {type: Array, default: []},

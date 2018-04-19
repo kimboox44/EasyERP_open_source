@@ -6,11 +6,11 @@ define([
     'text!templates/reports/inventoryReports/IndexTemplate.html',
     'collections/reports/filterCollection',
     'views/reports/inventoryReports/IncomingStock',
-    'views/reports/inventoryReports/ScarceProducts',
+    'views/reports/inventoryReports/ScarceProduits',
     'views/reports/inventoryReports/ProductListing',
     'dataService',
     'moment'
-], function (Backbone, $, _, Parent, mainTemplate, ReportCollection, IncomingStock, ScarceProducts, ProductListing, dataService, moment) {
+], function (Backbone, $, _, Parent, mainTemplate, ReportCollection, IncomingStock, ScarceProduits, ProductListing, dataService, moment) {
     'use strict';
 
     var ContentView = Parent.extend({
@@ -51,13 +51,13 @@ define([
                 return new IncomingStock({collection: collection, datesArray: datesArray});
             });
 
-            dataService.getData('/reports/scarceProducts', {}, function (resp) {
+            dataService.getData('/reports/scarceProduits', {}, function (resp) {
                 var collection;
 
-                collection = new ReportCollection({url: '/reports/scarceProducts'});
+                collection = new ReportCollection({url: '/reports/scarceProduits'});
                 collection.set(resp.data);
 
-                return new ScarceProducts({collection: collection, datesArray: datesArray});
+                return new ScarceProduits({collection: collection, datesArray: datesArray});
             });
 
             dataService.getData('/reports/getProductListingReport', {}, function (resp) {

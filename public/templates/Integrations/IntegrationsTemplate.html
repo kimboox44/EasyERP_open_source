@@ -55,12 +55,12 @@
         </div>
         <div class="_channelStatus" data-content="channelStat">
             <div data-content="list"
-                 class="_statusItem goListProducts <%= !stats.products.imported ? 'emptyValue' : '' %>">
+                 class="_statusItem goListProduits <%= !stats.Produits.imported ? 'emptyValue' : '' %>">
                 <div class="channelRowHeader">
                     <span>Listing</span>
                 </div>
                 <div class="channelRowValue">
-                    <span><%= stats && stats.products && stats.products.imported ? stats.products.imported.count : '-' %></span>
+                    <span><%= stats && stats.Produits && stats.Produits.imported ? stats.Produits.imported.count : '-' %></span>
                 </div>
             </div>
             <div class="_statusItem" data-content="order">
@@ -68,15 +68,15 @@
                     <span>Orders</span>
                 </div>
                 <div class="channelRowValue">
-                    <span><%= stats && stats.products && stats.orders.imported ? stats.orders.imported.count : '-' %></span>
+                    <span><%= stats && stats.Produits && stats.orders.imported ? stats.orders.imported.count : '-' %></span>
                 </div>
             </div>
-            <div class="_statusItem goUnlinkedProducts <%=stats && stats.products && stats.products.conflicted && stats.products.conflicted.count ? '' : 'disable'%>">
+            <div class="_statusItem goUnlinkedProduits <%=stats && stats.Produits && stats.Produits.conflicted && stats.Produits.conflicted.count ? '' : 'disable'%>">
                 <div class="channelRowHeader">
-                    <span>Conflicted Products</span>
+                    <span>Conflicted Produits</span>
                 </div>
                 <div class="channelRowValue">
-                    <span><%= stats && stats.products && stats.products.conflicted ? stats.products.conflicted.count : '-' %></span>
+                    <span><%= stats && stats.Produits && stats.Produits.conflicted ? stats.Produits.conflicted.count : '-' %></span>
                 </div>
             </div>
             <div class="_statusItem goUnlinkedOrders <%= stats && stats.orders && stats.orders.unlinked && stats.orders.unlinked.count ? '' : 'disable' %>">

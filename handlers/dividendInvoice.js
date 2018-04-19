@@ -65,7 +65,7 @@ var Proforma = function (models) {
                 groups     : data.groups,
                 invoiceDate: data.invoiceDate,
                 paymentInfo: data.paymentInfo,
-                products   : data.products,
+                Produits   : data.Produits,
                 whoCanRW   : data.whoCanRW
             };
 

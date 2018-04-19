@@ -11,7 +11,7 @@ define([], function () {
                    count: 5
                }
            ],
-           importedProducts: [
+           importedProduits: [
                {
                    _id: "584fb3461e5d070ece3a521d",
                    count: 15
@@ -21,7 +21,7 @@ define([], function () {
                    count: 98
                }
            ],
-           conflictProducts: [
+           conflictProduits: [
                {
                    _id: "584fc1a7150bde5a2d9a686c",
                    count: 7

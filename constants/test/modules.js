@@ -324,8 +324,8 @@ define([], function () {
         {
             subModules: [
                 {
-                    mname: "Products",
-                    href: "Products",
+                    mname: "Produits",
+                    href: "Produits",
                     link: true
                 },
                 {
@@ -367,8 +367,8 @@ define([], function () {
                     link: true
                 },
                 {
-                    mname: "Products Configurations",
-                    href: "productsSettings",
+                    mname: "Produits Configurations",
+                    href: "ProduitsSettings",
                     link: true
                 },
                 {

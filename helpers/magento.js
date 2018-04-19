@@ -16,7 +16,7 @@ var uploader = new Uploader();
 module.exports = function (models, event) {
     var customerService = require('../services/customer')(models);
     var currencyService = require('../services/currency')(models);
-    var productService = require('../services/products')(models);
+    var Produitservice = require('../services/Produits')(models);
     var productPriceService = require('../services/productPrice')(models);
     var productCategoryService = require('../services/category')(models);
     var AvailabilityService = require('../services/productAvailability')(models);
@@ -166,12 +166,12 @@ module.exports = function (models, event) {
         });
     }
 
-    function createMatchDataForProducts(product, createOpts, categoryExtIds, cb) {
+    function createMatchDataForProduits(product, createOpts, categoryExtIds, cb) {
         var db = createOpts.dbName;
         var channel = createOpts.channel;
         var sameProduct;
 
-        productService.findOne({'info.SKU': product.sku}, {dbName: db}, function (err, result) {
+        Produitservice.findOne({'info.SKU': product.sku}, {dbName: db}, function (err, result) {
             if (err) {
                 return cb(err);
             }
@@ -261,7 +261,7 @@ module.exports = function (models, event) {
                     ], function (err, categoryNativeIds, base64Data) {
                         var opts = {
                             action  : 'imports',
-                            category: 'products'
+                            category: 'Produits'
                         };
 
                         if (err) {
@@ -326,7 +326,7 @@ module.exports = function (models, event) {
                         if (err) {
                             logs = syncLogsHelper.addError(logs, {
                                 action  : 'imports',
-                                category: 'products'
+                                category: 'Produits'
                             }, {
                                 entityId         : resProduct.magentoId,
                                 entityDescription: resProduct.name,
@@ -339,11 +339,11 @@ module.exports = function (models, event) {
                         if (result.__v && result.__v === 0) {
                             logs = syncLogsHelper.addConflict(logs, {
                                 action  : 'imports',
-                                category: 'products'
+                                category: 'Produits'
                             }, {
                                 entityId         : resProduct.magentoId,
                                 entityDescription: resProduct.name,
-                                message          : 'Import ' + resProduct.magentoId + ' products is fail'
+                                message          : 'Import ' + resProduct.magentoId + ' Produits is fail'
                             });
                         }
 
@@ -368,12 +368,12 @@ module.exports = function (models, event) {
         var baseUrl = createOpts.baseUrl;
         var logsOptions = {
             action  : 'imports',
-            category: 'products'
+            category: 'Produits'
         };
 
         async.waterfall([
             function (wCb) {
-                createMatchDataForProducts(magentoProduct, createOpts, categoryExtIds, function (err, isProduct) {
+                createMatchDataForProduits(magentoProduct, createOpts, categoryExtIds, function (err, isProduct) {
                     if (err) {
                         return wCb(err);
                     }
@@ -474,7 +474,7 @@ module.exports = function (models, event) {
 
                 options.body = productObj;
 
-                productService.createProduct(options, function (err, product) {
+                Produitservice.createProduct(options, function (err, product) {
                     if (err) {
                         logs = syncLogsHelper.addError(logs, logsOptions, {
                             message          : err.message,
@@ -519,7 +519,7 @@ module.exports = function (models, event) {
                             wCb(err);
                         }
 
-                        productService.findOneAndUpdate({
+                        Produitservice.findOneAndUpdate({
                             _id: createdProduct._id
                         }, {
                             $set: {
@@ -554,7 +554,7 @@ module.exports = function (models, event) {
                             return eCb();
                         }
 
-                        productService.findOneAndUpdate({
+                        Produitservice.findOneAndUpdate({
                             _id: createdProduct._id
                         }, {
                             $set: {
@@ -590,7 +590,7 @@ module.exports = function (models, event) {
                     return wCb();
                 }
 
-                productCategoryService.findAndUpdate({_id: {$in: categoryNativeIds}}, {$inc: {productsCount: 1}}, {
+                productCategoryService.findAndUpdate({_id: {$in: categoryNativeIds}}, {$inc: {ProduitsCount: 1}}, {
                     multi : true,
                     dbName: dbName
                 }, function (err) {
@@ -688,16 +688,16 @@ module.exports = function (models, event) {
             var linkIds = magentoOrder.items.map(function (el) {
                 return el.product_id + '|' + el.sku;
             });
-            var hasUnlinkedProducts;
-            var products;
+            var hasUnlinkedProduits;
+            var Produits;
             var newOrder;
 
             productMagentoIds = productMagentoIds.map(function (id) {
                 return id.toString();
             });
 
-            function orderRowsBuilder(_order, products, callback) {
-                var arrayRows = products.map(function (elem) {
+            function orderRowsBuilder(_order, Produits, callback) {
+                var arrayRows = Produits.map(function (elem) {
                     var magentoId = elem.channelLinks.linkId.split('|')[0];
                     var object = magentoOrder.items.find(function (el) {
                         return el.product_id + '' === magentoId;
@@ -729,8 +729,8 @@ module.exports = function (models, event) {
                 }
 
                 async.each(arrayRows, function (productRow, eCb) {
-                    var productSku = productRow.SKU;
-                    var productUrl = '/rest/V1/products/' + productSku;
+                    var Produitsku = productRow.SKU;
+                    var productUrl = '/rest/V1/Produits/' + Produitsku;
                     var taxClassIdObj;
                     var taxRulesUrl;
                     var taxClassId;
@@ -840,22 +840,22 @@ module.exports = function (models, event) {
 
             async.series([
                 function (sCb) {
-                    productService
-                        .getProductsForOrder({
+                    Produitservice
+                        .getProduitsForOrder({
                             dbName : db,
                             channel: channel,
                             linkIds: linkIds || []
-                        }, function (err, ourProducts) {
+                        }, function (err, ourProduits) {
                             if (err) {
                                 return sCb(err);
                             }
 
-                            products = ourProducts;
+                            Produits = ourProduits;
 
-                            if (magentoOrder.items.length !== products.length) {
+                            if (magentoOrder.items.length !== Produits.length) {
                                 orderBody.workflow = ObjectId(CONSTANTS.DEFAULT_UNLINKED_WORKFLOW_ID);
                                 orderBody.tempWorkflow = workflow;
-                                hasUnlinkedProducts = true;
+                                hasUnlinkedProduits = true;
 
                                 if (orderBody.conflictTypes && orderBody.conflictTypes.length) {
                                     orderBody.conflictTypes.push({type: 'product'});
@@ -996,7 +996,7 @@ module.exports = function (models, event) {
                                     return sCb();
                                 }
 
-                                products = products.map(function (product) {
+                                Produits = Produits.map(function (product) {
                                     var currentRow = _.findWhere(resultRows, {product: product._id});
 
                                     if (currentRow) {
@@ -1005,7 +1005,7 @@ module.exports = function (models, event) {
                                     }
                                 });
 
-                                orderRowsBuilder(newObject, _.compact(products), sCb);
+                                orderRowsBuilder(newObject, _.compact(Produits), sCb);
                             });
                         });
                     } else {
@@ -1050,7 +1050,7 @@ module.exports = function (models, event) {
 
                             newOrder = _order;
 
-                            orderRowsBuilder(_order, products, sCb);
+                            orderRowsBuilder(_order, Produits, sCb);
                         });
                     }
                 },
@@ -1061,14 +1061,14 @@ module.exports = function (models, event) {
                     var unlinkedIds = _.pluck(unlinked, 'fields.id');
                     var logsOptions = {
                         action  : 'imports',
-                        category: 'products'
+                        category: 'Produits'
                     };
 
-                    if (!hasUnlinkedProducts || !unlinkedOrderId) {
+                    if (!hasUnlinkedProduits || !unlinkedOrderId) {
                         return sCb();
                     }
 
-                    nativeIds = _.pluck(products, 'channelLinks.linkId');
+                    nativeIds = _.pluck(Produits, 'channelLinks.linkId');
                     nativeIds = nativeIds.map(function (nativeId) {
                         if (nativeId) {
                             return parseInt(nativeId.split('|')[0], 10);
@@ -1615,20 +1615,20 @@ module.exports = function (models, event) {
                                             }
                                         });
 
-                                        ProductAvailabilityService.getAvailabilityForProducts({
+                                        ProductAvailabilityService.getAvailabilityForProduits({
                                             product  : {$in: productIdsForAvailability},
                                             warehouse: ObjectId(warehouse)
-                                        }, {dbName: db}, function (err, productsAvailability) {
+                                        }, {dbName: db}, function (err, ProduitsAvailability) {
                                             if (err) {
                                                 return eCb(err);
                                             }
 
-                                            if (!productsAvailability || !productsAvailability.length) {
+                                            if (!ProduitsAvailability || !ProduitsAvailability.length) {
                                                 return callback();
                                             }
 
                                             goodsOutNotesLines.forEach(function (item) {
-                                                var currentAvailability = _.findWhere(productsAvailability, {_id: item.product});
+                                                var currentAvailability = _.findWhere(ProduitsAvailability, {_id: item.product});
 
                                                 if (!currentAvailability || currentAvailability.onHand < item.quantity) {
                                                     needGoodsOutNote = false;
@@ -1670,7 +1670,7 @@ module.exports = function (models, event) {
                                                     return eCb();
                                                 }
 
-                                                AvailabilityHelper.updateAvailableProducts({
+                                                AvailabilityHelper.updateAvailableProduits({
                                                     dbName: db,
                                                     doc   : result.toJSON()
                                                 }, function (err, rows) {
@@ -1691,7 +1691,7 @@ module.exports = function (models, event) {
                                                             return eCb();
                                                         }
 
-                                                        AvailabilityHelper.deliverProducts({
+                                                        AvailabilityHelper.deliverProduits({
                                                             dbName      : db,
                                                             uId         : uId,
                                                             goodsOutNote: result.toJSON()
@@ -1745,7 +1745,7 @@ module.exports = function (models, event) {
                     return callback();
                 }
 
-                function createProductsReturn(magentoRefundId, magentoRefundLineItems, callback) {
+                function createProduitsReturn(magentoRefundId, magentoRefundLineItems, callback) {
                     var orderRowArray = [];
                     var options;
 
@@ -1894,7 +1894,7 @@ module.exports = function (models, event) {
                         return eCb();
                     }
 
-                    parallelTasks.push(async.apply(createProductsReturn, refund.entity_id, refund.items), async.apply(createPaymentsReturn, refund));
+                    parallelTasks.push(async.apply(createProduitsReturn, refund.entity_id, refund.items), async.apply(createPaymentsReturn, refund));
 
                     async.parallel(parallelTasks, eCb);
                 }, function (err) {
@@ -1946,7 +1946,7 @@ module.exports = function (models, event) {
             });
         }
 
-        function getUnlinkedProducts(pCb) {
+        function getUnlinkedProduits(pCb) {
             ConflictService.find({
                 entity          : 'Product',
                 type            : 'unlinked',
@@ -2013,7 +2013,7 @@ module.exports = function (models, event) {
             customers : getCustomers,
             warehouse : getWarehouse,
             workflows : getWorkflows,
-            unlinked  : getUnlinkedProducts
+            unlinked  : getUnlinkedProduits
         }, function (err, data) {
             var i = 0;
             var importData;
@@ -2679,7 +2679,7 @@ module.exports = function (models, event) {
             });
     }
 
-    function getProducts(opts, allCallback) {
+    function getProduits(opts, allCallback) {
         var db = opts.dbName;
         var accessToken = 'Bearer ' + opts.token;
         var baseUrl = opts.baseUrl;
@@ -2694,7 +2694,7 @@ module.exports = function (models, event) {
         };
         var priceList = opts.priceList;
         var getBySKURoute;
-        var products;
+        var Produits;
         var skusArray;
         var err;
         var getRoute;
@@ -2702,12 +2702,12 @@ module.exports = function (models, event) {
         var fullGetRoute;
         var logsOptions = {
             action  : 'imports',
-            category: 'products'
+            category: 'Produits'
         };
 
-        if (settings.products) {
-            getRoute = settings.products.get || null;
-            getBySKURoute = settings.products.getBySKU || null;
+        if (settings.Produits) {
+            getRoute = settings.Produits.get || null;
+            getBySKURoute = settings.Produits.getBySKU || null;
         }
 
         if (!opts.token || !baseUrl || !getRoute || !getBySKURoute) {
@@ -2739,8 +2739,8 @@ module.exports = function (models, event) {
                 return allCallback();
             }
 
-            products = result.body && result.body.items;
-            skusArray = _.pluck(products, 'sku');
+            Produits = result.body && result.body.items;
+            skusArray = _.pluck(Produits, 'sku');
             async.eachLimit(skusArray, 50, function (sku, eachCb) {
                 requestHelper.getData(fullGetBySKURoute + sku,
                     {
@@ -2780,7 +2780,7 @@ module.exports = function (models, event) {
                     return allCallback(err);
                 }
 
-                allCallback(null, products);
+                allCallback(null, Produits);
             });
         });
     }
@@ -2806,7 +2806,7 @@ module.exports = function (models, event) {
             err = new Error('Invalid integration settings');
             err.status = 400;
 
-            // write critical error logs for products
+            // write critical error logs for Produits
             logs = syncLogsHelper.addCriticalError(logs, logsOptions, {message: err.message});
 
             return allCallback(err);
@@ -3152,7 +3152,7 @@ module.exports = function (models, event) {
         var baseUrl = opts.baseUrl;
         var message = '';
         var settings = opts.settings;
-        var route = settings.products && settings.products.create;
+        var route = settings.Produits && settings.Produits.create;
         var channel = opts._id || opts.channel;
         var logsOptions;
         var fullRoute;
@@ -3168,7 +3168,7 @@ module.exports = function (models, event) {
             error = new Error('Bad Request');
             error.status = 400;
 
-            // write critical error logs for products
+            // write critical error logs for Produits
             logs = syncLogsHelper.addCriticalError(logs, logsOptions, {message: error.message});
 
             return allCallback(error);
@@ -3262,14 +3262,14 @@ module.exports = function (models, event) {
         });
     }
 
-    function exportProducts(opts, allCallback) {
+    function exportProduits(opts, allCallback) {
         var db = opts.dbName;
         var accessToken = 'Bearer ' + opts.token;
         var baseUrl = opts.baseUrl;
-        var productsIds = opts.products;
+        var ProduitsIds = opts.Produits;
         var query = {};
         var settings = opts.settings;
-        var route = settings.products && settings.products.create;
+        var route = settings.Produits && settings.Produits.create;
         var fullRoute;
         var error;
         var channel = opts._id || opts.channel;
@@ -3281,14 +3281,14 @@ module.exports = function (models, event) {
         // set logs options for categories
         logsOptions = {
             action  : 'exports',
-            category: 'products'
+            category: 'Produits'
         };
 
         if (!baseUrl || !accessToken || !route) {
             error = new Error('Bad Request');
             error.status = 400;
 
-            // write critical error logs for products
+            // write critical error logs for Produits
             logs = syncLogsHelper.addCriticalError(logs, logsOptions, {message: error.message});
 
             return allCallback(error);
@@ -3296,26 +3296,26 @@ module.exports = function (models, event) {
 
         fullRoute = baseUrl + route;
 
-        if (productsIds && productsIds.length) {
+        if (ProduitsIds && ProduitsIds.length) {
             query._id = {
-                $in: productsIds
+                $in: ProduitsIds
             };
         }
 
         async.waterfall([
             function (wCb) {
                 // get changed or created product id from Redis to export
-                redisClient.sMembers(CONSTANTS.REDIS.CHANGED_PRODUCTS, function (err, values) {
+                redisClient.sMembers(CONSTANTS.REDIS.CHANGED_Produits, function (err, values) {
                     if (err) {
                         return wCb(err);
                     }
 
-                    redisClient.sMove(CONSTANTS.REDIS.CHANGED_PRODUCTS, values, function (err) {
+                    redisClient.sMove(CONSTANTS.REDIS.CHANGED_Produits, values, function (err) {
                         if (err) {
                             console.error(err);
                         }
 
-                        console.log('Redis_ChangedProducts cleared!');
+                        console.log('Redis_ChangedProduits cleared!');
                     });
 
                     wCb(null, values);
@@ -3355,20 +3355,20 @@ module.exports = function (models, event) {
             },
 
             function (wCb) {
-                productService.getProductsForSyncToChannel({
+                Produitservice.getProduitsForSyncToChannel({
                     query             : {_id: {$in: productObjectIds}},
                     dbName            : db,
                     channel           : channel,
                     populateCategories: true
-                }, function (err, products) {
+                }, function (err, Produits) {
                     if (err) {
                         return wCb(err);
                     }
 
-                    wCb(null, products);
+                    wCb(null, Produits);
                 });
             }
-        ], function (err, products) {
+        ], function (err, Produits) {
             if (err) {
                 // write critical error logs for categories
                 logs = syncLogsHelper.addCriticalError(logs, logsOptions, {message: error.message});
@@ -3376,11 +3376,11 @@ module.exports = function (models, event) {
                 return allCallback(err);
             }
 
-            if (!products.length) {
+            if (!Produits.length) {
                 return allCallback();
             }
 
-            async.eachLimit(products, 1, function (product, eCb) {
+            async.eachLimit(Produits, 1, function (product, eCb) {
                 var channelLink = channelLinks.find(function (link) {
                     return link.product.toString() === product._id.toString() && link.channel.toString() === channel;
                 });
@@ -3452,7 +3452,7 @@ module.exports = function (models, event) {
                     });
                 } else {
 
-                    magentoMediaUrl = baseUrl + '/rest/V1/products/' + product.info.SKU + '/media';
+                    magentoMediaUrl = baseUrl + '/rest/V1/Produits/' + product.info.SKU + '/media';
 
                     requestHelper.getData(magentoMediaUrl, {
                         headers: {
@@ -3605,7 +3605,7 @@ module.exports = function (models, event) {
                                 return wCb();
                             }
 
-                            /*productService.findOne({_id: result.orderRow.product}, {dbName: db}, function (err, product) {
+                            /*Produitservice.findOne({_id: result.orderRow.product}, {dbName: db}, function (err, product) {
                              if (err) {
                              return wCb(err, {});
                              }
@@ -3850,12 +3850,12 @@ module.exports = function (models, event) {
             },
 
             function (sCb) {
-                exportProducts(opts, function (err) {
+                exportProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
 
-                    console.log('Magento -> Products exported');
+                    console.log('Magento -> Produits exported');
                     sCb();
                 });
             },
@@ -3883,12 +3883,12 @@ module.exports = function (models, event) {
             },
 
             function (sCb) {
-                getProducts(opts, function (err) {
+                getProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
 
-                    console.log('Magento -> Products synced');
+                    console.log('Magento -> Produits synced');
                     sCb();
                 });
             },
@@ -3943,7 +3943,7 @@ module.exports = function (models, event) {
         });
     }
 
-    function getOnlyProducts(opts, callback) {
+    function getOnlyProduits(opts, callback) {
         var dbName = opts.dbName;
         var channel = opts._id;
         var user = opts.user;
@@ -3967,12 +3967,12 @@ module.exports = function (models, event) {
             },
 
             function (sCb) {
-                getProducts(opts, function (err) {
+                getProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
 
-                    console.log('Magento -> Products synced');
+                    console.log('Magento -> Produits synced');
                     sCb();
                 });
             }], function (err) {
@@ -3985,7 +3985,7 @@ module.exports = function (models, event) {
                 dbName: opts.dbName
             });
 
-            console.log('Magento -> import products is complete!');
+            console.log('Magento -> import Produits is complete!');
 
             event.emit('getAllDone', {uId: user, dbName: dbName});
 
@@ -4028,13 +4028,13 @@ module.exports = function (models, event) {
             },
 
             function (sCb) {
-                getProducts(opts, function (err, products) {
+                getProduits(opts, function (err, Produits) {
                     if (err) {
                         return sCb(err);
                     }
 
-                    console.log('Products is imported  for channel ', channelName, ' id = ', channelId);
-                    sCb(null, products);
+                    console.log('Produits is imported  for channel ', channelName, ' id = ', channelId);
+                    sCb(null, Produits);
                 });
             },
 
@@ -4196,7 +4196,7 @@ module.exports = function (models, event) {
         var productPrices = nativeProduct.productPrices;
         var price = (productPrices && productPrices.prices && productPrices.prices.length && productPrices.prices[0].price) || 0;
         var baseUrl = opts.baseUrl;
-        var fullCreateRoute = baseUrl + settings.products.create;
+        var fullCreateRoute = baseUrl + settings.Produits.create;
         var accessToken = 'Bearer ' + opts.token;
         var model = {
             product: {
@@ -4300,7 +4300,7 @@ module.exports = function (models, event) {
         var sku = splittedLinkId[1];
         var settings = opts.settings;
         var baseUrl = opts.baseUrl;
-        var fullCreateRoute = baseUrl + settings.products.delete + sku;
+        var fullCreateRoute = baseUrl + settings.Produits.delete + sku;
         var accessToken = 'Bearer ' + opts.token;
 
         requestHelper.removeData(fullCreateRoute, {}, {
@@ -4320,11 +4320,11 @@ module.exports = function (models, event) {
         getSalesOrders     : getSalesOrders,
         getInvoices        : getInvoices,
         getCustomers       : getCustomers,
-        getProducts        : getProducts,
-        getOnlyProducts    : getOnlyProducts,
+        getProduits        : getProduits,
+        getOnlyProduits    : getOnlyProduits,
         getCategories      : getCategories,
         exportCustomers    : exportCustomers,
-        exportProducts     : exportProducts,
+        exportProduits     : exportProduits,
         exportInvoices     : exportInvoices,
         exportCategories   : exportCategories,
         exportInventory    : exportInventory,

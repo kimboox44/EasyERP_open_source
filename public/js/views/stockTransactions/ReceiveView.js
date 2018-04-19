@@ -96,17 +96,17 @@ define([
             var orderRowId;
             var targetEl;
             var saveObject;
-            var products = [];
+            var Produits = [];
             var i;
             var allReceived = 0;
 
-            var selectedProducts = self.$el.find('.productItem');
-            var selectedLength = selectedProducts.length;
+            var selectedProduits = self.$el.find('.productItem');
+            var selectedLength = selectedProduits.length;
             var locationsReceived;
             var ordered;
 
             for (i = selectedLength - 1; i >= 0; i--) {
-                targetEl = $(selectedProducts[i]);
+                targetEl = $(selectedProduits[i]);
                 orderRowId = targetEl.attr('id');
                 locationsReceived = [];
                 ordered = parseFloat(targetEl.find('#ordered').val());
@@ -133,7 +133,7 @@ define([
                 if (locationsReceived.length && (allReceived === ordered)) {
                     orderRow.locationsReceived = locationsReceived;
                     orderRow.product = orderRow.product ? orderRow.product._id : null;
-                    products.push(orderRow);
+                    Produits.push(orderRow);
                 } else {
                     return App.render({
                         type   : 'error',
@@ -143,16 +143,16 @@ define([
 
             }
 
-            if (!products.length) {
+            if (!Produits.length) {
                 return App.render({
                     type   : 'error',
-                    message: 'Not all products received'
+                    message: 'Not all Produits received'
                 });
             }
 
             saveObject = {
                 'status.received': true,
-                orderRows        : products
+                orderRows        : Produits
             };
 
             this.parentModel.save(saveObject, {
@@ -216,7 +216,7 @@ define([
 
             this.delegateEvents(this.events);
 
-            this.$el.find('#productItemsHolder').html(_.template(ProductItems, {products: parentModel.orderRows}));
+            this.$el.find('#productItemsHolder').html(_.template(ProductItems, {Produits: parentModel.orderRows}));
             return this;
         }
 

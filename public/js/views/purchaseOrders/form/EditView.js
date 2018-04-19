@@ -6,7 +6,7 @@ define([
     'text!templates/order/baseForm/baseFormEditTemplate.html',
     'text!templates/order/baseForm/baseFormViewTemplate.html',
     'models/goodsInNotesModel',
-    'views/Products/orderRows/ProductItems',
+    'views/Produits/orderRows/ProductItems',
     'views/goodsInNotes/CreateView',
     'views/Payment/CreateView',
     'views/guideTours/guideNotificationView',
@@ -78,7 +78,7 @@ define([
             e.preventDefault();
 
             rowId.each(function () {
-                var product = $(this).find('.productsDd').attr('data-id');
+                var product = $(this).find('.ProduitsDd').attr('data-id');
                 var quantity = $(this).find('input#quantity').val();
 
                 rows.push({
@@ -95,7 +95,7 @@ define([
                         var info = self.model.get('paymentInfo');
                         if (data) {
                             data.rows.forEach(function (row) {
-                                var existedProduct = _.findWhere(self.model.get('products'), {_id: row.orderRowId});
+                                var existedProduct = _.findWhere(self.model.get('Produits'), {_id: row.orderRowId});
 
                                 if (!existedProduct) {
                                     existedProduct = {};
@@ -189,9 +189,9 @@ define([
 
                   $(this).find('.accountDd').text(accountObj.name).attr('data-id', accountObj._id);
 
-                  if ($(this).find('.productsDd').attr('data-id')) {
-                    dataService.getData('/products/productAvalaible', {
-                      product  : $(this).find('.productsDd').attr('data-id'),
+                  if ($(this).find('.ProduitsDd').attr('data-id')) {
+                    dataService.getData('/Produits/productAvalaible', {
+                      product  : $(this).find('.ProduitsDd').attr('data-id'),
                       warehouse: warehouse._id
                     }, function (data) {
                       var itemsStock = data.onHand ? 'green' : 'red';
@@ -276,10 +276,10 @@ define([
             var self = this;
             var mid = 129;
             var thisEl = this.$el;
-            var selectedProducts = thisEl.find('.productItem');
-            var products = [];
+            var selectedProduits = thisEl.find('.productItem');
+            var Produits = [];
             var data;
-            var selectedLength = selectedProducts.length;
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var productId;
             var quantity;
@@ -289,7 +289,7 @@ define([
             var scheduledDate;
             var taxes;
             var supplier = thisEl.find('#supplierDd').data('id');
-            var orderRows = this.model.get('products');
+            var orderRows = this.model.get('Produits');
             var paymentMethod = $.trim(thisEl.find('#paymentMethod').attr('data-id')) || null;
             var destination = $.trim(thisEl.find('#destination').data('id'));
             var priceList = $.trim(thisEl.find('#priceList').data('id'));
@@ -309,7 +309,7 @@ define([
             var workflow = $.trim(thisEl.find('#workflowsDd').attr('data-id'));
             var account;
             var currency;
-            var allocateProducts = [];
+            var allocateProduits = [];
             var cost;
             var i;
             var orderRow;
@@ -363,9 +363,9 @@ define([
                 }
 
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = selectedProducts.length === i ? this.$el.find('#shippingRow') : $(selectedProducts[i]);
+                    targetEl = selectedProduits.length === i ? this.$el.find('#shippingRow') : $(selectedProduits[i]);
                     id = targetEl.data('id');
-                    productId = targetEl.find('.productsDd').attr('data-id');
+                    productId = targetEl.find('.ProduitsDd').attr('data-id');
                     account = targetEl.find('.accountDd').attr('data-id');
                     taxCode = targetEl.find('.current-selected.taxCode').attr('data-id');
 
@@ -407,7 +407,7 @@ define([
                             });
                         }
 
-                        products.push({
+                        Produits.push({
                             id           : id,
                             warehouse    : this.warehouse,
                             product      : productId,
@@ -465,7 +465,7 @@ define([
             }
 
             if (!this.onlyView) {
-                data.orderRows = products;
+                data.orderRows = Produits;
             }
 
             if (supplier) {
@@ -492,8 +492,8 @@ define([
                             self.hideDialog();
                         }
 
-                        if (allocateProducts && allocateProducts.length) {
-                            self.createAllocation(allocateProducts, callBack);
+                        if (allocateProduits && allocateProduits.length) {
+                            self.createAllocation(allocateProduits, callBack);
                         } else {
                             callBack();
                         }

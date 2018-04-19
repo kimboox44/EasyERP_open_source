@@ -82,7 +82,7 @@ define([
                 this.renderPagination($paginationContainer, this);
             }
 
-            if (this.contentType === 'Products') {
+            if (this.contentType === 'Produits') {
                 this.$el.find('.product').draggable({
                     revert: true
                 });
@@ -151,7 +151,7 @@ define([
             var contentType = this.contentType;
             var changedRows;
             var haveNewRow;
-            var action = App.publishProductState;
+            var action = App.publishProduitstate;
 
             changedRows = this.changedModels ? Object.keys(this.changedModels) : null;
             haveNewRow = $thisEl.find('#false, .false').length;
@@ -818,7 +818,7 @@ define([
             var ids = [];
             var answer;
             var edited = this.edited || $thisEl.find('tr.false, #false');
-            var dontConfirmContentTypes = ['Persons', 'Opportunities', 'order', 'invoice', 'Projects', 'Tasks', 'jobs', 'Employees', 'Applications', 'JobPositions', 'ChartOfAccount', 'journal', 'bonusType', 'Products', 'goodsOutNotes', 'productCategories', 'currency'];
+            var dontConfirmContentTypes = ['Persons', 'Opportunities', 'order', 'invoice', 'Projects', 'Tasks', 'jobs', 'Employees', 'Applications', 'JobPositions', 'ChartOfAccount', 'journal', 'bonusType', 'Produits', 'goodsOutNotes', 'productCategories', 'currency'];
             var answerConfirm = true;
 
             if (!edited.length) { // ToDo refactor

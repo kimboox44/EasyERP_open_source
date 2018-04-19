@@ -987,7 +987,7 @@ define([
                             link     : true,
                             visible  : true,
                             ancestors: [],
-                            href     : "productSettings"
+                            href     : "Produitsettings"
                         },
                         access: {
                             del      : true,
@@ -2045,7 +2045,7 @@ define([
                             link     : true,
                             visible  : true,
                             ancestors: [],
-                            href     : "productSettings"
+                            href     : "Produitsettings"
                         },
                         _id   : "569fa13362d172544baf0da5",
                         access: {
@@ -3107,7 +3107,7 @@ define([
                             link     : true,
                             visible  : true,
                             ancestors: [],
-                            href     : "productSettings"
+                            href     : "Produitsettings"
                         },
                         _id   : "56b8a435d54899a905ae021d",
                         access: {
@@ -4170,7 +4170,7 @@ define([
                             link     : true,
                             visible  : true,
                             ancestors: [],
-                            href     : "productSettings"
+                            href     : "Produitsettings"
                         },
                         _id   : "56b8a464d54899a905ae0228",
                         access: {
@@ -5233,7 +5233,7 @@ define([
                             link     : true,
                             visible  : true,
                             ancestors: [],
-                            href     : "productSettings"
+                            href     : "Produitsettings"
                         },
                         _id   : "569fa895897940204bdd4a01",
                         access: {
@@ -6296,7 +6296,7 @@ define([
                             link     : true,
                             visible  : true,
                             ancestors: [],
-                            href     : "productSettings"
+                            href     : "Produitsettings"
                         },
                         access: {
                             del      : true,
@@ -7326,7 +7326,7 @@ define([
                             link     : true,
                             visible  : true,
                             ancestors: [],
-                            href     : "productSettings"
+                            href     : "Produitsettings"
                         },
                         access: {
                             del      : true,
@@ -9412,7 +9412,7 @@ define([
                             link     : true,
                             visible  : true,
                             ancestors: [],
-                            href     : "productSettings"
+                            href     : "Produitsettings"
                         },
                         _id   : "56b8a490d54899a905ae0234",
                         access: {

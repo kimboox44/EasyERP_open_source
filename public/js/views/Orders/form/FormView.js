@@ -6,7 +6,7 @@ define([
     'text!templates/Orders/temps/documentTemp.html',
     'views/dialogViewBase',
     'views/Projects/projectInfo/proformas/proformaView',
-    'views/Products/InvoiceOrder/ProductItems',
+    'views/Produits/InvoiceOrder/ProductItems',
     'views/Projects/projectInfo/orders/orderView',
     'collections/Quotations/filterCollection',
     'collections/Proforma/filterCollection',

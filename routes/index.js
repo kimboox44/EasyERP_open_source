@@ -205,7 +205,7 @@ module.exports = function (app, mainDb) {
     });
 
     app.use('/filter', filterRouter);
-    app.use('/products', productRouter);
+    app.use('/Produits', productRouter);
     app.use('/orders', orderRouter);
     app.use('/invoices', invoiceRouter);
     app.use('/invoice', invoicesRouter);

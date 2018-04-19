@@ -684,7 +684,7 @@ module.exports = function (models) {
      }
      */
     router.get('/supplierPayments', handler.getSupplierPaymentsFilters);
-    router.get('/Products', handler.getProductsFilters);
+    router.get('/Produits', handler.getProduitsFilters);
 
     /**
      *@api {get} /filter/Quotations Request filter for Quotations
@@ -1641,7 +1641,7 @@ module.exports = function (models) {
 
     router.get('/stockTransactions', handler.getStockTransactionsFilters);
 
-    router.get('/stockInventory', handler.getProductsAvailabilityFilters);
+    router.get('/stockInventory', handler.getProduitsAvailabilityFilters);
 
     router.get('/ChartOfAccount', handler.getChartOfAccountFilters);
 

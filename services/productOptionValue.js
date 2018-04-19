@@ -1,6 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
-var ProductsOptionsValuesSchema = mongoose.Schemas.ProductOptionsValues;
+var ProduitsOptionsValuesSchema = mongoose.Schemas.ProductOptionsValues;
 var _ = require('lodash');
 
 module.exports = function (models) {
@@ -30,7 +30,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            ProductOptionsValue = models.get(dbName, 'ProductOptionsValues', ProductsOptionsValuesSchema);
+            ProductOptionsValue = models.get(dbName, 'ProductOptionsValues', ProduitsOptionsValuesSchema);
 
             ProductOptionsValue.find(query, options, function (err, optionValues) {
                 if (err) {
@@ -66,7 +66,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            ProductOptionsValue = models.get(dbName, 'ProductOptionsValues', ProductsOptionsValuesSchema);
+            ProductOptionsValue = models.get(dbName, 'ProductOptionsValues', ProduitsOptionsValuesSchema);
 
             ProductOptionsValue.findOne(query, options, function (err, optionValue) {
                 if (err) {
@@ -103,7 +103,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            ProductOptionsValue = models.get(dbName, 'ProductOptionsValues', ProductsOptionsValuesSchema);
+            ProductOptionsValue = models.get(dbName, 'ProductOptionsValues', ProduitsOptionsValuesSchema);
 
             productOptionsValue = new ProductOptionsValue(body);
 
@@ -153,7 +153,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            ProductOptionsValue = models.get(dbName, 'ProductOptionsValues', ProductsOptionsValuesSchema);
+            ProductOptionsValue = models.get(dbName, 'ProductOptionsValues', ProduitsOptionsValuesSchema);
             ProductOptionsValue.findOneAndUpdate(query, updateObject, _options, function (err, updated) {
                 if (err) {
                     return callback(err);

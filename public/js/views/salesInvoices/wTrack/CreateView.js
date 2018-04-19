@@ -162,9 +162,9 @@
             var usersId = [];
             var groupsId = [];
 
-            var selectedProducts = thisEl.find('.productItem');
-            var products = [];
-            var selectedLength = selectedProducts.length;
+            var selectedProduits = thisEl.find('.productItem');
+            var Produits = [];
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var productId;
             var quantity;
@@ -203,7 +203,7 @@
 
             if (selectedLength) {
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = $(selectedProducts[i]);
+                    targetEl = $(selectedProduits[i]);
                     productId = targetEl.data('id');
                     if (productId) {
                         quantity = targetEl.find('[data-name="quantity"]').text() || 1;
@@ -212,7 +212,7 @@
                         taxes = targetEl.find('.taxes').text();
                         amount = targetEl.find('.amount').text();
 
-                        products.push({
+                        Produits.push({
                             product    : productId,
                             description: description,
                             unitPrice  : price,
@@ -242,7 +242,7 @@
                 project     : projectId,
                 salesPerson : salesPersonId,
                 paymentTerms: paymentTermId,
-                products    : products,
+                Produits    : Produits,
                 paymentInfo : payments,
                 groups      : {
                     owner: this.$el.find('#allUsersSelect').attr('data-id') || null,

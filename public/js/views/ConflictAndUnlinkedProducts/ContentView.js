@@ -2,12 +2,12 @@ define([
     'jquery',
     'underscore',
     'Backbone',
-    'text!templates/ConflictAndUnlinkedProducts/conflictAndUnlinkedTemplate.html',
-    'views/ConflictAndUnlinkedProducts/resolveConflicts/ContentView',
-    'views/ConflictAndUnlinkedProducts/integrationUnlinkedProducts/list/ListView',
-    'views/ConflictAndUnlinkedProducts/resolveConflicts/TopBarView',
-    'views/ConflictAndUnlinkedProducts/integrationUnlinkedProducts/TopBarView'
-], function ($, _, Backbone, ConflictTemplate, ResolveConflictsView, UnlinkedProductsView, ResolveTopBar, UnlinkedTopBar) {
+    'text!templates/ConflictAndUnlinkedProduits/conflictAndUnlinkedTemplate.html',
+    'views/ConflictAndUnlinkedProduits/resolveConflicts/ContentView',
+    'views/ConflictAndUnlinkedProduits/integrationUnlinkedProduits/list/ListView',
+    'views/ConflictAndUnlinkedProduits/resolveConflicts/TopBarView',
+    'views/ConflictAndUnlinkedProduits/integrationUnlinkedProduits/TopBarView'
+], function ($, _, Backbone, ConflictTemplate, ResolveConflictsView, UnlinkedProduitsView, ResolveTopBar, UnlinkedTopBar) {
     'use strict';
     var ContentView = Backbone.View.extend({
         el         : '#content-holder',
@@ -31,7 +31,7 @@ define([
                 filter   : this.fliter
             }));
 
-            $thisEl.find('#unlinkedProducts').html(new UnlinkedProductsView({
+            $thisEl.find('#unlinkedProduits').html(new UnlinkedProduitsView({
                 startTime      : this.startTime,
                 filter         : this.fliter,
                 fromIntegration: this.fromIntegration

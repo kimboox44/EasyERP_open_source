@@ -189,7 +189,7 @@ define([
             name  : "Not Ordered",
             status: "New"
         },
-        products      : [
+        Produits      : [
             {
                 unitPrice    : 1500,
                 scheduledDate: "2016-03-15T00:00:00.000Z",
@@ -714,7 +714,7 @@ define([
                             },
                             "whoCanRW"      : "everyOne",
                             "workflow"      : "5555bf276a3f01acae0b5560",
-                            "products"      : [{
+                            "Produits"      : [{
                                 "subTotal"     : 13500,
                                 "taxes"        : 0,
                                 "scheduledDate": "2016-03-14T00:00:00.000Z",

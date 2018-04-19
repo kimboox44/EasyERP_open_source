@@ -7,7 +7,7 @@ define([
     'text!templates/order/baseForm/baseFormViewTemplate.html',
     'views/NoteEditor/NoteView',
     'models/goodsOutNotesModel',
-    'views/Products/orderRows/ProductItems',
+    'views/Produits/orderRows/ProductItems',
     'views/goodsOutNotes/CreateView',
     'views/Payment/CreateView',
     'common',
@@ -63,7 +63,7 @@ define([
             this.balanceVissible = false;
             modelObj = this.currentModel.toJSON();
             this.onlyView = (modelObj.workflow && modelObj.workflow.status === 'Done');
-            this.deletedProducts = [];
+            this.deletedProduits = [];
 
             App.stopPreload();
         },
@@ -77,7 +77,7 @@ define([
         cancelOrder: function (e) {
             var self = this;
             var canceledObj;
-            var answer = confirm('Do you really want to Cancel Order? All products will be returned.');
+            var answer = confirm('Do you really want to Cancel Order? All Produits will be returned.');
 
             if (!answer){
                 return false;
@@ -236,7 +236,7 @@ define([
             rowId.each(function () {
                 var allocatedAll = $(this).find('input#quantity').val() || $(this).find('[data-name="quantity"] span').text();
                 var fullfield = $(this).find('#fullfilled').text();
-                var product = $(this).find('.productsDd').attr('data-id');
+                var product = $(this).find('.ProduitsDd').attr('data-id');
                 var lastQuantity = parseInt(allocatedAll, 10) - fullfield;
                 var onHand = parseInt($(this).attr('data-hand'), 10);
 
@@ -300,7 +300,7 @@ define([
                         error: function (model, err) {
                             var message = err.message;
                             if (err.status === 404) {
-                                message = 'Not enough available products';
+                                message = 'Not enough available Produits';
                             }
                             App.render({
                                 type   : 'error',
@@ -358,7 +358,7 @@ define([
                     rows.push({
                         orderRowId: $(this).attr('data-id'),
                         quantity  : lastQuantity,
-                        product   : $(this).find('.productsDd').attr('data-id'),
+                        product   : $(this).find('.ProduitsDd').attr('data-id'),
                         warehouse : self.warehouse
                     });
                 }
@@ -389,7 +389,7 @@ define([
             e.preventDefault();
 
             rowId.each(function () {
-                var product = $(this).find('.productsDd').attr('data-id');
+                var product = $(this).find('.ProduitsDd').attr('data-id');
                 var quantity = $(this).find('input#quantity').val();
 
                 rows.push({
@@ -402,7 +402,7 @@ define([
                 var info = self.model.get('paymentInfo');
                 if (data) {
                     data.rows.forEach(function (row) {
-                        var existedProduct = _.findWhere(self.model.get('products'), {_id: row.orderRowId});
+                        var existedProduct = _.findWhere(self.model.get('Produits'), {_id: row.orderRowId});
                         existedProduct.subTotal = helpers.currencySplitter(row.priceAll.toFixed(2));
                         existedProduct.unitPrice = helpers.currencySplitter(row.price.toFixed(2));
                         existedProduct.quantity = row.quantity;
@@ -429,7 +429,7 @@ define([
                 rows.push({
                     orderRowId: $(this).attr('data-id'),
                     quantity  : 0,
-                    product   : $(this).find('.productsDd').attr('data-id'),
+                    product   : $(this).find('.ProduitsDd').attr('data-id'),
                     warehouse : self.warehouse
                 });
             });
@@ -469,9 +469,9 @@ define([
 
                   $(this).find('.accountDd').text(accountObj.name).attr('data-id', accountObj._id);
 
-                  if ($(this).find('.productsDd').attr('data-id')) {
-                    dataService.getData('/products/productAvalaible', {
-                      product  : $(this).find('.productsDd').attr('data-id'),
+                  if ($(this).find('.ProduitsDd').attr('data-id')) {
+                    dataService.getData('/Produits/productAvalaible', {
+                      product  : $(this).find('.ProduitsDd').attr('data-id'),
                       warehouse: warehouse._id
                     }, function (data) {
                       var itemsStock = data.onHand ? 'green' : 'red';
@@ -510,10 +510,10 @@ define([
             var self = this;
             var mid = 55;
             var thisEl = this.$el;
-            var selectedProducts = thisEl.find('.productItem');
-            var products = [];
+            var selectedProduits = thisEl.find('.productItem');
+            var Produits = [];
             var data;
-            var selectedLength = selectedProducts.length;
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var productId;
             var quantity;
@@ -550,7 +550,7 @@ define([
             var currency;
             var changedAllocated;
             var allocated;
-            var allocateProducts = [];
+            var allocateProduits = [];
             var allocatedAll;
             var fullfield;
             var lastQuantity;
@@ -619,10 +619,10 @@ define([
                 }
 
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = selectedProducts.length === i ? this.$el.find('#shippingRow') : $(selectedProducts[i]);
+                    targetEl = selectedProduits.length === i ? this.$el.find('#shippingRow') : $(selectedProduits[i]);
                     infoEl = targetEl.next();
                     id = targetEl.data('id');
-                    productId = targetEl.find('.productsDd').attr('data-id');
+                    productId = targetEl.find('.ProduitsDd').attr('data-id');
                     account = targetEl.find('.accountDd').attr('data-id');
                     taxCode = targetEl.find('.current-selected.taxCode').attr('data-id');
                     if (productId || shippingAccount) {  // added more info for save
@@ -659,7 +659,7 @@ define([
                                 allocatedAll = lastQuantity;
                             }
 
-                            allocateProducts.push({
+                            allocateProduits.push({
                                 orderRowId: id,
                                 quantity  : allocatedAll,
                                 product   : productId,
@@ -674,7 +674,7 @@ define([
                             });
                         }
 
-                        products.push({
+                        Produits.push({
                             id           : id,
                             warehouse    : this.warehouse,
                             product      : productId,
@@ -705,7 +705,7 @@ define([
                 supplier        : supplier,
                 paymentMethod   : paymentMethod,
                 priceList       : priceList,
-                orderRows       : products,
+                orderRows       : Produits,
                 orderDate       : orderDate,
                 expectedDate    : expectedDate,
                 workflow        : workflow,
@@ -732,7 +732,7 @@ define([
                 },
 
                 whoCanRW       : whoCanRW,
-                deletedProducts: this.deletedProducts
+                deletedProduits: this.deletedProduits
             };
 
             if (supplier) {
@@ -771,8 +771,8 @@ define([
 
                         }
 
-                        if (allocateProducts && allocateProducts.length) {
-                            self.createAllocation(allocateProducts, callBack);
+                        if (allocateProduits && allocateProduits.length) {
+                            self.createAllocation(allocateProduits, callBack);
                         } else {
                             callBack();
                         }
@@ -955,7 +955,7 @@ define([
                 service         : self.service,
                 warehouse       : this.warehouse,
                 responseObj     : this.responseObj,
-                deletedProducts : this.deletedProducts
+                deletedProduits : this.deletedProduits
             });
 
             productItemContainer.append(

@@ -99,7 +99,7 @@ define([
             var self = this;
             var order = this.orderModel.id;
             var name = this.orderModel.get('name');
-            var orderRows = this.orderModel.get('products');
+            var orderRows = this.orderModel.get('Produits');
             var orderRow;
             var warehouse = this.$el.find('#warehouseDd').attr('data-id');
             var date = helpers.setTimeToDate(this.$el.find('#date').val());
@@ -109,21 +109,21 @@ define([
             var quantity;
             var targetEl;
             var saveObject;
-            var products = [];
+            var Produits = [];
             var productAvailable;
             var i;
             var _model;
 
-            var selectedProducts = self.$el.find('.productItem');
-            var selectedLength = selectedProducts.length;
+            var selectedProduits = self.$el.find('.productItem');
+            var selectedLength = selectedProduits.length;
             var locationsReceived;
             var ordered;
             var cost;
             for (i = selectedLength - 1; i >= 0; i--) {
-                targetEl = $(selectedProducts[i]);
+                targetEl = $(selectedProduits[i]);
                 orderRowId = targetEl.attr('id');
                 locationsReceived = [];
-                productAvailable = targetEl.find('#productsDd').attr('data-id');
+                productAvailable = targetEl.find('#ProduitsDd').attr('data-id');
                 quantity = 0;
                 ordered = parseFloat(targetEl.find('#ordered').val());
 
@@ -144,7 +144,7 @@ define([
                 });
 
                 if (locationsReceived.length) {
-                    products.push({
+                    Produits.push({
                         orderRowId       : orderRowId,
                         locationsReceived: locationsReceived,
                         product          : productAvailable,
@@ -156,10 +156,10 @@ define([
 
             }
 
-            if (!products.length) {
+            if (!Produits.length) {
                 return App.render({
                     type   : 'error',
-                    message: 'No products for receive'
+                    message: 'No Produits for receive'
                 });
             }
 
@@ -174,7 +174,7 @@ define([
                     received: true
                 },
 
-                orderRows: products
+                orderRows: Produits
             };
 
             _model = new GoodsModel();
@@ -252,7 +252,7 @@ define([
             populate.get('.locationDd', 'warehouse/location/getForDd', {warehouse: warehouse}, 'name', this, true, false, null);
             this.delegateEvents(this.events);
 
-            this.$el.find('#productItemsHolder').html(_.template(ProductItems, {products: orderModel.products}));
+            this.$el.find('#productItemsHolder').html(_.template(ProductItems, {Produits: orderModel.Produits}));
 
             return this;
         }

@@ -6,7 +6,7 @@ define([
     'text!templates/Quotations/temps/documentTemp.html',
     'views/dialogViewBase',
     'views/Assignees/AssigneesView',
-    'views/Products/InvoiceOrder/ProductItems',
+    'views/Produits/InvoiceOrder/ProductItems',
     'views/NoteEditor/NoteView',
     'views/Editor/AttachView',
     'common',
@@ -95,7 +95,7 @@ define([
                 visible: true
                 // targetSource: 'order'
             }, function (workflow) {
-                var products;
+                var Produits;
 
                 if (workflow && workflow.error) {
                     return App.render({
@@ -104,9 +104,9 @@ define([
                     });
                 }
 
-                products = self.currentModel.get('products');
+                Produits = self.currentModel.get('Produits');
 
-                if (products && products.length) {
+                if (Produits && Produits.length) {
                     self.currentModel.save({
                         isOrder : true,
                         type    : 'Not Invoiced',

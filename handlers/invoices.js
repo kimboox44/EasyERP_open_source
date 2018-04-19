@@ -178,8 +178,8 @@ var Module = function (models, event) {
             var query = Order.findById(id).lean();
 
             query
-                .populate('products.info')
-                .populate('products.jobs')
+                .populate('Produits.info')
+                .populate('Produits.jobs')
                 .populate('project', '_id name salesmanager');
 
             query.exec(callback);
@@ -644,7 +644,7 @@ var Module = function (models, event) {
                     }
 
                     Invoice.findByIdAndUpdate(id, {$set: data}, {new: true}, function (err, invoice) {
-                        var products = data.products;
+                        var Produits = data.Produits;
                         var historyOptions;
 
                         if (err) {
@@ -677,8 +677,8 @@ var Module = function (models, event) {
                                     .populate('payments', '_id name date paymentRef paidAmount createdBy currency')
                                     .populate('department', '_id name')
                                     .populate('currency._id', 'name symbol')
-                                    .populate('products.jobs', 'name description')
-                                    .populate('products.product', 'name info')
+                                    .populate('Produits.jobs', 'name description')
+                                    .populate('Produits.product', 'name info')
                                     .populate('paymentTerms', function (err, invoice) {
                                         if (err) {
                                             return next(err);
@@ -704,7 +704,7 @@ var Module = function (models, event) {
                 });
             } else {
                 Invoice.findByIdAndUpdate(id, {$set: data}, {new: true}, function (err, invoice) {
-                    var products = data.products;
+                    var Produits = data.Produits;
                     var historyOptions;
 
                     if (err) {
@@ -737,8 +737,8 @@ var Module = function (models, event) {
                                 .populate('payments', '_id name date paymentRef paidAmount createdBy currency')
                                 .populate('department', '_id name')
                                 .populate('currency._id', 'name symbol')
-                                .populate('products.jobs', 'name description')
-                                .populate('products.product', 'name info')
+                                .populate('Produits.jobs', 'name description')
+                                .populate('Produits.product', 'name info')
                                 .populate('paymentTerms', function (err, invoice) {
                                     if (err) {
                                         return next(err);
@@ -830,7 +830,7 @@ var Module = function (models, event) {
 
         journalEntryBody.accountsItems = [];
 
-        invoice.products.forEach(function (prod) {
+        invoice.Produits.forEach(function (prod) {
             journalEntryBody.accountsItems.push({
                 debit  : prod.subTotal,
                 credit : 0,
@@ -838,7 +838,7 @@ var Module = function (models, event) {
             });
         });
 
-        creditAccount = invoice.products && invoice.products.length ? invoice.products[0].creditAccount : CONSTANTS.ACCOUNT_PAYABLE;
+        creditAccount = invoice.Produits && invoice.Produits.length ? invoice.Produits[0].creditAccount : CONSTANTS.ACCOUNT_PAYABLE;
 
         journalEntryBody.accountsItems.push({
             debit  : 0,
@@ -1573,9 +1573,9 @@ var Module = function (models, event) {
             query
                 .populate('currency._id')
                 .populate('expensesCategory', '_id account')
-                .populate('products.debitAccount', '_id name')
-                .populate('products.creditAccount', '_id name')
-                .populate('products.taxes.taxCode', 'fullName rate')
+                .populate('Produits.debitAccount', '_id name')
+                .populate('Produits.creditAccount', '_id name')
+                .populate('Produits.taxes.taxCode', 'fullName rate')
                 .populate('journal', '_id name')
                 .populate('payments', '_id name date paymentRef paidAmount createdBy currency')
                 .populate('paymentTerms', '_id name count')
@@ -1606,11 +1606,11 @@ var Module = function (models, event) {
         };
 
         function getAvailableForRows(req, docs, forSales, cb) {
-            var AvailabilitySchema = mongoose.Schemas.productsAvailability;
+            var AvailabilitySchema = mongoose.Schemas.ProduitsAvailability;
             var GoodsOutSchema = mongoose.Schemas.GoodsOutNote;
             var GoodsInSchema = mongoose.Schemas.GoodsInNote;
 
-            var Availability = models.get(req.session.lastDb, 'productsAvailability', AvailabilitySchema);
+            var Availability = models.get(req.session.lastDb, 'ProduitsAvailability', AvailabilitySchema);
             var GoodsOutNote = models.get(req.session.lastDb, 'GoodsOutNote', GoodsOutSchema);
             var GoodsInNote = models.get(req.session.lastDb, 'GoodsInNote', GoodsInSchema);
             var populateDocs = [];
@@ -1886,7 +1886,7 @@ var Module = function (models, event) {
                             return waterfallCallback(err);
                         }
 
-                        invoice.products = docs;
+                        invoice.Produits = docs;
                         invoice.account = docs && docs.length ? docs[0].debitAccount : {};
 
                         if (!invoice.forSales) {

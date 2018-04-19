@@ -40,7 +40,7 @@ define([
             var paidAmount = model.paidAmount || 0;
             var invoiced;
             var paid;
-            var products = model.products;
+            var Produits = model.Produits;
             var balance;
             var total;
             var unTaxed;
@@ -92,8 +92,8 @@ define([
                 model.paymentInfo.paid = paid;
             }
 
-            if (products) {
-                products = _.map(products, function (product) {
+            if (Produits) {
+                Produits = _.map(Produits, function (product) {
 
                     unitPrice = product.unitPrice || 0;
                     subTotal = product.subTotal || 0;

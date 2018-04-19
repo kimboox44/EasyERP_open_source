@@ -74,7 +74,7 @@ public/scss/.DS_Store
 public/scss/general/.DS_Store
 test/.DS_Store
 
-/updateCollections/toDo/updateProductsCategories.js
+/updateCollections/toDo/updateProduitsCategories.js
 /.gitignore
 cron.txt
 exportFiles/

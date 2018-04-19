@@ -531,7 +531,7 @@ module.exports = function (models, event) {
                "_type": "wTrackInvoice",
                "__v": 0,
                "project": "56e2924a1f2850d361927dd1",
-               "products": [
+               "Produits": [
                  {
                    "subTotal": 300000,
                    "unitPrice": 300000,

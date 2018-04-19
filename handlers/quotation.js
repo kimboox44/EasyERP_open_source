@@ -8,7 +8,7 @@ var Module = function (models, event) {
     var WorkflowSchema = mongoose.Schemas.workflow;
     var EmployeesSchema = mongoose.Schemas.Employees;
     var ProjectSchema = mongoose.Schemas.Project;
-    var ProductSchema = mongoose.Schemas.Products;
+    var Produitschema = mongoose.Schemas.Produits;
     var DepartmentSchema = mongoose.Schemas.Department;
     var JobsSchema = mongoose.Schemas.jobs;
     var wTrackSchema = mongoose.Schemas.wTrack;
@@ -36,12 +36,12 @@ var Module = function (models, event) {
         var dbName = req.session.lastDb;
         var Quotation = models.get(dbName, 'Quotation', QuotationSchema);
         var JobsModel = models.get(dbName, 'jobs', JobsSchema);
-        var ProductModel = models.get(dbName, 'Product', ProductSchema);
+        var ProductModel = models.get(dbName, 'Product', Produitschema);
 
         var wTrackModel = models.get(dbName, 'wTrack', wTrackSchema);
-        var products;
+        var Produits;
         var project;
-        var oldProducts = [];
+        var oldProduits = [];
         var editedBy = {
             user: req.session.uId,
             date: new Date()
@@ -94,7 +94,7 @@ var Module = function (models, event) {
                 return next(err);
             }
 
-            oldProducts = oldQuotation.toJSON().products;
+            oldProduits = oldQuotation.toJSON().Produits;
 
             Quotation.findByIdAndUpdate(id, {$set: data}, {new: true}, function (err, quotation) {
                 var historyOptions;
@@ -110,17 +110,17 @@ var Module = function (models, event) {
                 };
 
                 if (quotation.forSales) {
-                    products = data.products || quotation.toJSON().products;
+                    Produits = data.Produits || quotation.toJSON().Produits;
 
-                    async.each(products, function (product, cb) {
+                    async.each(Produits, function (product, cb) {
                         var jobs = product.jobs;
                         var productId = product.product;
                         var _type = quotation.toJSON().isOrder ? 'Ordered' : 'Quoted';
 
-                        var index = indexOfBinary(oldProducts, jobs.id);
+                        var index = indexOfBinary(oldProduits, jobs.id);
 
                         if (index !== -1) {
-                            oldProducts.splice(index, 1);
+                            oldProduits.splice(index, 1);
                         }
 
                         ProductModel.findByIdAndUpdate(productId, {
@@ -168,8 +168,8 @@ var Module = function (models, event) {
                                 .populate('incoterm')
                                 .populate('invoiceControl')
                                 .populate('paymentTerm')
-                                .populate('products.product', '_id name info')
-                                .populate('products.jobs', '_id name description')
+                                .populate('Produits.product', '_id name info')
+                                .populate('Produits.jobs', '_id name description')
                                 .populate('groups.users')
                                 .populate('groups.group')
                                 .populate('groups.owner', '_id login')
@@ -183,8 +183,8 @@ var Module = function (models, event) {
                                         }
 
                                         res.status(200).send(quotation);
-                                        if (oldProducts.length > 0) {
-                                            async.each(oldProducts, function (oldProduct, cb) {
+                                        if (oldProduits.length > 0) {
+                                            async.each(oldProduits, function (oldProduct, cb) {
 
                                                 type = 'Not Ordered';
 
@@ -230,8 +230,8 @@ var Module = function (models, event) {
                             .populate('incoterm')
                             .populate('invoiceControl')
                             .populate('paymentTerm')
-                            .populate('products.product', '_id name info')
-                            .populate('products.jobs', '_id name description')
+                            .populate('Produits.product', '_id name info')
+                            .populate('Produits.jobs', '_id name description')
                             .populate('groups.users')
                             .populate('groups.group')
                             .populate('groups.owner', '_id login')
@@ -667,16 +667,16 @@ var Module = function (models, event) {
 
                     async.parallel(parellelTasks, function (err) {
                         var id;
-                        var products;
+                        var Produits;
 
                         if (err) {
                             return next(err);
                         }
 
                         id = _quotation._id;
-                        products = body.products;
+                        Produits = body.Produits;
 
-                        async.each(products, function (product, cb) {
+                        async.each(Produits, function (product, cb) {
                             var jobs = product.jobs;
 
                             JobsModel.findByIdAndUpdate(jobs, {
@@ -1126,8 +1126,8 @@ var Module = function (models, event) {
                 .populate('incoterm')
                 .populate('invoiceControl')
                 .populate('paymentTerm')
-                .populate('products.product', '_id name info')
-                .populate('products.jobs', '_id name description')
+                .populate('Produits.product', '_id name info')
+                .populate('Produits.jobs', '_id name description')
                 .populate('groups.users')
                 .populate('groups.group')
                 .populate('groups.owner', '_id login')
@@ -1189,15 +1189,15 @@ var Module = function (models, event) {
         };
 
         Quotation.findByIdAndRemove(id, function (err, quotation) {
-            var products;
+            var Produits;
 
             if (err) {
                 return next(err);
             }
 
-            products = quotation ? quotation.get('products') : [];
+            Produits = quotation ? quotation.get('Produits') : [];
 
-            async.each(products, function (product, cb) {
+            async.each(Produits, function (product, cb) {
 
                 JobsModel.findByIdAndUpdate(product.jobs, {
                     type     : type,

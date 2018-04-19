@@ -4,7 +4,7 @@ define([
     'jQuery',
     'views/dialogViewBase',
     'models/OptionsValuesModel',
-    'collections/productSettings/optionValuesCollection',
+    'collections/Produitsettings/optionValuesCollection',
     'collections/productType/filterCollection',
     'text!templates/settingsOverview/productDetails/productOptions/EditTemplate.html',
     'constants',
@@ -18,7 +18,7 @@ define([
         initialize: function (options) {
             this.optionsValuesModel = new OptionsValuesModel;
             this.formModel = options.model;
-            this.formModel.urlRoot = '/products/options/';
+            this.formModel.urlRoot = '/Produits/options/';
             this.checkedPrTypes = [];
             this.responseObj = {};
             this.modelChanged = {};
@@ -87,7 +87,7 @@ define([
             var $target = $(e.target);
             var deleteId = $target.closest('.valueItem').data('id');
 
-            dataService.deleteData(CONSTANTS.URLS.SETTINGS_PRODUCTS_VALUES,
+            dataService.deleteData(CONSTANTS.URLS.SETTINGS_Produits_VALUES,
                 {
                     id: deleteId
                 },
@@ -107,7 +107,7 @@ define([
 
                     self.getOptionValues();
                 },
-                CONSTANTS.PRODUCTS_SETTINGS
+                CONSTANTS.Produits_SETTINGS
             );
         },
 
@@ -117,7 +117,7 @@ define([
             var self = this;
             this.value = $target.closest('.valueItem').find('input').val();
 
-            dataService.patchData(CONSTANTS.URLS.SETTINGS_PRODUCTS_VALUES,
+            dataService.patchData(CONSTANTS.URLS.SETTINGS_Produits_VALUES,
                 {
                     _id  : updateId,
                     value: this.value
@@ -132,7 +132,7 @@ define([
 
                     self.getOptionValues();
                 },
-                CONSTANTS.PRODUCTS_SETTINGS
+                CONSTANTS.Produits_SETTINGS
             );
         },
 

@@ -24,7 +24,7 @@ eventsHandler = function (app, mainDb) {
     var OrderSchema = mongoose.Schemas.Order;
     var GoodsOutSchema = mongoose.Schemas.GoodsOutNote;
     var OrderRowsSchema = mongoose.Schemas.OrderRow;
-    var AvailabilitySchema = mongoose.Schemas.productsAvailability;
+    var AvailabilitySchema = mongoose.Schemas.ProduitsAvailability;
     var ManufacturingOrdersSchema = mongoose.Schemas.manufacturingOrder;
 
     var io = app.get('io');
@@ -237,7 +237,7 @@ eventsHandler = function (app, mainDb) {
             dbName = req.session.lastDb;
         }
 
-        Availability = models.get(dbName, 'productsAvailability', AvailabilitySchema);
+        Availability = models.get(dbName, 'ProduitsAvailability', AvailabilitySchema);
         GoodsOutNote = models.get(dbName, 'GoodsOutNote', GoodsOutSchema);
         var stockStatus = {};
 

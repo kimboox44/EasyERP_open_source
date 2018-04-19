@@ -3,9 +3,9 @@ define([
     'Underscore',
     'jQuery',
     'models/OptionsValuesModel',
-    'collections/productSettings/optionValuesCollection',
+    'collections/Produitsettings/optionValuesCollection',
     'collections/productType/filterCollection',
-    'text!templates/productSettings/form/FormTemplate.html',
+    'text!templates/Produitsettings/form/FormTemplate.html',
     'constants',
     'dataService',
     'views/selectView/selectView',
@@ -22,7 +22,7 @@ define([
 
             this.optionsValuesModel = new OptionsValuesModel;
             this.formModel = options.model;
-            this.formModel.urlRoot = '/products/options/';
+            this.formModel.urlRoot = '/Produits/options/';
             this.checkedPrTypes = [];
             this.responseObj = {};
             this.modelChanged = {};
@@ -90,7 +90,7 @@ define([
             var $target = $(e.target);
             var deleteId = $target.closest('.valueItem').data('id');
 
-            dataService.deleteData(CONSTANTS.URLS.SETTINGS_PRODUCTS_VALUES,
+            dataService.deleteData(CONSTANTS.URLS.SETTINGS_Produits_VALUES,
                 {
                     id: deleteId
                 },
@@ -106,7 +106,7 @@ define([
 
                     self.getOptionValues();
                 },
-                CONSTANTS.PRODUCTS_SETTINGS
+                CONSTANTS.Produits_SETTINGS
             );
         },
 
@@ -116,7 +116,7 @@ define([
             var self = this;
             this.value = $target.closest('.valueItem').find('input').val();
 
-            dataService.patchData(CONSTANTS.URLS.SETTINGS_PRODUCTS_VALUES,
+            dataService.patchData(CONSTANTS.URLS.SETTINGS_Produits_VALUES,
                 {
                     _id  : updateId,
                     value: this.value
@@ -131,7 +131,7 @@ define([
 
                     self.getOptionValues();
                 },
-                CONSTANTS.PRODUCTS_SETTINGS
+                CONSTANTS.Produits_SETTINGS
             );
         },
 
@@ -186,7 +186,7 @@ define([
 
         saveChangeTypes: function () {
             var $thisEl = this.$el;
-            //var url = CONSTANTS.URLS.SETTINGS_PRODUCTS_TYPES;
+            //var url = CONSTANTS.URLS.SETTINGS_Produits_TYPES;
             var data = {
                 checkedPrTypes: this.checkedPrTypes
             };

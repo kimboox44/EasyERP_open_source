@@ -55,12 +55,12 @@ define([
             if (responseData && collection) {
                 _stats = collection.stats;
                 responseData.stats = {};
-                responseData.stats.products = {};
+                responseData.stats.Produits = {};
                 responseData.stats.orders = {};
 
                 if (_stats) {
-                    responseData.stats.products.imported = _.find(_stats.importedProducts, filterStats);
-                    responseData.stats.products.conflicted = _.find(_stats.conflictProducts, filterStats);
+                    responseData.stats.Produits.imported = _.find(_stats.importedProduits, filterStats);
+                    responseData.stats.Produits.conflicted = _.find(_stats.conflictProduits, filterStats);
                     responseData.stats.orders.imported = _.find(_stats.importedOrders, filterStats);
                     responseData.stats.orders.unlinked = _.find(_stats.unlinkedOrders, filterStats);
                 }

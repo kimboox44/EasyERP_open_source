@@ -15,9 +15,9 @@ module.exports = function (models) {
         var JournalEntryHandler = require('../handlers/journalEntry');
         var journalEntry = new JournalEntryHandler(models);
 
-        this.updateAvailableProducts = function (options, mainCb) {
+        this.updateAvailableProduits = function (options, mainCb) {
             var doc = options.doc;
-            var error = new Error('Not enough available products');
+            var error = new Error('Not enough available Produits');
 
             error.status = 404;
 
@@ -204,7 +204,7 @@ module.exports = function (models) {
             }
         };
 
-        this.deliverProducts = function (options, mainCb) {
+        this.deliverProduits = function (options, mainCb) {
             var OrderRows = models.get(options.dbName, 'orderRows', OrderRowsSchema);
             var goodsOutNote = options.goodsOutNote;
             var body;
@@ -359,7 +359,7 @@ module.exports = function (models) {
              });*/
         };
 
-        this.receiveProducts = function (options, mainCb) {
+        this.receiveProduits = function (options, mainCb) {
             var OrderRows = models.get(options.dbName, 'orderRows', OrderRowsSchema);
             var goodsInNote = options.goodsInNote;
             var dbName = options.dbName;

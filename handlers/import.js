@@ -38,7 +38,7 @@ var Module = function (models) {
         Invoice: [
             'externalId',
             'supplier',
-            'products',
+            'Produits',
             'sourceDocument'
         ],
 
@@ -63,7 +63,7 @@ var Module = function (models) {
             'externalId'
         ],
 
-        Products: [
+        Produits: [
             'name',
             'externalId'
         ],
@@ -130,7 +130,7 @@ var Module = function (models) {
         ],
 
         Invoice: [
-            'products',
+            'Produits',
             'payments',
             'groups.group',
             'groups.users',
@@ -140,7 +140,7 @@ var Module = function (models) {
         Quotation: [
             'groups.group',
             'groups.users',
-            'products'
+            'Produits'
         ]
     };
 
@@ -160,7 +160,7 @@ var Module = function (models) {
         PurchasePayments: mongoose.Schemas.purchasePayments,
         InvoicePayments : mongoose.Schemas.InvoicePayment,
         Department      : mongoose.Schemas.Department,
-        Products        : mongoose.Schemas.Products,
+        Produits        : mongoose.Schemas.Produits,
         JobPosition     : mongoose.Schemas.JobPosition,
         ProductCategory : mongoose.Schemas.ProductCategory,
         Workflow        : mongoose.Schemas.workflow,
@@ -1245,12 +1245,12 @@ var Module = function (models) {
         var currencyName = item['currency._id'];
         var customerId = item.supplier;
         var quotationId = item.sourceDocument;
-        var productsId = item.products;
+        var ProduitsId = item.Produits;
         var workflowName = item.workflow;
         var CustomerModel = models.get(lastDb, 'Customers', schemaObj.Persons);
         var QuotationModel = models.get(lastDb, 'Quotation', schemaObj.Quotation);
         var InvoiceModel = models.get(lastDb, 'Invoice', schemaObj.Invoice);
-        var ProductsModel = models.get(lastDb, 'Products', schemaObj.Products);
+        var ProduitsModel = models.get(lastDb, 'Produits', schemaObj.Produits);
         var WorkflowModel = models.get(lastDb, 'workflow', schemaObj.Workflow);
         var CurrencyModel = models.get(lastDb, 'currency', schemaObj.Currency);
         var skippedIdsArray = [];
@@ -1303,24 +1303,24 @@ var Module = function (models) {
                 });
             },
 
-            getProducts: function (pCb) {
-                ProductsModel.findOne({externalId: productsId}, {_id: 1}, function (err, productsModel) {
+            getProduits: function (pCb) {
+                ProduitsModel.findOne({externalId: ProduitsId}, {_id: 1}, function (err, ProduitsModel) {
                     if (err) {
                         return pCb(err);
                     }
 
-                    pCb(null, productsModel);
+                    pCb(null, ProduitsModel);
                 });
             }
         }, function (err, result) {
             var workflowModel = result.getWorkflow;
             var customerModel = result.getCustomer;
             var quotationModel = result.getQuotation;
-            var productsModel = result.getProducts;
+            var ProduitsModel = result.getProduits;
             var currencyModel = result.getCurrency;
 
             if (stage === 'import') {
-                if (err || !customerModel || !quotationModel || !productsModel) {
+                if (err || !customerModel || !quotationModel || !ProduitsModel) {
                     reasons[item.importId.toString()] = 'Provided field doesn`t exist';
                     skippedIdsArray.push(item.importId.toString());
 
@@ -1340,8 +1340,8 @@ var Module = function (models) {
 
                 item.supplier = currencyModel && customerModel._id;
                 item.sourceDocument = quotationModel && quotationModel._id;
-                item.products = [{
-                    product: productsModel && productsModel._id
+                item.Produits = [{
+                    product: ProduitsModel && ProduitsModel._id
                 }];
 
                 //TODO hardcode journal ID
@@ -1366,7 +1366,7 @@ var Module = function (models) {
                     });
                 });
             } else {
-                if (err || !customerModel || !quotationModel || !productsModel) {
+                if (err || !customerModel || !quotationModel || !ProduitsModel) {
                     item.reason = 'Provided Customer or Quotation doesn`t exist';
                     skippedArray.push(item);
                     return callback(null, {
@@ -1382,8 +1382,8 @@ var Module = function (models) {
                 }
 
 
-                item.products = [{
-                    product: productsModel && productsModel._id
+                item.Produits = [{
+                    product: ProduitsModel && ProduitsModel._id
                 }];
 
                 item.supplier = customerModel && customerModel._id;
@@ -1413,13 +1413,13 @@ var Module = function (models) {
 
     function createQuotation(lastDb, item, stage, callback) {
         var customerId = item.supplier;
-        var productsId = item.products;
+        var ProduitsId = item.Produits;
         var workflowName = item.workflow;
         var currencyName = item['currency._id'];
         var CurrencyModel = models.get(lastDb, 'currency', schemaObj.Currency);
         var CustomerModel = models.get(lastDb, 'Customers', schemaObj.Persons);
         var QuotationModel = models.get(lastDb, 'Quotation', schemaObj.Quotation);
-        var ProductsModel = models.get(lastDb, 'Products', schemaObj.Products);
+        var ProduitsModel = models.get(lastDb, 'Produits', schemaObj.Produits);
         var WorkflowModel = models.get(lastDb, 'workflow', schemaObj.Workflow);
         var skippedIdsArray = [];
         var skippedArray = [];
@@ -1461,25 +1461,25 @@ var Module = function (models) {
                 });
             },
 
-            getProducts: function (pCb) {
-                ProductsModel.findOne({externalId: productsId}, {_id: 1}, function (err, productsModel) {
+            getProduits: function (pCb) {
+                ProduitsModel.findOne({externalId: ProduitsId}, {_id: 1}, function (err, ProduitsModel) {
                     if (err) {
                         return pCb(err);
                     }
 
-                    pCb(null, productsModel);
+                    pCb(null, ProduitsModel);
                 });
             }
 
         }, function (err, result) {
             var workflowModel = result.getWorkflow;
             var customerModel = result.getCustomer;
-            var productsModel = result.getProducts;
+            var ProduitsModel = result.getProduits;
             var currencyModel = result.getCurrency;
 
             if (stage === 'import') {
                 if (err || !customerModel || !currencyModel) {
-                    reasons[item.importId.toString()] = 'Provided Customers or Products doesn`t exist';
+                    reasons[item.importId.toString()] = 'Provided Customers or Produits doesn`t exist';
                     skippedIdsArray.push(item.importId.toString());
 
                     return callback(null, {
@@ -1497,8 +1497,8 @@ var Module = function (models) {
 
                 item['currency._id'] = currencyModel._id;
                 item.supplier = customerModel && customerModel._id;
-                item.products = [{
-                    product: productsModel ? productsModel._id : null
+                item.Produits = [{
+                    product: ProduitsModel ? ProduitsModel._id : null
                 }];
 
                 quotationModel = new QuotationModel(item);
@@ -1519,7 +1519,7 @@ var Module = function (models) {
                     });
                 });
             } else {
-                if (err || !customerModel || !productsModel) {
+                if (err || !customerModel || !ProduitsModel) {
                     item.reason = 'Provided Customer or Product doesn`t exist';
                     skippedArray.push(item);
 
@@ -1530,7 +1530,7 @@ var Module = function (models) {
                 }
 
                 customerId = customerModel._id;
-                productsId = productsModel._id;
+                ProduitsId = ProduitsModel._id;
 
                 if (workflowModel) {
                     item.workflow = workflowModel._id;
@@ -1539,8 +1539,8 @@ var Module = function (models) {
                 }
 
                 item.supplier = customerModel && customerModel._id;
-                item.products = [{
-                    product: productsModel && productsModel._id
+                item.Produits = [{
+                    product: ProduitsModel && ProduitsModel._id
                 }];
 
                 quotationModel = new QuotationModel(item);
@@ -1676,16 +1676,16 @@ var Module = function (models) {
         var CustomerModel = models.get(lastDb, 'Customers', schemaObj.Persons);
         var QuotationModel = models.get(lastDb, 'Quotation', schemaObj.Quotation);
         var InvoiceModel = models.get(lastDb, 'Invoice', schemaObj.Invoice);
-        var ProductsModel = models.get(lastDb, 'Products', schemaObj.Products);
+        var ProduitsModel = models.get(lastDb, 'Produits', schemaObj.Produits);
         var WorkflowModel = models.get(lastDb, 'workflow', schemaObj.Workflow);
         var customerExternalId = updateObj.customer;
         var quotationExternalId = updateObj.sourceDocument;
-        var productsExternalId = updateObj.products;
+        var ProduitsExternalId = updateObj.Produits;
         var workflowName = updateObj.workflow;
         var workflow;
         var mergedCount = 0;
 
-        if (!customerExternalId && !quotationExternalId && !productsExternalId && !workflowName) {
+        if (!customerExternalId && !quotationExternalId && !ProduitsExternalId && !workflowName) {
             InvoiceModel.update({_id: existId}, {$set: updateObj}, function (err) {
                 if (err) {
                     importItem.reason = err.message;
@@ -1751,16 +1751,16 @@ var Module = function (models) {
                         });
                 },
 
-                products: function (parCb) {
-                    if (!productsExternalId) {
+                Produits: function (parCb) {
+                    if (!ProduitsExternalId) {
                         return parCb(null);
                     }
 
-                    ProductsModel.findOne({externalId: productsExternalId}, {_id: 1})
+                    ProduitsModel.findOne({externalId: ProduitsExternalId}, {_id: 1})
                         .lean()
-                        .exec(function (err, products) {
+                        .exec(function (err, Produits) {
 
-                            updateObj.products = products._id;
+                            updateObj.Produits = Produits._id;
 
                             parCb(null);
                         });
@@ -1788,15 +1788,15 @@ var Module = function (models) {
     function updateQuotation(lastDb, existId, updateObj, importItem, callback) {
         var CustomerModel = models.get(lastDb, 'Customers', schemaObj.Persons);
         var QuotationModel = models.get(lastDb, 'Quotation', schemaObj.Quotation);
-        var ProductsModel = models.get(lastDb, 'Products', schemaObj.Products);
+        var ProduitsModel = models.get(lastDb, 'Produits', schemaObj.Produits);
         var WorkflowModel = models.get(lastDb, 'workflow', schemaObj.Workflow);
         var customerExternalId = updateObj.supplier;
-        var productsExternalId = updateObj.products;
+        var ProduitsExternalId = updateObj.Produits;
         var workflowName = updateObj.workflow;
         var mergedCount = 0;
         var workflow;
 
-        if (!workflowName && !productsExternalId && !customerExternalId) {
+        if (!workflowName && !ProduitsExternalId && !customerExternalId) {
             QuotationModel.update({_id: existId}, {$set: updateObj}, function (err) {
                 if (err) {
                     importItem.reason = err.message;
@@ -1843,14 +1843,14 @@ var Module = function (models) {
                         });
                 },
 
-                products: function (parCb) {
-                    if (!productsExternalId) {
+                Produits: function (parCb) {
+                    if (!ProduitsExternalId) {
                         return parCb(null);
                     }
-                    ProductsModel.findOne({externalId: productsExternalId}, {_id: 1})
+                    ProduitsModel.findOne({externalId: ProduitsExternalId}, {_id: 1})
                         .lean()
-                        .exec(function (err, products) {
-                            updateObj.products = products._id;
+                        .exec(function (err, Produits) {
+                            updateObj.Produits = Produits._id;
 
                             parCb(null);
                         });
@@ -2996,7 +2996,7 @@ var Module = function (models) {
                         importItem = setDefaultFields(type, importItem);
 
                         switch (type) {
-                            case 'Products':
+                            case 'Produits':
                                 createProduct(lastDb, importItem, type, 'merge', function (err, result) {
                                     skippedArray = skippedArray.concat(result.skippedArray);
                                     importedCount += result.importedCount;
@@ -3541,7 +3541,7 @@ var Module = function (models) {
                                     eachCb(null);
                                 });
                                 break;
-                            case 'Products':
+                            case 'Produits':
                                 createProduct(lastDb, item, type, 'import', function (err, result) {
                                     skippedIdsArray = skippedIdsArray.concat(result.skippedIdsArray);
                                     idsForRemove = idsForRemove.concat(result.idsForRemove);

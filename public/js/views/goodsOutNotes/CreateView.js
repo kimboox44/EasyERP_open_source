@@ -88,19 +88,19 @@ define([
                 var quantity;
                 var targetEl;
                 var saveObject;
-                var products = [];
+                var Produits = [];
                 var productAvailable;
                 var i;
                 var warehouse;
                 var _model;
                 var id = el._id;
 
-                var selectedProducts = self.$el.find('.productItem[data-id="' + id + '"]');
-                var selectedLength = selectedProducts.length;
+                var selectedProduits = self.$el.find('.productItem[data-id="' + id + '"]');
+                var selectedLength = selectedProduits.length;
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = $(selectedProducts[i]);
+                    targetEl = $(selectedProduits[i]);
                     orderRowId = targetEl.attr('id');
-                    productAvailable = targetEl.find('#productsDd').attr('data-id');
+                    productAvailable = targetEl.find('#ProduitsDd').attr('data-id');
                     warehouse = targetEl.find('#warehouseDd').attr('data-id');
                     quantity = parseFloat(targetEl.find('#newShip').val());
                     fulfilled = parseFloat(targetEl.find('#fulfilled').val());
@@ -112,14 +112,14 @@ define([
 
                     quantity = quantity > (ordered - fulfilled) ? ordered - fulfilled : quantity;
 
-                    products.push({
+                    Produits.push({
                         orderRowId: orderRowId,
                         quantity  : quantity,
                         product   : productAvailable
                     });
                 }
 
-                if (!products.length) {
+                if (!Produits.length) {
                     return;
                 }
 
@@ -128,7 +128,7 @@ define([
                     order    : order,
                     name     : name,
                     date     : date,
-                    orderRows: products
+                    orderRows: Produits
                 };
 
                 _model = new GoodsModel(saveObject);
@@ -139,7 +139,7 @@ define([
             if (!this.collection.length) {
                 return App.render({
                     type   : 'error',
-                    message: 'No products for fulfill'
+                    message: 'No Produits for fulfill'
                 });
             }
 
@@ -172,7 +172,7 @@ define([
             var type = $target.closest('a').attr('id');
 
             var $row = $target.closest('.productItem,deleteItem');
-            var product = $row.find('#productsDd').attr('data-id');
+            var product = $row.find('#ProduitsDd').attr('data-id');
 
             if (type === 'warehouseDd') {
                 dataService.getData('warehouse/getAvailability', {warehouse: id, product: product}, function (data) {
@@ -234,7 +234,7 @@ define([
 
             this.delegateEvents(this.events);
 
-            this.$el.find('#productItemsHolder').html(_.template(ProductItems, {products: orderModel.products}));
+            this.$el.find('#productItemsHolder').html(_.template(ProductItems, {Produits: orderModel.Produits}));
             this.$el.find('#goodsHolder').html(_.template(goodsNoteItems, {goodsNotes: orderModel.goodsNotes}));
 
             return this;

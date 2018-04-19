@@ -176,7 +176,7 @@ define([
                         'name'
                     ]
                 },
-                Products        : {
+                Produits        : {
                     names: [
                         'Name'
                     ],

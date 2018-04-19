@@ -58,20 +58,20 @@ var Proforma = function (models) {
                     _id: objectId(id)
                 }
             }, {
-                $unwind: '$products'
+                $unwind: '$Produits'
             }, {
                 $lookup: {
-                    from        : 'Products',
-                    localField  : 'products.product',
+                    from        : 'Produits',
+                    localField  : 'Produits.product',
                     foreignField: '_id',
-                    as          : 'products.product'
+                    as          : 'Produits.product'
                 }
             }, {
                 $lookup: {
                     from        : 'jobs',
-                    localField  : 'products.jobs',
+                    localField  : 'Produits.jobs',
                     foreignField: '_id',
-                    as          : 'products.jobs'
+                    as          : 'Produits.jobs'
                 }
             }, {
                 $lookup: {
@@ -96,16 +96,16 @@ var Proforma = function (models) {
                 }
             }, {
                 $project: {
-                    'products.product'    : {$arrayElemAt: ['$products.product', 0]},
-                    'products.jobs'       : {$arrayElemAt: ['$products.jobs', 0]},
+                    'Produits.product'    : {$arrayElemAt: ['$Produits.product', 0]},
+                    'Produits.jobs'       : {$arrayElemAt: ['$Produits.jobs', 0]},
                     'currency.obj'        : {$arrayElemAt: ['$currency.obj', 0]},
                     project               : {$arrayElemAt: ['$project', 0]},
                     supplier              : {$arrayElemAt: ['$supplier', 0]},
-                    'products.subTotal'   : 1,
-                    'products.unitPrice'  : 1,
-                    'products.taxes'      : 1,
-                    'products.description': 1,
-                    'products.quantity'   : 1,
+                    'Produits.subTotal'   : 1,
+                    'Produits.unitPrice'  : 1,
+                    'Produits.taxes'      : 1,
+                    'Produits.description': 1,
+                    'Produits.quantity'   : 1,
                     'currency._id'        : 1,
                     forSales              : 1,
                     type                  : 1,
@@ -130,16 +130,16 @@ var Proforma = function (models) {
                 }
             }, {
                 $project: {
-                    'products.product'    : 1,
-                    'products.jobs'       : 1,
+                    'Produits.product'    : 1,
+                    'Produits.jobs'       : 1,
                     'currency.obj'        : 1,
                     project               : 1,
                     supplier              : 1,
-                    'products.subTotal'   : 1,
-                    'products.unitPrice'  : 1,
-                    'products.taxes'      : 1,
-                    'products.description': 1,
-                    'products.quantity'   : 1,
+                    'Produits.subTotal'   : 1,
+                    'Produits.unitPrice'  : 1,
+                    'Produits.taxes'      : 1,
+                    'Produits.description': 1,
+                    'Produits.quantity'   : 1,
                     'currency._id'        : 1,
                     salesPerson           : '$supplier.salesPurchases.salesPerson',
                     forSales              : 1,
@@ -166,7 +166,7 @@ var Proforma = function (models) {
             }, {
                 $group: {
                     _id           : '$_id',
-                    products      : {$push: '$products'},
+                    Produits      : {$push: '$Produits'},
                     project       : {$first: '$project'},
                     currency      : {$first: '$currency'},
                     forSales      : {$first: '$forSales'},

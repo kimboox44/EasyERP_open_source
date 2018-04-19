@@ -19,7 +19,7 @@ var SyncLogsHelper = require('../helpers/syncLogs');
 module.exports = function (models, event) {
     var customerService = require('../services/customer')(models);
     var currencyService = require('../services/currency')(models);
-    var productService = require('../services/products')(models);
+    var Produitservice = require('../services/Produits')(models);
     var paymentMethodService = require('../services/paymentMethod')(models);
     var shippingMethodService = require('../services/shippingMethod')(models);
     var AvailabilityService = require('../services/productAvailability')(models);
@@ -207,7 +207,7 @@ module.exports = function (models, event) {
         var groupId = productObjArray[0].groupId;
         var logsOptions = {
             action  : 'imports',
-            category: 'products'
+            category: 'Produits'
         };
 
         var imageOpts = {
@@ -379,7 +379,7 @@ module.exports = function (models, event) {
                             },
 
                             function (wCb) {
-                                productService.createProduct(options, function (err, product) {
+                                Produitservice.createProduct(options, function (err, product) {
                                     if (err) {
                                         logs = syncLogsHelper.addError(logs, logsOptions, {
                                             message          : err.message,
@@ -448,10 +448,10 @@ module.exports = function (models, event) {
 
     }
 
-    function getProducts(opts, allCallback) {
+    function getProduits(opts, allCallback) {
         var productLength = 0;
         var internalProds = [];
-        var products = [];
+        var Produits = [];
         var helperForWhile = true;
         var pageNumber = 1;
         var err;
@@ -466,7 +466,7 @@ module.exports = function (models, event) {
         var priceList;
         var logsOptions = {
             action  : 'imports',
-            category: 'products'
+            category: 'Produits'
         };
 
         if (typeof opts === 'function') {
@@ -482,7 +482,7 @@ module.exports = function (models, event) {
         settings = opts.settings;
         priceList = opts.priceList;
 
-        route = settings.products && settings.products.get;
+        route = settings.Produits && settings.Produits.get;
 
         if (!accessToken || !baseUrl || !route) {
             err = new Error('Invalid integration settings');
@@ -524,13 +524,13 @@ module.exports = function (models, event) {
                     return whCb();
                 }
 
-                products = result.body && result.body.products;
+                Produits = result.body && result.body.Produits;
 
-                if (result.body && result.body.products && (result.body.products.length < 250)) {
+                if (result.body && result.body.Produits && (result.body.Produits.length < 250)) {
                     helperForWhile = false;
                 }
 
-                productService.find({}, {
+                Produitservice.find({}, {
                     'info.SKU': 1,
                     dbName    : db
                 }, function (err, result) {
@@ -546,7 +546,7 @@ module.exports = function (models, event) {
                         });
                     }
 
-                    async.eachLimit(products, 1, function (shopifyProduct, eachCb) {
+                    async.eachLimit(Produits, 1, function (shopifyProduct, eachCb) {
                         var productObjArray = [];
                         var options = {
                             dbName: db
@@ -772,7 +772,7 @@ module.exports = function (models, event) {
         settings = opts.settings;
         channel = opts._id;
 
-        route = settings.products && settings.products.put;
+        route = settings.Produits && settings.Produits.put;
 
         if (!accessToken || !baseUrl || !route) {
             err = new Error('Invalid integration settings');
@@ -873,7 +873,7 @@ module.exports = function (models, event) {
         });
     }
 
-    function exportsProducts(opts, allCallback) {
+    function exportsProduits(opts, allCallback) {
         var shopifyId = 0;
         var message = '';
         var fullPutRoute;
@@ -891,7 +891,7 @@ module.exports = function (models, event) {
         var productObjectIds;
         var logsOptions = {
             action  : 'exports',
-            category: 'products'
+            category: 'Produits'
         };
 
         if (typeof opts === 'function') {
@@ -905,9 +905,9 @@ module.exports = function (models, event) {
         channel = opts.channel || opts._id;
         settings = opts.settings;
 
-        if (settings.products) {
-            putRoute = settings.products.put;
-            putVariantRoute = settings.products.putVariant;
+        if (settings.Produits) {
+            putRoute = settings.Produits.put;
+            putVariantRoute = settings.Produits.putVariant;
         }
 
         if (!accessToken || !baseUrl || !putRoute || !putVariantRoute) {
@@ -926,17 +926,17 @@ module.exports = function (models, event) {
         async.waterfall([
             function (wCb) {
                 // get changed or created product id from Redis to export
-                redisClient.sMembers(CONSTANTS.REDIS.CHANGED_PRODUCTS, function (err, values) {
+                redisClient.sMembers(CONSTANTS.REDIS.CHANGED_Produits, function (err, values) {
                     if (err) {
                         return wCb(err);
                     }
 
-                    redisClient.sMove(CONSTANTS.REDIS.CHANGED_PRODUCTS, values, function (err) {
+                    redisClient.sMove(CONSTANTS.REDIS.CHANGED_Produits, values, function (err) {
                         if (err) {
                             console.error(err);
                         }
 
-                        console.log('Redis_ChangedProducts cleared!');
+                        console.log('Redis_ChangedProduits cleared!');
                     });
 
                     wCb(null, values);
@@ -976,30 +976,30 @@ module.exports = function (models, event) {
             },
 
             function (wCb) {
-                productService.getProductsForChannelWithVariants({
+                Produitservice.getProduitsForChannelWithVariants({
                     dbName : db,
                     channel: channel,
                     query  : {_id: {$in: productObjectIds}}
-                }, function (err, products) {
+                }, function (err, Produits) {
                     if (err) {
                         return wCb(err);
                     }
 
-                    wCb(null, products);
+                    wCb(null, Produits);
                 });
             }
-        ], function (err, products) {
+        ], function (err, Produits) {
             if (err) {
                 logs = syncLogsHelper.addError(logs, logsOptions, {message: err.message});
 
                 return allCallback(err);
             }
 
-            if (!products.length) {
+            if (!Produits.length) {
                 return allCallback();
             }
 
-            async.eachLimit(products, 10, function (product, eCb) {
+            async.eachLimit(Produits, 10, function (product, eCb) {
                 var model;
                 var priceList;
                 var price;
@@ -1324,14 +1324,14 @@ module.exports = function (models, event) {
             var workflow = statusBuilder(shopifyOrder.financial_status || '', workflowObj);
             var needPayments = false;
             var needShipping = false;
-            var hasUnlinkedProducts;
+            var hasUnlinkedProduits;
             var unlinkedOrderId;
             var shippingMethods;
             var paymentMethod;
-            var products;
+            var Produits;
             var newOrder;
 
-            function orderRowsBuilder(_order, products, callback) {
+            function orderRowsBuilder(_order, Produits, callback) {
 
                 warehouseService.findOne({_id: ObjectId(warehouse)}, {dbName: db}, function (err, resultWarehouse) {
                     var arrayRows;
@@ -1340,7 +1340,7 @@ module.exports = function (models, event) {
                         return callback(err);
                     }
 
-                    arrayRows = products.map(function (elem) {
+                    arrayRows = Produits.map(function (elem) {
                         var shopifyVariantId = elem.channelLinks.linkId.split('|')[1];
                         var object = shopifyOrder.line_items.find(function (el) {
                             return el.variant_id.toString() === shopifyVariantId;
@@ -1400,22 +1400,22 @@ module.exports = function (models, event) {
 
             async.series([
                 function (sCb) {
-                    productService
-                        .getProductsForOrder({
+                    Produitservice
+                        .getProduitsForOrder({
                             dbName : db,
                             channel: channel,
                             linkIds: linkIds
-                        }, function (err, ourProducts) {
-                            products = ourProducts;
+                        }, function (err, ourProduits) {
+                            Produits = ourProduits;
 
                             if (err) {
                                 return sCb(err);
                             }
 
-                            if (shopifyOrder.line_items.length !== ourProducts.length) {
+                            if (shopifyOrder.line_items.length !== ourProduits.length) {
                                 orderBody.workflow = ObjectId(CONSTANTS.DEFAULT_UNLINKED_WORKFLOW_ID);
                                 orderBody.tempWorkflow = workflow;
-                                hasUnlinkedProducts = true;
+                                hasUnlinkedProduits = true;
 
                                 if (orderBody.conflictTypes && orderBody.conflictTypes.length) {
                                     orderBody.conflictTypes.push({
@@ -1589,7 +1589,7 @@ module.exports = function (models, event) {
                                             return sCb();
                                         }
 
-                                        products = products.map(function (product) {
+                                        Produits = Produits.map(function (product) {
                                             var currentRow = _.findWhere(resultRows, {product: product._id});
 
                                             if (currentRow) {
@@ -1599,7 +1599,7 @@ module.exports = function (models, event) {
                                             }
                                         });
 
-                                        orderRowsBuilder(newObject, _.compact(products), sCb);
+                                        orderRowsBuilder(newObject, _.compact(Produits), sCb);
                                     });
                                 } else {
 
@@ -1607,7 +1607,7 @@ module.exports = function (models, event) {
                                         return sCb();
                                     }
 
-                                    products = products.map(function (product) {
+                                    Produits = Produits.map(function (product) {
                                         var currentRow = _.findWhere(resultRows, {product: product._id});
 
                                         if (currentRow) {
@@ -1617,7 +1617,7 @@ module.exports = function (models, event) {
                                         }
                                     });
 
-                                    orderRowsBuilder(newObject, _.compact(products), sCb);
+                                    orderRowsBuilder(newObject, _.compact(Produits), sCb);
                                 }
                             });
                         });
@@ -1660,7 +1660,7 @@ module.exports = function (models, event) {
 
                             newOrder = _order;
 
-                            orderRowsBuilder(_order, products, sCb);
+                            orderRowsBuilder(_order, Produits, sCb);
                         });
                     }
                 },
@@ -1671,14 +1671,14 @@ module.exports = function (models, event) {
                     var unlinkedIds = _.pluck(unlinked, 'fields.id');
                     var logsOptions = {
                         action  : 'imports',
-                        category: 'products'
+                        category: 'Produits'
                     };
 
-                    if (!hasUnlinkedProducts) {
+                    if (!hasUnlinkedProduits) {
                         return sCb();
                     }
 
-                    nativeIds = _.pluck(products, 'channelLinks.linkId');
+                    nativeIds = _.pluck(Produits, 'channelLinks.linkId');
                     nativeIds = nativeIds.map(function (el) {
                         if (el) {
                             return parseInt(el.split('|')[1], 10);
@@ -2289,20 +2289,20 @@ module.exports = function (models, event) {
                                         }
                                     });
 
-                                    ProductAvailabilityService.getAvailabilityForProducts({
+                                    ProductAvailabilityService.getAvailabilityForProduits({
                                         product  : {$in: productIdsForAvailability},
                                         warehouse: ObjectId(warehouse)
-                                    }, {dbName: db}, function (err, productsAvailability) {
+                                    }, {dbName: db}, function (err, ProduitsAvailability) {
                                         if (err) {
                                             return eCb(err);
                                         }
 
-                                        if (!productsAvailability || !productsAvailability.length) {
+                                        if (!ProduitsAvailability || !ProduitsAvailability.length) {
                                             return callback();
                                         }
 
                                         goodsOutNotesLines.forEach(function (item) {
-                                            var currentAvailability = _.findWhere(productsAvailability, {_id: item.product});
+                                            var currentAvailability = _.findWhere(ProduitsAvailability, {_id: item.product});
 
                                             if (!currentAvailability || currentAvailability.onHand < item.quantity) {
                                                 needGoodsOutNote = false;
@@ -2344,7 +2344,7 @@ module.exports = function (models, event) {
                                                 return eCb();
                                             }
 
-                                            AvailabilityHelper.updateAvailableProducts({
+                                            AvailabilityHelper.updateAvailableProduits({
                                                 dbName: db,
                                                 doc   : result.toJSON()
                                             }, function (err, rows) {
@@ -2365,7 +2365,7 @@ module.exports = function (models, event) {
                                                         return eCb();
                                                     }
 
-                                                    AvailabilityHelper.deliverProducts({
+                                                    AvailabilityHelper.deliverProduits({
                                                         dbName      : db,
                                                         uId         : uId,
                                                         goodsOutNote: result.toJSON()
@@ -2526,7 +2526,7 @@ module.exports = function (models, event) {
                     return callback();
                 }
 
-                function createProductsReturn(shopifyRefundId, shopifyRefundLineItems, callback) {
+                function createProduitsReturn(shopifyRefundId, shopifyRefundLineItems, callback) {
                     var orderRowArray = [];
                     var options;
 
@@ -2681,7 +2681,7 @@ module.exports = function (models, event) {
                     var parallelTasks = [];
 
                     if (refund.refund_line_items && refund.refund_line_items.length) {
-                        parallelTasks.push(async.apply(createProductsReturn, refund.id, refund.refund_line_items))
+                        parallelTasks.push(async.apply(createProduitsReturn, refund.id, refund.refund_line_items))
                     }
 
                     if (refund.transactions && refund.transactions.length) {
@@ -2736,7 +2736,7 @@ module.exports = function (models, event) {
             });
         }
 
-        function getUnlinkedProducts(pCb) {
+        function getUnlinkedProduits(pCb) {
             ConflictService.find({
                 entity          : 'Product',
                 type            : 'unlinked',
@@ -2820,7 +2820,7 @@ module.exports = function (models, event) {
             currencies: getCurrencies,
             warehouse : getWarehouse,
             workflows : getWorkflows,
-            unlinked  : getUnlinkedProducts
+            unlinked  : getUnlinkedProduits
         }, function (err, data) {
             var importData;
             var customers;
@@ -2969,12 +2969,12 @@ module.exports = function (models, event) {
 
         async.series([
             function (sCb) {
-                getProducts(opts, function (err) {
+                getProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
 
-                    console.log('Shopify -> products is imported for channel ', channelName, ' id = ', channelId);
+                    console.log('Shopify -> Produits is imported for channel ', channelName, ' id = ', channelId);
                     sCb();
                 });
             },
@@ -3028,7 +3028,7 @@ module.exports = function (models, event) {
 
         async.series([
             function (sCb) {
-                exportsProducts(opts, function (err) {
+                exportsProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
@@ -3050,12 +3050,12 @@ module.exports = function (models, event) {
             },
 
             function (sCb) {
-                getProducts(opts, function (err) {
+                getProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
 
-                    console.log('Shopify -> Products imported');
+                    console.log('Shopify -> Produits imported');
                     sCb();
                 });
             },
@@ -3097,7 +3097,7 @@ module.exports = function (models, event) {
         });
     }
 
-    function getOnlyProducts(opts, callback) {
+    function getOnlyProduits(opts, callback) {
         var dbName = opts.dbName;
         var user = opts.user;
         var channel = opts._id;
@@ -3110,13 +3110,13 @@ module.exports = function (models, event) {
 
         async.series([
             function (sCb) {
-                getProducts(opts, function (err) {
+                getProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
 
 
-                    console.log('Shopify -> Products imported');
+                    console.log('Shopify -> Produits imported');
                     sCb();
                 });
             }], function (err) {
@@ -3129,7 +3129,7 @@ module.exports = function (models, event) {
                 dbName: opts.dbName
             });
 
-            console.log('Shopify -> import products is complete!');
+            console.log('Shopify -> import Produits is complete!');
 
             event.emit('getAllDone', {uId: user, dbName: dbName});
 
@@ -3205,9 +3205,9 @@ module.exports = function (models, event) {
         var productPrices = nativeProduct.productPrices;
         var price = (productPrices && productPrices.prices && productPrices.prices.length && productPrices.prices[0].price) || 0;
         var baseUrl = opts.baseUrl;
-        var fullCreateRoute = baseUrl + settings.products.create;
-        var putRoute = baseUrl + (settings.products && settings.products.put);
-        var fullCreateVariantRoute = baseUrl + settings.products.createVariant;
+        var fullCreateRoute = baseUrl + settings.Produits.create;
+        var putRoute = baseUrl + (settings.Produits && settings.Produits.put);
+        var fullCreateVariantRoute = baseUrl + settings.Produits.createVariant;
         var accessToken = opts.token;
         var dbName = opts.dbName;
         var channel = opts._id;
@@ -3261,22 +3261,22 @@ module.exports = function (models, event) {
             },
 
             function (wCb) {
-                productService.find({
+                Produitservice.find({
                     groupId: nativeProduct.groupId
                 }, {
                     dbName: dbName,
                     _id   : 1
-                }, function (err, products) {
+                }, function (err, Produits) {
                     if (err) {
                         return wCb(err);
                     }
 
-                    wCb(null, products);
+                    wCb(null, Produits);
                 });
             },
 
-            function (products, wCb) {
-                var ids = _.pluck(products, '_id');
+            function (Produits, wCb) {
+                var ids = _.pluck(Produits, '_id');
 
                 channelLinksService.find({
                     product: {$in: ids},
@@ -3328,7 +3328,7 @@ module.exports = function (models, event) {
 
                         prodId = channelLinks.product || nativeProduct._id;
 
-                        productService.getProductsWithVariants({
+                        Produitservice.getProduitsWithVariants({
                             query : {_id: prodId},
                             dbName: dbName
                         }, function (err, resultProduct) {
@@ -3447,8 +3447,8 @@ module.exports = function (models, event) {
         productId = splittedStr[0];
         variantId = splittedStr[1];
 
-        fullRemoveRoute = baseUrl + settings.products.delete + productId + '.json';
-        fullRemoveVariantRoute = baseUrl + settings.products.delete + productId + '/variants/' + variantId + '.json';
+        fullRemoveRoute = baseUrl + settings.Produits.delete + productId + '.json';
+        fullRemoveVariantRoute = baseUrl + settings.Produits.delete + productId + '/variants/' + variantId + '.json';
 
         requestHelper.removeData(fullRemoveVariantRoute, {}, {
             headers: {
@@ -3478,12 +3478,12 @@ module.exports = function (models, event) {
     }
 
     return {
-        getProducts        : getProducts,
+        getProduits        : getProduits,
         exportInventory    : exportInventory,
-        exportsProducts    : exportsProducts,
+        exportsProduits    : exportsProduits,
         getCustomers       : getCustomers,
         getSalesOrders     : getSalesOrders,
-        getOnlyProducts    : getOnlyProducts,
+        getOnlyProduits    : getOnlyProduits,
         getAll             : getAll,
         syncChannel        : syncChannel,
         publishProduct     : publishProduct,

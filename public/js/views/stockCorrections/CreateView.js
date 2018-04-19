@@ -29,13 +29,13 @@ define([
         },
 
         events: {
-            'click .addProductItem a': 'getProducts',
+            'click .addProductItem a': 'getProduits',
             'click .removeJob'       : 'deleteRow',
             'keypress  .number'      : 'keypressHandler',
             'keyup  input.quantity'  : 'changedQuantity'
         },
 
-        getProducts: function (e) {
+        getProduits: function (e) {
             this.$el.find('#productList').prepend(_.template(ProductItem, {elem: {}}));
         },
 
@@ -76,34 +76,34 @@ define([
             var warehouse = $thisEl.find('#warehouseDd').attr('data-id');
             var location = this.$el.find('#locationDd').attr('data-id');
             var description = this.$el.find('#description').val();
-            var selectedProducts = this.$el.find('.productItem');
+            var selectedProduits = this.$el.find('.productItem');
             var saveObject;
-            var selectedLength = selectedProducts.length;
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var productId;
             var adjusted;
             var cost;
             var onHand;
-            var products = [];
+            var Produits = [];
             var productAvailable;
             var i;
 
             if (!selectedLength) {
                 return App.render({
                     type   : 'error',
-                    message: "Products can't be empty."
+                    message: "Produits can't be empty."
                 });
             }
 
             for (i = selectedLength - 1; i >= 0; i--) {
-                targetEl = $(selectedProducts[i]);
-                productId = targetEl.find('#productsDd').attr('data-id');
+                targetEl = $(selectedProduits[i]);
+                productId = targetEl.find('#ProduitsDd').attr('data-id');
                 productAvailable = targetEl.attr('id');
 
                 if (!productId) {
                     return App.render({
                         type   : 'error',
-                        message: "Products can't be empty."
+                        message: "Produits can't be empty."
                     });
                 }
 
@@ -114,18 +114,18 @@ define([
                 if (onHand < 0) {
                     return App.render({
                         type   : 'error',
-                        message: "Available products value can't be negative"
+                        message: "Available Produits value can't be negative"
                     });
                 }
 
                 if (!adjusted) {
                     return App.render({
                         type   : 'error',
-                        message: "Corrections not found in products"
+                        message: "Corrections not found in Produits"
                     });
                 }
 
-                products.push({
+                Produits.push({
                     productAvailable: productAvailable,
                     product         : productId,
                     cost            : cost,
@@ -137,7 +137,7 @@ define([
             saveObject = {
                 warehouse  : warehouse,
                 location   : location,
-                orderRows  : products,
+                orderRows  : Produits,
                 description: description
             };
 
@@ -160,8 +160,8 @@ define([
         deleteRow: function (e) {
             var target = $(e.target);
             var tr = target.closest('tr');
-            var jobId = tr.find('#productsDd').attr('data-id');
-            var product = _.findWhere(this.responseObj['#productsDd'], {_id: jobId});
+            var jobId = tr.find('#ProduitsDd').attr('data-id');
+            var product = _.findWhere(this.responseObj['#ProduitsDd'], {_id: jobId});
             if (product) {
                 product.selectedElement = false;
             }
@@ -182,14 +182,14 @@ define([
             var location = this.$el.find('#locationDd').attr('data-id');
             var product;
             var $row = $target.closest('.productItem,deleteItem');
-            var prevProduct = $row.find('#productsDd').attr('data-id');
+            var prevProduct = $row.find('#ProduitsDd').attr('data-id');
 
             if (type === 'warehouseDd') {    // added condition for project with no data-level empty
                 populate.get('#locationDd', 'warehouse/location/getForDd', {warehouse: id}, 'name', this, false);
                 $thisEl.find('.jobs').removeClass('jobs');
                 $thisEl.find('#productList').html('');
                 $thisEl.find('#locationDd').text('Select').attr('data-id', '');
-                self.responseObj['#productsDd'].forEach(function (el) {
+                self.responseObj['#ProduitsDd'].forEach(function (el) {
                     delete el.selectedElement;
                 });
             }
@@ -197,17 +197,17 @@ define([
             if (type === 'locationDd' && warehouse) {    // added condition for project with no data-level empty
                 $thisEl.find('#newItem').removeClass('hidden');
                 $thisEl.find('#productList').html('');
-                self.responseObj['#productsDd'].forEach(function (el) {
+                self.responseObj['#ProduitsDd'].forEach(function (el) {
                     delete el.selectedElement;
                 });
             }
 
-            if (type === 'productsDd') {
+            if (type === 'ProduitsDd') {
                 dataService.getData('warehouse/getAvailability', {location: location, product: id}, function (data) {
-                    product = _.findWhere(self.responseObj['#productsDd'], {_id: id});
+                    product = _.findWhere(self.responseObj['#ProduitsDd'], {_id: id});
 
                     if (prevProduct) {
-                        prevProduct = _.findWhere(self.responseObj['#productsDd'], {_id: prevProduct});
+                        prevProduct = _.findWhere(self.responseObj['#ProduitsDd'], {_id: prevProduct});
                         delete prevProduct.selectedElement;
                     }
 
@@ -263,8 +263,8 @@ define([
             populate.get('#locationDd', 'warehouse/location/getForDd', {}, 'name', this, false);
             populate.get('#warehouseDd', 'warehouse/getForDD', {}, 'name', this, false);
 
-            dataService.getData('products/', {canBeSold: true}, function (data) {
-                self.responseObj['#productsDd'] = data.success;
+            dataService.getData('Produits/', {canBeSold: true}, function (data) {
+                self.responseObj['#ProduitsDd'] = data.success;
             });
 
             this.delegateEvents(this.events);

@@ -94,7 +94,7 @@ define([
         var self = this;
         var checkObject = {};
 
-        dataService.getData('/products/optionsValues/getForFiler', {id: this.groupId}, function (result) {
+        dataService.getData('/Produits/optionsValues/getForFiler', {id: this.groupId}, function (result) {
 
             _.each(result, function (category) {
                 checkedName = '';

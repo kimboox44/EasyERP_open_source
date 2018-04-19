@@ -1,8 +1,8 @@
-<% products.forEach(function(product){ %>
+<% Produits.forEach(function(product){ %>
 <tr class="productItem" data-id="<%=product.product ? product.product._id : 'err'%>">
     <td data-name="productName">
         <div class="jobsWescWrap _newSelectListWrap">
-            <span class="productsDd" ><%=product.product ? product.product.name : '- - -' %></span>
+            <span class="ProduitsDd" ><%=product.product ? product.product.name : '- - -' %></span>
             <textarea class="productDescr" <%= approved  ? 'readonly' : ''%>><%= product ? product.product.info.description || product.description : ''%></textarea>
         </div>
     </td>

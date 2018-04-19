@@ -33,12 +33,12 @@ module.exports = function (models) {
 
             Product = models.get(dbName, 'productTypes', ProductTypeSchema);
 
-            Product.find(query, options, function (err, products) {
+            Product.find(query, options, function (err, Produits) {
                 if (err) {
                     return callback(err);
                 }
 
-                callback(null, products);
+                callback(null, Produits);
             });
         };
 

@@ -22,13 +22,13 @@ module.exports = (function () {
 
         creationDate: {type: Date, default: Date.now},
         archived    : {type: Boolean, default: false}
-    }, {collection: 'productsAvailability'});
+    }, {collection: 'ProduitsAvailability'});
 
-    mongoose.model('productsAvailability', AvailabilitySchema);
+    mongoose.model('ProduitsAvailability', AvailabilitySchema);
 
     if (!mongoose.Schemas) {
         mongoose.Schemas = {};
     }
 
-    mongoose.Schemas.productsAvailability = AvailabilitySchema;
+    mongoose.Schemas.ProduitsAvailability = AvailabilitySchema;
 })();

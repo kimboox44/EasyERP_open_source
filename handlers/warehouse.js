@@ -5,7 +5,7 @@ var Module = function (models) {
     var warehouseSchema = mongoose.Schemas.warehouse;
     var locationSchema = mongoose.Schemas.locations;
     var zoneSchema = mongoose.Schemas.zones;
-    var AvailabilitySchema = mongoose.Schemas.productsAvailability;
+    var AvailabilitySchema = mongoose.Schemas.ProduitsAvailability;
 
     function get(req, res, next) {
         var Model = models.get(req.session.lastDb, 'warehouse', warehouseSchema);
@@ -434,10 +434,10 @@ var Module = function (models) {
 
     this.remove = function (req, res, next) {
         var Model = models.get(req.session.lastDb, 'warehouse', warehouseSchema);
-        var productsAvailability = models.get(req.session.lastDb, 'productsAvailability', AvailabilitySchema);
+        var ProduitsAvailability = models.get(req.session.lastDb, 'ProduitsAvailability', AvailabilitySchema);
         var id = req.params.id;
 
-        productsAvailability.find({warehouse: id}, function (err, result) {
+        ProduitsAvailability.find({warehouse: id}, function (err, result) {
             if (err) {
                 return next(err);
             }
@@ -451,7 +451,7 @@ var Module = function (models) {
                     res.status(200).send(result);
                 });
             } else {
-                res.status(400).send({error: 'You can delete only empty Warehouse. Please, remove products first'});
+                res.status(400).send({error: 'You can delete only empty Warehouse. Please, remove Produits first'});
 
             }
         });

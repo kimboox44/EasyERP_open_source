@@ -1,10 +1,10 @@
-<tr class="productItem deleteRow" data-id="<%= products[0] ? products[0]._id : 'false'%>" data-error="true">
+<tr class="productItem deleteRow" data-id="<%= Produits[0] ? Produits[0]._id : 'false'%>" data-error="true">
     <td>
         <span title="Delete" class="icon-trash"></span>
     </td>
     <td data-name="productName" class="_newSelectListWrap">
-        <a class="current-selected productsDd" href="javascript:;" data-id="<%= products[0] ? products[0]._id : null%>"><%=
-            products[0] ? products[0].name : 'Select'%></a>
+        <a class="current-selected ProduitsDd" href="javascript:;" data-id="<%= Produits[0] ? Produits[0]._id : null%>"><%=
+            Produits[0] ? Produits[0].name : 'Select'%></a>
     </td>
     <td data-name="jobs" class="jobs trash _newSelectListWrap">
         <a class="current-selected jobs" data-id="jobs" href="javascript:;">Select</a>

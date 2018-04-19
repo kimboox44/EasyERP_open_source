@@ -2,20 +2,20 @@ define([
     'Backbone',
     'jQuery',
     'Underscore',
-    'text!templates/Products/ContentTemplate.html',
-    'text!templates/Products/TreeItemTemplate.html',
+    'text!templates/Produits/ContentTemplate.html',
+    'text!templates/Produits/TreeItemTemplate.html',
     'models/Category',
-    'views/Products/category/CreateView',
-    'views/Products/category/EditView',
-    'views/Products/category/TopBarView',
-    'collections/Products/filterCollection',
-    'collections/Products/ProductCategories',
-    'views/Products/thumbnails/ThumbnailsView',
+    'views/Produits/category/CreateView',
+    'views/Produits/category/EditView',
+    'views/Produits/category/TopBarView',
+    'collections/Produits/filterCollection',
+    'collections/Produits/ProductCategories',
+    'views/Produits/thumbnails/ThumbnailsView',
     'helpers/eventsBinder',
     'dataService',
     'constants'
-], function (Backbone, $, _, ContentTemplate, ItemTemplate, CurrentModel, CreateCategoryView, EditCategoryView, TopBarView, ProductsCollection, CategoryCollection, ThumbnailsView, eventsBinder, dataService, CONSTANTS) {
-    var ProductsView = Backbone.View.extend({
+], function (Backbone, $, _, ContentTemplate, ItemTemplate, CurrentModel, CreateCategoryView, EditCategoryView, TopBarView, ProduitsCollection, CategoryCollection, ThumbnailsView, eventsBinder, dataService, CONSTANTS) {
+    var ProduitsView = Backbone.View.extend({
         el               : '#content-holder',
         thumbnailsView   : null,
         productCollection: null,
@@ -44,9 +44,9 @@ define([
             this.startNumber = 0;
             this.filter = options.filter;
             this.countPerPage = options.countPerPage;
-            this.productCollection = new ProductsCollection({
+            this.productCollection = new ProduitsCollection({
                 page       : 1,
-                contentType: 'Products',
+                contentType: 'Produits',
                 viewType   : 'thumbnails',
                 filter     : this.filter,
                 count      : this.countPerPage,
@@ -210,7 +210,7 @@ define([
             if (product.child && product.child.length) {
                 canDelete = false;
             } else {
-                if (product.productsCount > 0) {
+                if (product.ProduitsCount > 0) {
                     canDelete = false;
                 }
             }
@@ -228,7 +228,7 @@ define([
             });
         },
 
-        renderFoldersTree: function (products) {
+        renderFoldersTree: function (Produits) {
             var self = this;
             var $thisEl = this.$el;
             var selectedMain = '';
@@ -239,7 +239,7 @@ define([
                 currentCategory = App.filtersObject.filter.productCategory.value[App.filtersObject.filter.productCategory.value.length - 1];
             }
 
-            products.forEach(function (product) {
+            Produits.forEach(function (product) {
 
                 if (!currentCategory) {
                     selectedMain = 'selected';
@@ -367,7 +367,7 @@ define([
                 categories  : this.collection,
                 startTime   : new Date(),
                 filter      : this.filter,
-                el          : '#productsHolder',
+                el          : '#ProduitsHolder',
                 eventChannel: this.eventChannel,
                 topBar      : this.topBar
             });
@@ -397,11 +397,11 @@ define([
         },
 
         render: function () {
-            var products = this.collection.toJSON();
+            var Produits = this.collection.toJSON();
             this.$el.html(_.template(ContentTemplate));
-            this.renderFoldersTree(products);
+            this.renderFoldersTree(Produits);
         }
     });
 
-    return ProductsView;
+    return ProduitsView;
 });

@@ -6,7 +6,7 @@ define([
     'text!templates/purchaseOrders/EditTemplate.html',
     'text!templates/purchaseOrders/ViewTemplate.html',
     'views/Assignees/AssigneesView',
-    'views/Products/orderRows/ProductItems',
+    'views/Produits/orderRows/ProductItems',
     'models/goodsOutNotesModel',
     'common',
     'custom',
@@ -201,10 +201,10 @@ define([
             var self = this;
             var mid = 55;
             var thisEl = this.$el;
-            var selectedProducts = thisEl.find('.productItem');
-            var products = [];
+            var selectedProduits = thisEl.find('.productItem');
+            var Produits = [];
             var data;
-            var selectedLength = selectedProducts.length;
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var productId;
             var quantity;
@@ -280,10 +280,10 @@ define([
                 }
 
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = selectedProducts.length === i ? this.$el.find('#shippingRow') : $(selectedProducts[i]);
+                    targetEl = selectedProduits.length === i ? this.$el.find('#shippingRow') : $(selectedProduits[i]);
                     id = targetEl.data('id');
                     if (id) {  // added more info for save
-                        productId = targetEl.find('.productsDd').attr('data-id');
+                        productId = targetEl.find('.ProduitsDd').attr('data-id');
                         quantity = $.trim(targetEl.find('[data-name="quantity"]').text()) || targetEl.find('[data-name="quantity"] input').val();
                         price = helpers.spaceReplacer(targetEl.find('[data-name="price"] .sum').text()) || helpers.spaceReplacer(targetEl.find('[data-name="price"] input').val());
                         price = parseFloat(price) * 100;
@@ -310,7 +310,7 @@ define([
                             });
                         }
 
-                        products.push({
+                        Produits.push({
                             id            : id,
                             product       : productId,
                             warehouse     : this.warehouse,
@@ -329,7 +329,7 @@ define([
                 currency         : currency,
                 supplier         : supplier,
                 supplierReference: supplierReference,
-                orderRows        : products,
+                orderRows        : Produits,
                 orderDate        : helpers.setTimeToDate(orderDate),
                 expectedDate     : expectedDate,
                 destination      : destination || null,

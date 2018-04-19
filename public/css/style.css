@@ -3542,7 +3542,7 @@ span.error {
         border-color: #7eadcc;
         color: #fff; }
 
-#tbodyProducts input[readonly] {
+#tbodyProduits input[readonly] {
   text-align: right; }
 
 div.noPaginationWrap {
@@ -5165,15 +5165,15 @@ template, [hidden] {
   font-size: 16px;
   font-size: 1rem; }
 
-._productsForBundle,
-._productsBundle {
+._ProduitsForBundle,
+._ProduitsBundle {
   height: 300px;
   overflow: auto;
   border: 1px solid #7eadcc; }
 
-._productsForBundle > li.itemForLink.focus {
+._ProduitsForBundle > li.itemForLink.focus {
   background-color: #cacaca; }
-._productsForBundle > li {
+._ProduitsForBundle > li {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -5184,19 +5184,19 @@ template, [hidden] {
   border-bottom: 1px solid #DEDEDE;
   background-color: #fff;
   cursor: pointer; }
-  ._productsForBundle > li:last-child {
+  ._ProduitsForBundle > li:last-child {
     border-bottom: none; }
-  ._productsForBundle > li:first-child {
+  ._ProduitsForBundle > li:first-child {
     border-bottom: 1px solid #DEDEDE; }
-  ._productsForBundle > li:nth-child(even) {
+  ._ProduitsForBundle > li:nth-child(even) {
     background-color: #FAFAFA; }
-  ._productsForBundle > li span {
+  ._ProduitsForBundle > li span {
     text-align: right;
     margin-left: 15px; }
 
-._productsBundle {
+._ProduitsBundle {
   padding: 5px 10px; }
-  ._productsBundle ._bundle {
+  ._ProduitsBundle ._bundle {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -5207,20 +5207,20 @@ template, [hidden] {
         -ms-flex-align: center;
             align-items: center;
     margin: 5px 0; }
-    ._productsBundle ._bundle ._editConteiner {
+    ._ProduitsBundle ._bundle ._editConteiner {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex; }
-      ._productsBundle ._bundle ._editConteiner ._quantity {
+      ._ProduitsBundle ._bundle ._editConteiner ._quantity {
         width: 100px;
         margin: 0 5px;
         padding: 0; }
-      ._productsBundle ._bundle ._editConteiner ._actionCircleBtn {
+      ._ProduitsBundle ._bundle ._editConteiner ._actionCircleBtn {
         line-height: 24px;
         color: #000;
         font-size: 12px;
         font-size: 0.75rem; }
-      ._productsBundle ._bundle ._editConteiner span {
+      ._ProduitsBundle ._bundle ._editConteiner span {
         cursor: pointer; }
 
 ._searchContWrap {
@@ -8912,7 +8912,7 @@ ul.bxslider {
 ._tableWtrackWrap,
 ._tableLettersWrap,
 ._productCategoryTableWrap,
-._tableResolveConflictsWrap, ._integrationProductsTable {
+._tableResolveConflictsWrap, ._integrationProduitsTable {
   position: relative;
   height: calc(100% - 25px);
   padding: 15px;
@@ -9016,7 +9016,7 @@ ul.bxslider {
   ._productCategoryTableWrap td,
   ._productCategoryTableWrap th,
   ._tableResolveConflictsWrap td,
-  ._tableResolveConflictsWrap th, ._integrationProductsTable td, ._integrationProductsTable th {
+  ._tableResolveConflictsWrap th, ._integrationProduitsTable td, ._integrationProduitsTable th {
     transition: all .2s ease; }
     ._tableLeadsWrap td:first-child, ._tableLeadsWrap th:first-child,
     ._tableChartList td:first-child,
@@ -9116,7 +9116,7 @@ ul.bxslider {
     ._productCategoryTableWrap td:first-child,
     ._productCategoryTableWrap th:first-child,
     ._tableResolveConflictsWrap td:first-child,
-    ._tableResolveConflictsWrap th:first-child, ._integrationProductsTable td:first-child, ._integrationProductsTable th:first-child {
+    ._tableResolveConflictsWrap th:first-child, ._integrationProduitsTable td:first-child, ._integrationProduitsTable th:first-child {
       border-left: 3px solid transparent; }
   ._tableLeadsWrap tr:hover td,
   ._tableChartList tr:hover td,
@@ -9167,7 +9167,7 @@ ul.bxslider {
   ._tableWtrackWrap tr:hover td,
   ._tableLettersWrap tr:hover td,
   ._productCategoryTableWrap tr:hover td,
-  ._tableResolveConflictsWrap tr:hover td, ._integrationProductsTable tr:hover td {
+  ._tableResolveConflictsWrap tr:hover td, ._integrationProduitsTable tr:hover td {
     background-color: #e6e7eb; }
     ._tableLeadsWrap tr:hover td:first-child, ._tableLeadsWrap tr:hover td:first-child.fillColor,
     ._tableChartList tr:hover td:first-child,
@@ -9267,7 +9267,7 @@ ul.bxslider {
     ._productCategoryTableWrap tr:hover td:first-child,
     ._productCategoryTableWrap tr:hover td:first-child.fillColor,
     ._tableResolveConflictsWrap tr:hover td:first-child,
-    ._tableResolveConflictsWrap tr:hover td:first-child.fillColor, ._integrationProductsTable tr:hover td:first-child, ._integrationProductsTable tr:hover td:first-child.fillColor {
+    ._tableResolveConflictsWrap tr:hover td:first-child.fillColor, ._integrationProduitsTable tr:hover td:first-child, ._integrationProduitsTable tr:hover td:first-child.fillColor {
       border-left-color: #7EADCC; }
   ._tableLeadsWrap tr.unlinkedProduct:hover td,
   ._tableChartList tr.unlinkedProduct:hover td,
@@ -9318,7 +9318,7 @@ ul.bxslider {
   ._tableWtrackWrap tr.unlinkedProduct:hover td,
   ._tableLettersWrap tr.unlinkedProduct:hover td,
   ._productCategoryTableWrap tr.unlinkedProduct:hover td,
-  ._tableResolveConflictsWrap tr.unlinkedProduct:hover td, ._integrationProductsTable tr.unlinkedProduct:hover td {
+  ._tableResolveConflictsWrap tr.unlinkedProduct:hover td, ._integrationProduitsTable tr.unlinkedProduct:hover td {
     background-color: rgba(255, 0, 0, 0.1) !important; }
     ._tableLeadsWrap tr.unlinkedProduct:hover td:first-child,
     ._tableChartList tr.unlinkedProduct:hover td:first-child,
@@ -9369,7 +9369,7 @@ ul.bxslider {
     ._tableWtrackWrap tr.unlinkedProduct:hover td:first-child,
     ._tableLettersWrap tr.unlinkedProduct:hover td:first-child,
     ._productCategoryTableWrap tr.unlinkedProduct:hover td:first-child,
-    ._tableResolveConflictsWrap tr.unlinkedProduct:hover td:first-child, ._integrationProductsTable tr.unlinkedProduct:hover td:first-child {
+    ._tableResolveConflictsWrap tr.unlinkedProduct:hover td:first-child, ._integrationProduitsTable tr.unlinkedProduct:hover td:first-child {
       border-left-color: red !important; }
   ._tableLeadsWrap tr.unlinkedProduct td,
   ._tableChartList tr.unlinkedProduct td,
@@ -9420,7 +9420,7 @@ ul.bxslider {
   ._tableWtrackWrap tr.unlinkedProduct td,
   ._tableLettersWrap tr.unlinkedProduct td,
   ._productCategoryTableWrap tr.unlinkedProduct td,
-  ._tableResolveConflictsWrap tr.unlinkedProduct td, ._integrationProductsTable tr.unlinkedProduct td {
+  ._tableResolveConflictsWrap tr.unlinkedProduct td, ._integrationProduitsTable tr.unlinkedProduct td {
     background-color: rgba(255, 0, 0, 0.1) !important; }
     ._tableLeadsWrap tr.unlinkedProduct td:first-child,
     ._tableChartList tr.unlinkedProduct td:first-child,
@@ -9471,7 +9471,7 @@ ul.bxslider {
     ._tableWtrackWrap tr.unlinkedProduct td:first-child,
     ._tableLettersWrap tr.unlinkedProduct td:first-child,
     ._productCategoryTableWrap tr.unlinkedProduct td:first-child,
-    ._tableResolveConflictsWrap tr.unlinkedProduct td:first-child, ._integrationProductsTable tr.unlinkedProduct td:first-child {
+    ._tableResolveConflictsWrap tr.unlinkedProduct td:first-child, ._integrationProduitsTable tr.unlinkedProduct td:first-child {
       border-left-color: red !important; }
 
 ._stockDetailsTable {
@@ -19921,14 +19921,14 @@ input._taskDueDate {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.3); }
 
-._productSliderThumbnails {
+._ProduitsliderThumbnails {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   margin: 5px -5px; }
-  ._productSliderThumbnails ._slideThumbnail {
+  ._ProduitsliderThumbnails ._slideThumbnail {
     position: relative;
     width: 100px;
     height: 100px;
@@ -20028,19 +20028,19 @@ input._taskDueDate {
     opacity: 1;
     visibility: visible; }
 
-._productSlider {
+._Produitslider {
   position: relative;
   width: 100%;
   min-height: 400px;
   height: 50vh;
   margin-right: 20px; }
-  ._productSlider:hover ._controls {
+  ._Produitslider:hover ._controls {
     opacity: 1;
     transition: all 150ms ease-in-out; }
-    ._productSlider:hover ._controls .prevSlide,
-    ._productSlider:hover ._controls .nextSlide {
+    ._Produitslider:hover ._controls .prevSlide,
+    ._Produitslider:hover ._controls .nextSlide {
       transition: all 150ms ease-in-out; }
-  ._productSlider ._productSlide {
+  ._Produitslider ._Produitslide {
     position: absolute;
     top: 0;
     left: 0;
@@ -20050,10 +20050,10 @@ input._taskDueDate {
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat; }
-  ._productSlider ._controls {
+  ._Produitslider ._controls {
     opacity: 0; }
-    ._productSlider ._controls .prevSlide,
-    ._productSlider ._controls .nextSlide {
+    ._Produitslider ._controls .prevSlide,
+    ._Produitslider ._controls .nextSlide {
       position: absolute;
       top: 0;
       display: -webkit-box;
@@ -20071,19 +20071,19 @@ input._taskDueDate {
       color: #fff;
       background-color: rgba(255, 255, 255, 0.3);
       text-shadow: 1px 0 #000, -1px 0 #000; }
-      ._productSlider ._controls .prevSlide:hover,
-      ._productSlider ._controls .nextSlide:hover {
+      ._Produitslider ._controls .prevSlide:hover,
+      ._Produitslider ._controls .nextSlide:hover {
         background-color: rgba(255, 255, 255, 0.6); }
-    ._productSlider ._controls .prevSlide {
+    ._Produitslider ._controls .prevSlide {
       left: 0; }
-    ._productSlider ._controls .nextSlide {
+    ._Produitslider ._controls .nextSlide {
       right: 0; }
 
-._productSliderWrap {
+._ProduitsliderWrap {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex; }
-  ._productSliderWrap .productSlider {
+  ._ProduitsliderWrap .Produitslider {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1; }
@@ -20822,18 +20822,18 @@ td .channelImg {
 ._switcherWrap.success:after {
   content: 'Connected'; }
 
-.conflictUnlinkProducts {
+.conflictUnlinkProduits {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex; }
-  .conflictUnlinkProducts .conflictedWrap, .conflictUnlinkProducts .unlinkedWrap {
+  .conflictUnlinkProduits .conflictedWrap, .conflictUnlinkProduits .unlinkedWrap {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
     padding-top: 15px; }
-  .conflictUnlinkProducts h3 {
+  .conflictUnlinkProduits h3 {
     padding: 0 20px; }
-  .conflictUnlinkProducts .top-bar {
+  .conflictUnlinkProduits .top-bar {
     display: block;
     padding: 0 20px;
     border-bottom: 0; }
@@ -21704,14 +21704,14 @@ td.invalidValue {
       width: 120px;
       min-width: 120px;
       max-width: 120px; }
-.productForm ._mainProductsForm ._editingVariantsWrap,
-.productForm ._mainProductsForm ._createdVariantsWrap,
-.productForm ._mainProductsForm ._editedVariantsWrap {
+.productForm ._mainProduitsForm ._editingVariantsWrap,
+.productForm ._mainProduitsForm ._createdVariantsWrap,
+.productForm ._mainProduitsForm ._editedVariantsWrap {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column; }
-.productForm ._mainProductsForm ._editAllBlock + ._createEditVariants {
+.productForm ._mainProduitsForm ._editAllBlock + ._createEditVariants {
   margin-top: 20px; }
 
 ._labelWrap {

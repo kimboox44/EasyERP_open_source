@@ -6,7 +6,7 @@ var _ = require('lodash');
 
 var Categories = function (models, event) {
     var CategorySchema = mongoose.Schemas.ProductCategory;
-    var ProductsSchema = mongoose.Schemas.Products;
+    var ProduitsSchema = mongoose.Schemas.Produits;
     var objectId = mongoose.Types.ObjectId;
     var MAINCONSTANTS = require('../constants/mainConstants');
 
@@ -120,7 +120,7 @@ var Categories = function (models, event) {
     }
 
     this.getForDd = function (req, res, next) {
-        var Product = models.get(req.session.lastDb, 'Product', ProductsSchema);
+        var Product = models.get(req.session.lastDb, 'Product', ProduitsSchema);
         var ProductCategory = models.get(req.session.lastDb, 'ProductCategory', CategorySchema);
         var parentId = req.query.parentId;
         var isChild = req.query.isChild || false;
@@ -166,7 +166,7 @@ var Categories = function (models, event) {
                         return catCount && catCount._id ? catCount._id.toString() === el._id.toString() : null;
                     });
 
-                    el.productsCount = count ? count.count : 0;
+                    el.ProduitsCount = count ? count.count : 0;
 
                     return el;
                 });
@@ -560,7 +560,7 @@ var Categories = function (models, event) {
 
     function removeAllChild(req, id, callback) {
         var ProductCategory = models.get(req.session.lastDb, 'ProductCategory', CategorySchema);
-        var Product = models.get(req.session.lastDb, 'Product', ProductsSchema);
+        var Product = models.get(req.session.lastDb, 'Product', ProduitsSchema);
 
         ProductCategory.find({
             $or: [
@@ -586,7 +586,7 @@ var Categories = function (models, event) {
                 });
             }
 
-            function deleteProducts(parCb) {
+            function deleteProduits(parCb) {
                 Product.remove({'accounting.category._id': {$in: ids}}, function (err) {
                     if (err) {
                         return parCb(err);
@@ -597,7 +597,7 @@ var Categories = function (models, event) {
             }
 
             async
-                .parallel([deleteCategories, deleteProducts], function (err) {
+                .parallel([deleteCategories, deleteProduits], function (err) {
                     if (err) {
                         return callback(err);
                     }

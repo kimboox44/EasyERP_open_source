@@ -7,7 +7,7 @@ define([
     'text!templates/Projects/projectInfo/quotations/newRow.html',
     'collections/Persons/PersonsCollection',
     'collections/Departments/DepartmentsCollection',
-    'views/Products/InvoiceOrder/ProductItems',
+    'views/Produits/InvoiceOrder/ProductItems',
     'models/QuotationModel',
     'common',
     'populate',
@@ -63,10 +63,10 @@ define([
             var self = this;
             var mid = 55;
             var thisEl = this.$el;
-            var selectedProducts = thisEl.find('.productItem');
-            var products = [];
+            var selectedProduits = thisEl.find('.productItem');
+            var Produits = [];
             var data;
-            var selectedLength = selectedProducts.length;
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var productId;
             var quantity;
@@ -122,7 +122,7 @@ define([
 
             if (selectedLength) {
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = $(selectedProducts[i]);
+                    targetEl = $(selectedProduits[i]);
                     productId = targetEl.data('id');
 
                     if (productId) {
@@ -160,7 +160,7 @@ define([
                             });
                         }
 
-                        products.push({
+                        Produits.push({
                             product       : productId,
                             unitPrice     : price,
                             quantity      : quantity,
@@ -174,7 +174,7 @@ define([
                     } else {
                         return App.render({
                             type   : 'error',
-                            message: "Products can't be empty."
+                            message: "Produits can't be empty."
                         });
                     }
                 }
@@ -186,7 +186,7 @@ define([
                 supplier      : supplier,
                 project       : project,
                 deliverTo     : deliverTo,
-                products      : products,
+                Produits      : Produits,
                 orderDate     : helpers.setTimeToDate(orderDate),
                 expectedDate  : expectedDate,
                 destination   : destination,

@@ -11,7 +11,7 @@ define([
     'use strict';
     var socket = io.connect();
     var counterForOrdersProgress = 0;
-    var counterForProductsProgress = 0;
+    var counterForProduitsProgress = 0;
     var counterForInvoicesProgress = 0;
     var counterForCustomersProgress = 0;
     var counterForCategoriesProgress = 0;
@@ -128,22 +128,22 @@ define([
 
     function savedProduct(options) {
         var uId = options.uId;
-        var $barProducts = $('#productsBar');
-        var $statusProductsBar = $('#statusProductsBar');
+        var $barProduits = $('#ProduitsBar');
+        var $statusProduitsBar = $('#statusProduitsBar');
 
         if (uId === App.currentUser._id) {
             if (options.count <= 1) {
-                counterForProductsProgress = 0;
+                counterForProduitsProgress = 0;
             }
 
-            counterForProductsProgress += (100 / options.total);
+            counterForProduitsProgress += (100 / options.total);
 
             if (options.count === options.total) {
-                counterForProductsProgress = 100;
+                counterForProduitsProgress = 100;
             }
 
-            $barProducts.width(counterForProductsProgress + '%');
-            $statusProductsBar.html('<p>' + Math.floor(counterForProductsProgress) + '% ' + options.count + '/' + options.total + '</p>');
+            $barProduits.width(counterForProduitsProgress + '%');
+            $statusProduitsBar.html('<p>' + Math.floor(counterForProduitsProgress) + '% ' + options.count + '/' + options.total + '</p>');
         }
     }
 

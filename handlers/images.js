@@ -11,14 +11,14 @@ var _ = require('lodash');
 var Images = function (models) {
 
     var ImagesService = require('../services/images')(models);
-    var productService = require('../services/products')(models);
+    var Produitservice = require('../services/Produits')(models);
 
     this.checkAsMain = function (req, res, next) {
         var db = req.session.lastDb;
         var id = req.params.id;
         var product = req.params.product;
 
-        productService.findOneAndUpdate({_id: product}, {$set: {imageSrc: id}}, {dbName: db}, function (err) {
+        Produitservice.findOneAndUpdate({_id: product}, {$set: {imageSrc: id}}, {dbName: db}, function (err) {
             if (err) {
                 return next(err);
             }
@@ -79,33 +79,33 @@ var Images = function (models) {
 
         async.waterfall([
             function (wCb) {
-                productService.find({imageSrc: id}, {dbName: db})
+                Produitservice.find({imageSrc: id}, {dbName: db})
                     .lean()
-                    .exec(function (err, resultProducts) {
+                    .exec(function (err, resultProduits) {
                         if (err) {
                             return wCb(err);
                         }
 
-                        wCb(null, resultProducts);
+                        wCb(null, resultProduits);
                     });
             },
 
-            function (resultProducts, wCb) {
+            function (resultProduits, wCb) {
                 var productIds;
                 var groupId;
 
-                if (!wCb && typeof resultProducts === 'function') {
-                    wCb = resultProducts;
+                if (!wCb && typeof resultProduits === 'function') {
+                    wCb = resultProduits;
 
                     return wCb();
                 }
 
-                if (!resultProducts.length) {
+                if (!resultProduits.length) {
                     return wCb();
                 }
 
-                groupId = resultProducts[0].groupId;
-                productIds = _.pluck(resultProducts, '_id');
+                groupId = resultProduits[0].groupId;
+                productIds = _.pluck(resultProduits, '_id');
 
                 main = !main;
 
@@ -124,7 +124,7 @@ var Images = function (models) {
                         return wCb(err);
                     }
 
-                    productService.findAndUpdate({
+                    Produitservice.findAndUpdate({
                         _id: {$in: productIds}
                     }, {
                         $set: {imageSrc: resultImage._id}

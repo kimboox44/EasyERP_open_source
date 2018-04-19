@@ -5,8 +5,8 @@ define([
     'text!templates/DividendInvoice/InvoiceProductItems.html',
     'text!templates/DividendInvoice/InvoiceProductInputContent.html',
     'text!templates/DividendInvoice/EditInvoiceProductInputContent.html',
-    'text!templates/Products/InvoiceOrder/TotalAmount.html',
-    'collections/Products/products',
+    'text!templates/Produits/InvoiceOrder/TotalAmount.html',
+    'collections/Produits/Produits',
     'populate',
     'helpers'
 ], function ($, _, Backbone, productItemTemplate, ProductInputContent, ProductItemsEditList, totalAmount, productCollection, populate, helpers) {
@@ -14,7 +14,7 @@ define([
         el: '#invoiceItemsHolder',
 
         events: {
-            'click .addProductItem'                            : 'getProducts',
+            'click .addProductItem'                            : 'getProduits',
             'click .newSelectList li.miniStylePagination'      : 'notHide',
             'change input.statusInfo'                          : 'recalculateTaxes',
             'click .newSelectList li:not(.miniStylePagination)': 'chooseOption',
@@ -42,7 +42,7 @@ define([
 
         template: _.template(productItemTemplate),
 
-        getProducts: function (e) {
+        getProduits: function (e) {
             var target = $(e.target);
             var parrent = target.closest('tbody');
             var parrentRow = parrent.find('.productItem').last();
@@ -134,16 +134,16 @@ define([
 
         render: function (options) {
             var self = this;
-            var productsContainer;
+            var ProduitsContainer;
             var totalAmountContainer;
             var thisEl = this.$el;
-            var products;
+            var Produits;
 
             if (options && options.model) {
-                products = options.model.products;
+                Produits = options.model.Produits;
 
                 if (options.model.currency) {
-                    products.currency = options.model.currency._id;
+                    Produits.currency = options.model.currency._id;
                 }
 
                 thisEl.html(_.template(productItemTemplate, {
@@ -153,10 +153,10 @@ define([
                     notAddItem: this.notAddItem
                 }));
 
-                if (products) {
-                    productsContainer = thisEl.find('#productList');
-                    productsContainer.prepend(_.template(ProductItemsEditList, {
-                        products        : products,
+                if (Produits) {
+                    ProduitsContainer = thisEl.find('#productList');
+                    ProduitsContainer.prepend(_.template(ProductItemsEditList, {
+                        Produits        : Produits,
                         forSales        : self.forSales,
                         isPaid          : self.isPaid,
                         notAddItem      : this.notAddItem,

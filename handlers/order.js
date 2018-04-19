@@ -28,7 +28,7 @@ var Module = function (models, event) {
     var GoodsInSchema = mongoose.Schemas.GoodsInNote;
     var OrderRowsSchema = mongoose.Schemas.OrderRow;
     var PrepaymentSchema = mongoose.Schemas.Prepayment;
-    var AvailabilitySchema = mongoose.Schemas.productsAvailability;
+    var AvailabilitySchema = mongoose.Schemas.ProduitsAvailability;
     var HistoryService = require('../services/history.js')(models);
     var StockReturnsService = require('../services/stockReturns.js')(models);
     var ConflictsService = require('../services/conflict.js')(models);
@@ -70,9 +70,9 @@ var Module = function (models, event) {
             delete data.orderRows;
         }
 
-        if (data.deletedProducts) {
-            deletedOrderRows = data.deletedProducts;
-            delete data.deletedProducts;
+        if (data.deletedProduits) {
+            deletedOrderRows = data.deletedProduits;
+            delete data.deletedProduits;
         }
 
         if (data.notes && data.notes.length !== 0) {
@@ -274,7 +274,7 @@ var Module = function (models, event) {
         var body = mapObject(req.body);
         var order;
         var mid = parseInt(req.headers.mid, 10) || 129;
-        var arrayRows = body.products;
+        var arrayRows = body.Produits;
         var rates;
         var currency = body.currency;
         var base;
@@ -341,7 +341,7 @@ var Module = function (models, event) {
                         $match: {_id: {$in: insertedIds}}
                     }, {
                         $lookup: {
-                            from        : 'Products',
+                            from        : 'Produits',
                             localField  : 'product',
                             foreignField: '_id',
                             as          : 'product'
@@ -985,7 +985,7 @@ var Module = function (models, event) {
     }
 
     function getAvailableForRows(req, docs, forSales, cb) {
-        var Availability = models.get(req.session.lastDb, 'productsAvailability', AvailabilitySchema);
+        var Availability = models.get(req.session.lastDb, 'ProduitsAvailability', AvailabilitySchema);
         var GoodsOutNote = models.get(req.session.lastDb, 'GoodsOutNote', GoodsOutSchema);
         var GoodsInNote = models.get(req.session.lastDb, 'GoodsInNote', GoodsInSchema);
         var populateDocs = [];
@@ -1121,7 +1121,7 @@ var Module = function (models, event) {
                             }
                         }, {
                             $lookup: {
-                                from        : 'productsAvailability',
+                                from        : 'ProduitsAvailability',
                                 localField  : '_id',
                                 foreignField: 'goodsInNote',
                                 as          : 'goodsInNote'
@@ -1421,7 +1421,7 @@ var Module = function (models, event) {
                 .populate('creditAccount', 'name')
                 .populate('taxes.taxCode', 'fullName rate')
                 .populate('warehouse', 'name')
-                .sort('products')
+                .sort('Produits')
                 .exec(function (err, docs) {
                     if (err) {
                         return waterfallCallback(err);
@@ -1434,7 +1434,7 @@ var Module = function (models, event) {
                             return waterfallCallback(err);
                         }
 
-                        order.products = docs;
+                        order.Produits = docs;
                         order.account = docs && docs.length ? docs[0].debitAccount : {};
 
                         if (!order.forSales) {
@@ -1578,7 +1578,7 @@ var Module = function (models, event) {
         var GoodsOutNote = models.get(req.session.lastDb, 'GoodsOutNote', GoodsOutSchema);
         var JobsModel = models.get(req.session.lastDb, 'jobs', JobsSchema);
         var wTrack = models.get(req.session.lastDb, 'wTrack', wTrackSchema);
-        var Availability = models.get(req.session.lastDb, 'productsAvailability', AvailabilitySchema);
+        var Availability = models.get(req.session.lastDb, 'ProduitsAvailability', AvailabilitySchema);
         var editedBy = {
             user: req.session.uId,
             date: new Date()

@@ -36,7 +36,7 @@
             }
         },
 
-        integrationUnlinkedProducts: {
+        integrationUnlinkedProduits: {
             order: {
                 displayName: 'Order',
                 backend    : 'fields.order'
@@ -815,7 +815,7 @@
          },
          */
 
-        Products: {
+        Produits: {
             name: {
                 displayName: 'Product Name',
                 backend    : '_id'

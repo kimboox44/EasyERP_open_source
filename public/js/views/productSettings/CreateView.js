@@ -2,7 +2,7 @@ define([
     'Backbone',
     'jQuery',
     'Underscore',
-    'text!templates/productSettings/CreateTemplate.html',
+    'text!templates/Produitsettings/CreateTemplate.html',
     'models/OptionsModel',
     'views/dialogViewBase',
     'common',
@@ -13,7 +13,7 @@ define([
 
     var CreateView = dialogViewBase.extend({
         el         : '#content-holder',
-        contentType: CONSTANTS.PRODUCTS_SETTINGS,
+        contentType: CONSTANTS.Produits_SETTINGS,
         template   : _.template(CreateTemplate),
         events     : {},
 

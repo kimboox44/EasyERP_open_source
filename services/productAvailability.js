@@ -1,7 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 
-var AvailabilitySchema = mongoose.Schemas.productsAvailability;
+var AvailabilitySchema = mongoose.Schemas.ProduitsAvailability;
 var WarehousesSchema = mongoose.Schemas.warehouse;
 var LocationsSchema = mongoose.Schemas.locations;
 var _ = require('underscore');
@@ -37,7 +37,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Availability = models.get(dbName, 'productsAvailability', AvailabilitySchema);
+            Availability = models.get(dbName, 'ProduitsAvailability', AvailabilitySchema);
 
             availability = new Availability(body);
 
@@ -75,7 +75,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Availability = models.get(dbName, 'productsAvailability', AvailabilitySchema);
+            Availability = models.get(dbName, 'ProduitsAvailability', AvailabilitySchema);
 
             Availability.collection.insertMany(options.availabilities, function (err) {
                 if (err) {
@@ -117,7 +117,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Availability = models.get(dbName, 'productsAvailability', AvailabilitySchema);
+            Availability = models.get(dbName, 'ProduitsAvailability', AvailabilitySchema);
             Warehouse = models.get(dbName, 'warehouses', WarehousesSchema);
             Location = models.get(dbName, 'locations', LocationsSchema);
 
@@ -187,7 +187,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Availability = models.get(dbName, 'productsAvailability', AvailabilitySchema);
+            Availability = models.get(dbName, 'ProduitsAvailability', AvailabilitySchema);
 
             Availability.update(query, body, settings || {}, function (err, availability) {
                 if (err) {
@@ -238,7 +238,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Availability = models.get(dbName, 'productsAvailability', AvailabilitySchema);
+            Availability = models.get(dbName, 'ProduitsAvailability', AvailabilitySchema);
 
             Availability.findByIdAndUpdate(id, body, {new: true}, function (err, availability) {
                 if (err) {
@@ -277,7 +277,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Availability = models.get(dbName, 'productsAvailability', AvailabilitySchema);
+            Availability = models.get(dbName, 'ProduitsAvailability', AvailabilitySchema);
 
             Availability.find(query, function (err, result) {
                 var goodsOut = 0;
@@ -335,7 +335,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Availability = models.get(dbName, 'productsAvailability', AvailabilitySchema);
+            Availability = models.get(dbName, 'ProduitsAvailability', AvailabilitySchema);
 
             Availability.remove(query, function (err, docs) {
                 if (err) {
@@ -377,7 +377,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Availability = models.get(dbName, 'productsAvailability', AvailabilitySchema);
+            Availability = models.get(dbName, 'ProduitsAvailability', AvailabilitySchema);
 
             Availability.find(query)
                 .populate('location', 'name')
@@ -416,7 +416,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Availability = models.get(dbName, 'productsAvailability', AvailabilitySchema);
+            Availability = models.get(dbName, 'ProduitsAvailability', AvailabilitySchema);
             Availability.aggregate([{
                 $match: query
             }, {
@@ -522,7 +522,7 @@ module.exports = function (models) {
 
                 {
                     $lookup: {
-                        from        : 'Products',
+                        from        : 'Produits',
                         localField  : 'product',
                         foreignField: '_id',
                         as          : 'product'
@@ -693,7 +693,7 @@ module.exports = function (models) {
                 });
             }
 
-            Availability = models.get(dbName, 'productsAvailability', AvailabilitySchema);
+            Availability = models.get(dbName, 'ProduitsAvailability', AvailabilitySchema);
             Availability.aggregate(pipeLine, function (err, result) {
                 if (err) {
                     return callback(err);
@@ -703,7 +703,7 @@ module.exports = function (models) {
             });
         };
 
-        this.getAvailabilityForProducts = function (query, options, callback) {
+        this.getAvailabilityForProduits = function (query, options, callback) {
             var Availability;
             var dbName;
             var err;
@@ -733,7 +733,7 @@ module.exports = function (models) {
                 return callback(err);
             }
 
-            Availability = models.get(dbName, 'productsAvailability', AvailabilitySchema);
+            Availability = models.get(dbName, 'ProduitsAvailability', AvailabilitySchema);
             Availability.aggregate([
                 {
                     $match: query

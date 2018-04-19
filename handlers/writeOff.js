@@ -33,10 +33,10 @@ var WriteOffObj = function (models, event) {
         var request;
         var date = moment().format('YYYY-MM-DD');
         var data = req.body;
-        var products = data.products;
+        var Produits = data.Produits;
         var parallelTasks;
         var waterFallTasks;
-        var jobs = products.map(function (elem) {
+        var jobs = Produits.map(function (elem) {
             return elem.jobs;
         });
         jobs = jobs.objectID();
@@ -130,7 +130,7 @@ var WriteOffObj = function (models, event) {
             var writeOff;
             var saveObject;
 
-            data.products.forEach(function (elem) {
+            data.Produits.forEach(function (elem) {
                 jobCosts.jobs.forEach(function (job) {
                     if (elem.jobs === job._id.toJSON()) {
                         elem.unitPrice = job.cost;
@@ -156,7 +156,7 @@ var WriteOffObj = function (models, event) {
                     unTaxed: jobCosts.costTotal
                 },
 
-                products: data.products,
+                Produits: data.Produits,
                 whoCanRW: data.whoCanRW,
                 journal : data.journal
             };
@@ -220,11 +220,11 @@ var WriteOffObj = function (models, event) {
         }
 
         function updateJobs(writeOff, callback) {
-            var products = data.products;
+            var Produits = data.Produits;
             var project;
 
-            if (products) {
-                async.each(products, function (result, cb) {
+            if (Produits) {
+                async.each(Produits, function (result, cb) {
                     var jobs = objectId(result.jobs);
                     var editedBy = {
                         user: req.session.uId,
@@ -257,15 +257,15 @@ var WriteOffObj = function (models, event) {
         }
 
         /* function removeDocsByJob(writeOff, callback) {
-         var products = writeOff.products;
+         var Produits = writeOff.Produits;
          var project;
          var jobsForUpdate = [];
          var Invoice = models.get(dbIndex, 'wTrackInvoice', InvoiceSchema);
          var Order = models.get(dbIndex, 'Quotation', OrderSchema);
          var Proforma = models.get(dbIndex, 'Proforma', ProformaSchema);
 
-         if (products) {
-         async.each(products, function (result, cb) {
+         if (Produits) {
+         async.each(Produits, function (result, cb) {
          var jobs = result.jobs;
          var parallelTasks;
 
@@ -275,13 +275,13 @@ var WriteOffObj = function (models, event) {
          };
 
          function removeInvoices(parallelCb) {
-         Invoice.find({'products.jobs': jobs, _type : {$ne : 'writeOff'}}, function (err, results) {
+         Invoice.find({'Produits.jobs': jobs, _type : {$ne : 'writeOff'}}, function (err, results) {
          if (err) {
          parallelCb(err);
          }
          async.each(results, function (file, eachCb) {
-         if (file.products) {
-         file.products.forEach(function (elem) {
+         if (file.Produits) {
+         file.Produits.forEach(function (elem) {
          if (elem.jobs.toString() !== jobs.toString()) {
          jobsForUpdate.push(elem.jobs);
          }
@@ -299,13 +299,13 @@ var WriteOffObj = function (models, event) {
          }
 
          function removeOrders(parallelCb) {
-         Order.find({'products.jobs': jobs}, function (err, results) {
+         Order.find({'Produits.jobs': jobs}, function (err, results) {
          if (err) {
          parallelCb(err);
          }
          async.each(results, function (file, eachCb) {
-         if (file.products) {
-         file.products.forEach(function (elem) {
+         if (file.Produits) {
+         file.Produits.forEach(function (elem) {
          if (elem.jobs.toString() !== jobs.toString()) {
          jobsForUpdate.push(elem.jobs);
          }

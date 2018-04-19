@@ -37,7 +37,7 @@ module.exports = {
     CAPACITY            : 77,
     JOBSDASHBOARD       : 80,
     PAYROLLPAYMENTS     : 79,
-    PRODUCTSETTINGS     : 84,
+    ProduitsETTINGS     : 84,
     INVOICEAGING        : 82,
     CHARTOFACCOUNT      : 83,
     JOURNAL             : 85,

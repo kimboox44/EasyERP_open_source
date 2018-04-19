@@ -3,13 +3,13 @@ define([
     'jQuery',
     'Underscore',
     'views/tformViewBase',
-    'views/Products/publishProductView',
-    'text!templates/Products/form/ContentTemplate.html',
-    'text!templates/Products/form/ListItemTemplate.html',
+    'views/Produits/publishProductView',
+    'text!templates/Produits/form/ContentTemplate.html',
+    'text!templates/Produits/form/ListItemTemplate.html',
     'models/ProductModel',
-    'views/Products/form/FormView',
-    'views/Products/CreateView',
-    'views/Products/list/ListItemView',
+    'views/Produits/form/FormView',
+    'views/Produits/CreateView',
+    'views/Produits/list/ListItemView',
     'views/Filter/filterView',
     'dataService',
     'common',
@@ -17,13 +17,13 @@ define([
 ], function (Backbone, $, _, TFormBaseView, PublishProductView, ContentTemplate, ListItemTemplate, ProductModel, FormView, CreateView, ListItemView, FilterView, dataService, common, CONSTANTS) {
     'use strict';
 
-    var ProductsListView = TFormBaseView.extend({
+    var ProduitsListView = TFormBaseView.extend({
         listTemplate   : _.template(ListItemTemplate),
         contentTemplate: _.template(ContentTemplate),
         CreateView     : CreateView,
         ListItemView   : ListItemView,
-        listUrl        : 'easyErp/Products/list/',
-        contentType    : CONSTANTS.PRODUCTS, // needs in view.prototype.changeLocationHash
+        listUrl        : 'easyErp/Produits/list/',
+        contentType    : CONSTANTS.Produits, // needs in view.prototype.changeLocationHash
         viewType       : 'tform', // needs in view.prototype.changeLocationHash
         hasPagination  : true,
         hasAlphabet    : false,
@@ -52,7 +52,7 @@ define([
         getChannelData: function (isPublishAction) {
             var $currentEl = this.$el;
             var $checked = $currentEl.find('#listContent input.checkbox:checked');
-            var products = [];
+            var Produits = [];
             var data;
             var collection = this.collection;
             var channelType = this.channelType;
@@ -69,7 +69,7 @@ define([
                     return;
                 }
 
-                products.push(val);
+                Produits.push(val);
             });
 
             if (error) {
@@ -77,7 +77,7 @@ define([
             }
 
             data = {
-                products: products,
+                Produits: Produits,
                 channel : this.channel
             };
 
@@ -108,7 +108,7 @@ define([
                 toExpand : true
             };
 
-            App.publishProductState = action;
+            App.publishProduitstate = action;
             App.filtersObject.filter = this.filter;
 
             this.collection.getFirstPage({
@@ -158,30 +158,30 @@ define([
                 $('#channelStatus div').attr('class', 'channelImg');
 
                 if (self.productId) {
-                    urlHash = '#easyErp/Products/tform/' + self.productId + '/p=1/c=50';
+                    urlHash = '#easyErp/Produits/tform/' + self.productId + '/p=1/c=50';
                 } else {
-                    urlHash = '#easyErp/Products/list/p=1/c=50';
+                    urlHash = '#easyErp/Produits/list/p=1/c=50';
                 }
 
-                App.publishProductState = null;
+                App.publishProduitstate = null;
                 Backbone.history.fragment = '';
                 Backbone.history.navigate(urlHash, {trigger: true});
             });
         },
 
         publish: function () {
-            this.makeTheAction('/products/channelLinks', 'published', dataService.postData);
+            this.makeTheAction('/Produits/channelLinks', 'published', dataService.postData);
         },
 
         unpublish: function () {
-            this.makeTheAction('/products/channelLinks', 'unpublished', dataService.patchData);
+            this.makeTheAction('/Produits/channelLinks', 'unpublished', dataService.patchData);
         },
 
-        renderList: function (products) {
+        renderList: function (Produits) {
             var $thisEl = this.$el;
             var $listHolder = $thisEl.find('#listContent');
             var _id = window.location.hash.split('/')[3];
-            var currentProduct = _.find(products, function (el) {
+            var currentProduct = _.find(Produits, function (el) {
                 return _id === el._id;
             });
 
@@ -191,10 +191,10 @@ define([
             $('#top-bar-back').hide();
 
             $listHolder.append(this.listTemplate({
-                products: products
+                Produits: Produits
             }));
         }
     });
 
-    return ProductsListView;
+    return ProduitsListView;
 });

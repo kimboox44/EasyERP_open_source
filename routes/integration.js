@@ -21,7 +21,7 @@ module.exports = function (models, event) {
     router.get('/conflicts', handler.getConflictsData);
     router.get('/etsy/shippingTemplate', etsyHandler.getShippingMethodsForDd);
     router.get('/countOfConflictsAndImported', handler.countOfConflictsAndImported);
-    router.get('/unlinkedProducts', handler.getUnlinkedProducts);
+    router.get('/unlinkedProduits', handler.getUnlinkedProduits);
     router.get('/sync', handler.syncAll);
 
     // router.get('/all/:type', handler.getAll);
@@ -30,7 +30,7 @@ module.exports = function (models, event) {
 
     router.post('/testWebHook', handler.updateShopifyOrder);
 
-    router.patch('/unlinkedProducts/:id', handler.updateUnlinkedProduct);
+    router.patch('/unlinkedProduits/:id', handler.updateUnlinkedProduct);
 
     router.patch('/linkOrder/:id', handler.linkOrder);
 

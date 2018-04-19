@@ -3,14 +3,14 @@ var async = require('async');
 var _ = require('lodash');
 
 var ProductOptions = function (models) {
-    var ProductSchema = mongoose.Schemas.Products;
-    var ProductsOptionsSchema = mongoose.Schemas.ProductOptions;
-    var ProductsOptionsValuesSchema = mongoose.Schemas.ProductOptionsValues;
+    var Produitschema = mongoose.Schemas.Produits;
+    var ProduitsOptionsSchema = mongoose.Schemas.ProductOptions;
+    var ProduitsOptionsValuesSchema = mongoose.Schemas.ProductOptionsValues;
     var ProductTypesSchema = mongoose.Schemas.productTypes;
     var pageHelper = require('../helpers/pageHelper');
     var ObjectId = mongoose.Types.ObjectId;
 
-    var productService = require('../services/products')(models);
+    var Produitservice = require('../services/Produits')(models);
 
     function updateTypesForOptions(ProductTypesModel, Product, modelId, checkedPrTypes, checkedNow, callback) {
         var deletedTypes = _.difference(checkedPrTypes, checkedNow);
@@ -96,7 +96,7 @@ var ProductOptions = function (models) {
         }
 
         async.each(changedProduct, function (product, eachCb) {
-            productService.findOneAndUpdate({_id: product.product}, {$push: {variants: product.value}}, {dbName: db}, function (err, result) {
+            Produitservice.findOneAndUpdate({_id: product.product}, {$push: {variants: product.value}}, {dbName: db}, function (err, result) {
                 if (err) {
                     return next(err);
                 }
@@ -114,7 +114,7 @@ var ProductOptions = function (models) {
 
     this.createOptions = function (req, res, next) {
         var body = req.body;
-        var OptionsModel = models.get(req.session.lastDb, 'ProductOptions', ProductsOptionsSchema);
+        var OptionsModel = models.get(req.session.lastDb, 'ProductOptions', ProduitsOptionsSchema);
         var model;
         var err;
 
@@ -139,25 +139,25 @@ var ProductOptions = function (models) {
         var params = req.params;
         var groupId = params.id;
 
-        productService.find({groupId: groupId}, {
+        Produitservice.find({groupId: groupId}, {
             dbName    : db,
             name      : 1,
             'info.SKU': 1,
             variants  : 1,
             imageSrc  : 1
-        }, function (err, products) {
+        }, function (err, Produits) {
             if (err) {
                 return next(err);
             }
 
-            res.status(200).send(products);
+            res.status(200).send(Produits);
         });
     };
 
     this.updateOptions = function (req, res, next) {
-        var OptionsModel = models.get(req.session.lastDb, 'ProductOptions', ProductsOptionsSchema);
+        var OptionsModel = models.get(req.session.lastDb, 'ProductOptions', ProduitsOptionsSchema);
         var ProductTypesModel = models.get(req.session.lastDb, 'productTypes', ProductTypesSchema);
-        var Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+        var Product = models.get(req.session.lastDb, 'Product', Produitschema);
         var body = req.body;
         var _id = req.params._id;
         var data = {
@@ -189,9 +189,9 @@ var ProductOptions = function (models) {
 
     this.deleteOptions = function (req, res, next) {
         var ProductTypesModel = models.get(req.session.lastDb, 'productTypes', ProductTypesSchema);
-        var OptionsModel = models.get(req.session.lastDb, 'ProductOptions', ProductsOptionsSchema);
-        var OptionsValuesModel = models.get(req.session.lastDb, 'ProductOptionsValues', ProductsOptionsValuesSchema);
-        var Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+        var OptionsModel = models.get(req.session.lastDb, 'ProductOptions', ProduitsOptionsSchema);
+        var OptionsValuesModel = models.get(req.session.lastDb, 'ProductOptionsValues', ProduitsOptionsValuesSchema);
+        var Product = models.get(req.session.lastDb, 'Product', Produitschema);
         var id = req.params.id;
         var ids = [id];
         var variantsIds = [];
@@ -275,7 +275,7 @@ var ProductOptions = function (models) {
     };
 
     this.getOneOption = function (req, res, next) {
-        var OptionsModel = models.get(req.session.lastDb, 'ProductOptions', ProductsOptionsSchema);
+        var OptionsModel = models.get(req.session.lastDb, 'ProductOptions', ProduitsOptionsSchema);
         var _id = req.params._id;
 
         OptionsModel.findById(_id, function (err, model) {
@@ -298,7 +298,7 @@ var ProductOptions = function (models) {
         var paginationObject = pageHelper(query);
         var skip = paginationObject.skip;
         var limit = paginationObject.limit;
-        var OptionsModel = models.get(req.session.lastDb, 'ProductOptions', ProductsOptionsSchema);
+        var OptionsModel = models.get(req.session.lastDb, 'ProductOptions', ProduitsOptionsSchema);
         var sortObj;
         var key;
         var match = query.ids || [];

@@ -5,7 +5,7 @@ define([
     'views/order/CreateView',
     'collections/Persons/PersonsCollection',
     'collections/Departments/DepartmentsCollection',
-    'views/Products/InvoiceOrder/ProductItems',
+    'views/Produits/InvoiceOrder/ProductItems',
     'models/orderModel',
     'common',
     'populate',
@@ -77,10 +77,10 @@ define([
             var self = this;
             var mid = 55;
             var thisEl = this.$el;
-            var selectedProducts = thisEl.find('.productItem');
-            var products = [];
+            var selectedProduits = thisEl.find('.productItem');
+            var Produits = [];
             var data;
-            var selectedLength = selectedProducts.length;
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var productId;
             var quantity;
@@ -138,18 +138,18 @@ define([
             if (!selectedLength) {
                 return App.render({
                     type   : 'error',
-                    message: "Products can't be empty."
+                    message: "Produits can't be empty."
                 });
             }
 
             for (i = selectedLength - 1; i >= 0; i--) {
-                targetEl = $(selectedProducts[i]);
-                productId = targetEl.find('.productsDd').attr('data-id');
+                targetEl = $(selectedProduits[i]);
+                productId = targetEl.find('.ProduitsDd').attr('data-id');
 
                 if (!productId) {
                     return App.render({
                         type   : 'error',
-                        message: "Products can't be empty."
+                        message: "Produits can't be empty."
                     });
                 }
 
@@ -194,7 +194,7 @@ define([
                     });
                 }
 
-                products.push({
+                Produits.push({
                     product      : productId,
                     unitPrice    : price,
                     costPrice    : cost,
@@ -208,7 +208,7 @@ define([
                 });
             }
 
-            if (products.length) {
+            if (Produits.length) {
                 status.allocateStatus = 'NOT';
                 status.fulfillStatus = 'NOT';
                 status.shippingStatus = 'NOT';
@@ -223,7 +223,7 @@ define([
                 project       : project,
                 salesPerson   : assignedTo,
                 warehouse     : warehouse,
-                products      : products,
+                Produits      : Produits,
                 orderDate     : helpers.setTimeToDate(orderDate),
                 expectedDate  : expectedDate,
                 destination   : destination,

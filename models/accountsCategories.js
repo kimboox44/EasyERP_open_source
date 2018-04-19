@@ -22,7 +22,7 @@ module.exports = (function () {
         sequence     : {type: Number, default: 0},
         main         : {type: Boolean, default: false},
         removable    : {type: Boolean, default: true},
-        productsCount: {type: Number, default: 0}
+        ProduitsCount: {type: Number, default: 0}
     }, {collection: 'accountsCategories'});
 
     mongoose.model('accountsCategory', CategorySchema);

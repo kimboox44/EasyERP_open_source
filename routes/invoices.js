@@ -190,7 +190,7 @@ module.exports = function (models, event) {
   "_type": "Invoices",
   "paymentDate": "2016-03-10T04:00:00.000Z",
   "__v": 0,
-  "products": [
+  "Produits": [
     {
       "_id": "5840229b7a7667d81be7f8b9",
       "description": "",

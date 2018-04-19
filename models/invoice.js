@@ -71,7 +71,7 @@ module.exports = (function () {
 
     var jobsInvoiceSchema = baseSchema.extend({
         forSales: {type: Boolean, default: true},
-        products: [{
+        Produits: [{
             _id        : false,
             quantity   : {type: Number, default: 1},
             unitPrice  : Number,
@@ -86,7 +86,7 @@ module.exports = (function () {
     });
 
     var writeOffSchema = baseSchema.extend({
-        products: [{
+        Produits: [{
             _id        : false,
             quantity   : {type: Number, default: 1},
             unitPrice  : Number,
@@ -105,7 +105,7 @@ module.exports = (function () {
 
     var payRollInvoiceSchema = baseSchema.extend({
         expense : {type: Boolean, default: true},
-        products: [{
+        Produits: [{
             _id    : false,
             product: productForPayRolls,
             paid   : Number,
@@ -122,7 +122,7 @@ module.exports = (function () {
     });
 
     var invoiceSchema = baseSchema.extend({
-        products: [{
+        Produits: [{
             _id        : false,
             quantity   : {type: Number, default: 1},
             unitPrice  : Number,
@@ -145,7 +145,7 @@ module.exports = (function () {
     });
 
     var dividendInvoiceSchema = invoiceSchema.extend({
-        products: [{
+        Produits: [{
             _id        : false,
             quantity   : {type: Number, default: 1},
             unitPrice  : Number,

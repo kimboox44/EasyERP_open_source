@@ -4,7 +4,7 @@ module.exports = (function () {
 
     var OptionsValuesSchema = mongoose.Schema({
         value   : {type: String, default: 'default'},
-        optionId: {type: ObjectId, ref: 'productsOptions', default: null}
+        optionId: {type: ObjectId, ref: 'ProduitsOptions', default: null}
     }, {collection: 'ProductOptionsValues'});
 
     mongoose.model('ProductOptionsValues', OptionsValuesSchema);

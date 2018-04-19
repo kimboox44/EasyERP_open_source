@@ -159,7 +159,7 @@ module.exports = function (models) {
                     "fullName"           : "All",
                     "name"               : "All",
                     "__v"                : 0,
-                    "productsCount"      : 0,
+                    "ProduitsCount"      : 0,
                     "child"              : [],
                     "main"               : false,
                     "externalId"         : null,

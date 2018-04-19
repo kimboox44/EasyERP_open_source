@@ -291,7 +291,7 @@ define([
             var collIds;
             var diffIds;
             var needId;
-            var dontConfirmContentTypes = ['Persons', 'Opportunities', 'order', 'invoice', 'Projects', 'Tasks', 'jobs', 'Employees', 'Applications', 'JobPositions', 'ChartOfAccount', 'journal', 'bonusType', 'Products', 'goodsOutNotes', 'productCategories', 'currency'];
+            var dontConfirmContentTypes = ['Persons', 'Opportunities', 'order', 'invoice', 'Projects', 'Tasks', 'jobs', 'Employees', 'Applications', 'JobPositions', 'ChartOfAccount', 'journal', 'bonusType', 'Produits', 'goodsOutNotes', 'productCategories', 'currency'];
             var answerConfirm = true;
 
             if (!edited.length) { // ToDo refactor

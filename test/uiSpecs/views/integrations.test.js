@@ -91,7 +91,7 @@ define([
                 count: 5
             }
         ],
-        importedProducts: [
+        importedProduits: [
             {
                 _id  : "584fb3461e5d070ece3a521d",
                 count: 5
@@ -101,7 +101,7 @@ define([
                 count: 5
             }
         ],
-        conflictProducts: [
+        conflictProduits: [
             {
                 _id  : "584fc1a7150bde5a2d9a686c",
                 count: 5
@@ -208,8 +208,8 @@ define([
             var saveWarehouseSpy;
             var savePriceListSpy;
             var saveChannelSpy;
-            var importedProductsSpy;
-            var conflictedProductsSpy;
+            var importedProduitsSpy;
+            var conflictedProduitsSpy;
             var importedOrdersSpy;
             var unlinkedOrdersSpy;
 
@@ -222,8 +222,8 @@ define([
                 saveWarehouseSpy = sinon.spy(IntegrationSettingsView.prototype, 'saveWarehouse');
                 savePriceListSpy = sinon.spy(IntegrationSettingsView.prototype, 'savePriceList');
                 saveChannelSpy = sinon.spy(IntegrationSettingsView.prototype, 'save');
-                importedProductsSpy = sinon.spy(IntegrationView.prototype, 'updateProductsCount');
-                conflictedProductsSpy = sinon.spy(IntegrationView.prototype, 'updateConflictedProductsCount');
+                importedProduitsSpy = sinon.spy(IntegrationView.prototype, 'updateProduitsCount');
+                conflictedProduitsSpy = sinon.spy(IntegrationView.prototype, 'updateConflictedProduitsCount');
                 importedOrdersSpy = sinon.spy(IntegrationView.prototype, 'updateOrdersCount');
                 unlinkedOrdersSpy = sinon.spy(IntegrationView.prototype, 'updateUnlinkedOrdersCount');
             });
@@ -237,8 +237,8 @@ define([
                 savePriceListSpy.restore();
                 saveChannelSpy.restore();
 
-                importedProductsSpy.restore();
-                conflictedProductsSpy.restore();
+                importedProduitsSpy.restore();
+                conflictedProduitsSpy.restore();
                 importedOrdersSpy.restore();
                 unlinkedOrdersSpy.restore();
 
@@ -286,7 +286,7 @@ define([
 
                 $firstChannel = $thisEl.find('.app').first();
 
-                expect($firstChannel.find('.goUnlinkedProducts')).to.exist;
+                expect($firstChannel.find('.goUnlinkedProduits')).to.exist;
                 expect($firstChannel.find('.goUnlinkedOrders')).to.exist;
                 expect($firstChannel.find('.settingsContainer')).to.exist;
             });
@@ -543,13 +543,13 @@ define([
                 expect(historyNavigateSpy.calledOnce).to.be.true;
             });
 
-            it('Try to go to unlinked products', function () {
+            it('Try to go to unlinked Produits', function () {
                 var $thisEl = integrationView.$el;
-                var $unlinkedProductsBtn = $thisEl.find('.goUnlinkedProducts').eq(0);
+                var $unlinkedProduitsBtn = $thisEl.find('.goUnlinkedProduits').eq(0);
 
                 historyNavigateSpy.reset(0);
 
-                $unlinkedProductsBtn.click();
+                $unlinkedProduitsBtn.click();
                 expect(historyNavigateSpy.calledOnce).to.be.true;
             });
 
@@ -570,8 +570,8 @@ define([
 
                 integrationView.eventsChannel.trigger('retrievedInventoryCount');
 
-                expect(importedProductsSpy.calledTwice).to.be.false;
-                expect(conflictedProductsSpy.calledTwice).to.be.false;
+                expect(importedProduitsSpy.calledTwice).to.be.false;
+                expect(conflictedProduitsSpy.calledTwice).to.be.false;
                 expect(importedOrdersSpy.calledTwice).to.be.false;
                 expect(unlinkedOrdersSpy.calledTwice).to.be.false;
 
@@ -582,14 +582,14 @@ define([
 
                 integrationView.eventsChannel.trigger('retrievedInventoryCount', fakeStats);
 
-                expect(importedProductsSpy.calledTwice).to.be.true;
-                expect(conflictedProductsSpy.calledTwice).to.be.true;
+                expect(importedProduitsSpy.calledTwice).to.be.true;
+                expect(conflictedProduitsSpy.calledTwice).to.be.true;
                 expect(importedOrdersSpy.calledTwice).to.be.true;
                 expect(unlinkedOrdersSpy.calledTwice).to.be.true;
 
-                // expect($thisEl.find('.app').eq(0).find('.goUnlinkedProducts > .channelRowValue > span')).contain('5');
+                // expect($thisEl.find('.app').eq(0).find('.goUnlinkedProduits > .channelRowValue > span')).contain('5');
                 // expect($thisEl.find('.app').eq(0).find('.goUnlinkedOrders > .channelRowValue > span')).contain('5');
-                // expect($thisEl.find('.app').eq(1).find('.goUnlinkedProducts > .channelRowValue > span')).contain('5');
+                // expect($thisEl.find('.app').eq(1).find('.goUnlinkedProduits > .channelRowValue > span')).contain('5');
                 // expect($thisEl.find('.app').eq(1).find('.goUnlinkedOrders > .channelRowValue > span')).contain('5');
             });
 

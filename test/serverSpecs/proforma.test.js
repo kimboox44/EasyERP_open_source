@@ -51,7 +51,7 @@ describe('Invoice Specs', function () {
                 destination      : null,
                 incoterm         : null,
 
-                products: [
+                Produits: [
                     {
                         product      : CONSTANTS.PRODUCT,
                         unitPrice    : '500',
@@ -133,11 +133,11 @@ describe('Invoice Specs', function () {
                     proformaId = body._id;
 
                     expect(body)
-                        .to.have.property('products')
+                        .to.have.property('Produits')
                         .and.to.be.instanceOf(Array)
                         .and.to.have.deep.property('[0]')
                         .and.to.have.property('jobs', CONSTANTS.JOB);
-                    expect(body.products[0])
+                    expect(body.Produits[0])
                         .to.have.property('product', CONSTANTS.PRODUCT);
                     expect(body)
                         .to.have.property('groups')
@@ -230,12 +230,12 @@ describe('Invoice Specs', function () {
                         .to.have.property('_type', 'Proforma');
 
                     expect(body)
-                        .to.have.property('products')
+                        .to.have.property('Produits')
                         .and.to.be.instanceOf(Array)
                         .and.to.have.deep.property('[0]')
                         .and.to.have.property('jobs')
                         .and.to.have.property('_id', CONSTANTS.JOB);
-                    expect(body.products[0])
+                    expect(body.Produits[0])
                         .to.have.property('subTotal', 500);
                     expect(body)
                         .to.have.property('groups')

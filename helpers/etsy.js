@@ -13,7 +13,7 @@ var SyncLogsHelper = require('../helpers/syncLogs');
 module.exports = function (models, event) {
     'use strict';
 
-    var productService = require('../services/products')(models);
+    var Produitservice = require('../services/Produits')(models);
     var productAvailability = require('../services/productAvailability')(models);
     var orderService = require('../services/order')(models);
     var orderRowsService = require('../services/orderRows')(models);
@@ -21,7 +21,7 @@ module.exports = function (models, event) {
     var ConflictService = require('../services/conflict')(models);
     var oauthService = require('../helpers/oauthTracker')(models);
     var imageHelper = require('../helpers/imageHelper');
-    var productsPriceService = require('../services/productPrice')(models);
+    var ProduitsPriceService = require('../services/productPrice')(models);
     var customerService = require('../services/customer')(models);
     var ChannelLinksService = require('../services/channelLinks')(models);
     var WorkflowService = require('../services/workflow')(models);
@@ -38,15 +38,15 @@ module.exports = function (models, event) {
 
     var refundHelper = new RefundHelper(models);
 
-    function createMatchDataForProducts(product, opts, cb) {
+    function createMatchDataForProduits(product, opts, cb) {
         var db = opts.dbName;
         var uId = opts.uId;
         var channel = opts._id || opts.channel;
 
-        productService.find({}, {
+        Produitservice.find({}, {
             'info.SKU': 1,
             dbName    : db
-        }, function (err, nativeProducts) {
+        }, function (err, nativeProduits) {
             if (err) {
                 return cb(err);
             }
@@ -65,7 +65,7 @@ module.exports = function (models, event) {
                         return cb(err);
                     }
 
-                    checkIdentitySKU = _.find(nativeProducts, function (el) {
+                    checkIdentitySKU = _.find(nativeProduits, function (el) {
                         return el.info.SKU === product.listing_id.toString();
                     });
 
@@ -109,7 +109,7 @@ module.exports = function (models, event) {
                         if (!result._id) {
                             logs = syncLogsHelper.addConflict(logs, {
                                 action  : 'imports',
-                                category: 'products'
+                                category: 'Produits'
                             }, {
                                 entityId         : product.listing_id,
                                 entityDescription: product.title
@@ -142,14 +142,14 @@ module.exports = function (models, event) {
         });
     }
 
-    function importProducts(opts, allCallback) {
+    function importProduits(opts, allCallback) {
         var settings = opts.settings;
-        var productUri = opts.settings && opts.settings.products ? opts.settings.products.get : '/listings';
-        var productStatusArray = ['active', 'draft', 'expired', 'inactive'];
-        var allProducts = [];
+        var productUri = opts.settings && opts.settings.Produits ? opts.settings.Produits.get : '/listings';
+        var ProduitstatusArray = ['active', 'draft', 'expired', 'inactive'];
+        var allProduits = [];
         var groupId;
 
-        async.eachLimit(productStatusArray, 1, function (status, eachCallback) {
+        async.eachLimit(ProduitstatusArray, 1, function (status, eachCallback) {
 
             var query = {
                 shop: true,
@@ -157,9 +157,9 @@ module.exports = function (models, event) {
             };
 
             oauthService.get(query, opts, function (err, docs) {
-                var products;
+                var Produits;
 
-                products = docs ? docs.results : [];
+                Produits = docs ? docs.results : [];
 
                 if (err) {
                     syncLogsHelper.addC
@@ -167,7 +167,7 @@ module.exports = function (models, event) {
                     return eachCallback(err);
                 }
 
-                allProducts = allProducts.concat(products);
+                allProduits = allProduits.concat(Produits);
 
                 eachCallback();
             });
@@ -176,8 +176,8 @@ module.exports = function (models, event) {
                 return allCallback(err);
             }
 
-            async.eachLimit(allProducts, 1, function (product, eachCb) {
-                createMatchDataForProducts(product, opts, function (err, existProduct) {
+            async.eachLimit(allProduits, 1, function (product, eachCb) {
+                createMatchDataForProduits(product, opts, function (err, existProduct) {
                     var waterFallTasks;
                     var categoryIds = [];
 
@@ -189,7 +189,7 @@ module.exports = function (models, event) {
                         return eachCb();
                     }
 
-                    waterFallTasks = [createCategories, getImages, createProducts, createImages, createPrice, createLink];
+                    waterFallTasks = [createCategories, getImages, createProduits, createImages, createPrice, createLink];
 
                     function createCategories(waterFallCb) {
                         if (!product.category_path || !product.category_path.length || !product.category_path_ids) {
@@ -216,7 +216,7 @@ module.exports = function (models, event) {
 
                                     productCategoryService.findByIdAndUpdate(doc._id, {
                                         $inc: {
-                                            productsCount: 1
+                                            ProduitsCount: 1
                                         }
                                     }, {
                                         dbName: opts.dbName
@@ -249,7 +249,7 @@ module.exports = function (models, event) {
                                             name         : category.short_name,
                                             fullName     : category.short_name,
                                             integrationId: category.category_id,
-                                            productsCount: 1
+                                            ProduitsCount: 1
                                         };
 
                                         productCategoryService.create(saveObject, function (err, doc) {
@@ -277,7 +277,7 @@ module.exports = function (models, event) {
                     }
 
                     function getImages(categoryIds, waterFallCb) {
-                        var uri = settings && settings.products ? settings.products.get : '/listings';
+                        var uri = settings && settings.Produits ? settings.Produits.get : '/listings';
                         var queryObj = {
                             uri: uri + '/' + product.listing_id + '/images'
                         };
@@ -306,7 +306,7 @@ module.exports = function (models, event) {
                         });
                     }
 
-                    function createProducts(categoryIds, image, waterFallCb) {
+                    function createProduits(categoryIds, image, waterFallCb) {
                         var saveObject;
                         var productPrice = parseFloat(product.price);
 
@@ -347,7 +347,7 @@ module.exports = function (models, event) {
                             uId   : opts.uId
                         };
 
-                        productService.createProduct(saveObject, function (err, data) {
+                        Produitservice.createProduct(saveObject, function (err, data) {
                             if (err) {
                                 waterFallCb(err);
                             }
@@ -377,7 +377,7 @@ module.exports = function (models, event) {
                                     waterFallCb(err);
                                 }
 
-                                productService.findOneAndUpdate({
+                                Produitservice.findOneAndUpdate({
                                     _id: productId
                                 }, {
                                     $set: {
@@ -412,7 +412,7 @@ module.exports = function (models, event) {
                                     return eCb();
                                 }
 
-                                productService.findOneAndUpdate({
+                                Produitservice.findOneAndUpdate({
                                     _id: productId
                                 }, {
                                     $set: {
@@ -465,7 +465,7 @@ module.exports = function (models, event) {
 
                             dbName: opts.dbName
                         };
-                        productsPriceService.create(saveObject, function (err) {
+                        ProduitsPriceService.create(saveObject, function (err) {
                             if (err) {
                                 return waterFallCb(err);
                             }
@@ -508,7 +508,7 @@ module.exports = function (models, event) {
         var nativeUnlinked;
         var workflowId;
 
-        function getUnlinkedProducts(waterFallCb) {
+        function getUnlinkedProduits(waterFallCb) {
             ConflictService.find({
                 entity          : 'Product',
                 type            : 'unlinked',
@@ -591,9 +591,9 @@ module.exports = function (models, event) {
                 async.eachLimit(orders, 1, function (order, eachCb) {
                     var waterFallTasks;
                     var etsyIds;
-                    var nativeProducts;
-                    var products;
-                    var hasUnlinkedProducts;
+                    var nativeProduits;
+                    var Produits;
+                    var hasUnlinkedProduits;
                     var unlinkedOrderId;
                     var tempWorkflow;
                     var workflow;
@@ -601,45 +601,45 @@ module.exports = function (models, event) {
                     var paymentId;
                     var conflictTypes;
 
-                    function getProductsByOrder(waterFallCb) {
+                    function getProduitsByOrder(waterFallCb) {
                         var queryObj = {
                             uri: orderUri + '/' + order.receipt_id + '/transactions'
                         };
 
                         oauthService.get(queryObj, opts, function (err, response) {
-                            products = response && response.results;
+                            Produits = response && response.results;
 
                             if (err) {
                                 return waterFallCb(err);
                             }
 
-                            etsyIds = _.pluck(products, 'listing_id');
+                            etsyIds = _.pluck(Produits, 'listing_id');
 
                             waterFallCb();
                         });
                     }
 
-                    function getNativeProductsForOrder(waterFallCb) {
+                    function getNativeProduitsForOrder(waterFallCb) {
                         var etsyIdsToString = etsyIds.map(function (el) {
                             return el.toString();
                         });
 
-                        productService
-                            .getProductsForOrder({
+                        Produitservice
+                            .getProduitsForOrder({
                                 dbName : dbName,
                                 channel: channel,
                                 linkIds: etsyIdsToString
-                            }, function (err, ourProducts) {
-                                nativeProducts = ourProducts;
+                            }, function (err, ourProduits) {
+                                nativeProduits = ourProduits;
 
                                 if (err) {
                                     return waterFallCb(err);
                                 }
 
-                                if (etsyIds.length !== nativeProducts.length) {
+                                if (etsyIds.length !== nativeProduits.length) {
                                     workflow = ObjectId(CONSTANTS.DEFAULT_UNLINKED_WORKFLOW_ID);
                                     tempWorkflow = workflowId;
-                                    hasUnlinkedProducts = true;
+                                    hasUnlinkedProduits = true;
 
                                     if (conflictTypes && conflictTypes.length) {
                                         conflictTypes.push({
@@ -848,8 +848,8 @@ module.exports = function (models, event) {
 
                     function createOrderRows(createdOrder, waterFallCb) {
 
-                        if (products) {
-                            async.each(products, function (el, eachCb) {
+                        if (Produits) {
+                            async.each(Produits, function (el, eachCb) {
                                 ChannelLinksService.findOne({
                                     linkId : el.listing_id,
                                     channel: channel
@@ -891,16 +891,16 @@ module.exports = function (models, event) {
 
                     }
 
-                    function createUnlinkedProducts(createdOrder, waterFallCb) {
+                    function createUnlinkedProduits(createdOrder, waterFallCb) {
                         var differenceProductIds;
                         var nativeIds;
                         var unlinkedIds = _.pluck(nativeUnlinked, 'fields.id');
 
-                        if (!hasUnlinkedProducts) {
+                        if (!hasUnlinkedProduits) {
                             return waterFallCb(null, createdOrder);
                         }
 
-                        nativeIds = _.pluck(nativeProducts, 'channelLinks.linkId');
+                        nativeIds = _.pluck(nativeProduits, 'channelLinks.linkId');
                         nativeIds = nativeIds.map(function (el) {
                             return parseInt(el, 10);
                         });
@@ -909,7 +909,7 @@ module.exports = function (models, event) {
 
                         async.each(differenceProductIds, function (product, intCb) {
                             var unlinkedOrderRow;
-                            var fields = products.find(function (theirProduct) {
+                            var fields = Produits.find(function (theirProduct) {
                                 return theirProduct.listing_id === product;
                             });
                             var unitPrice = parseFloat(fields.price) * 100;
@@ -1202,7 +1202,7 @@ module.exports = function (models, event) {
                         waterFallTasks = [async.apply(createPayments, existOrder), createRefund];
 
                     } else {
-                        waterFallTasks = [getProductsByOrder, getNativeProductsForOrder, getCountry, createCustomer, getCurrency, createOrder, createOrderRows, createUnlinkedProducts, createPayments, createRefund];
+                        waterFallTasks = [getProduitsByOrder, getNativeProduitsForOrder, getCountry, createCustomer, getCurrency, createOrder, createOrderRows, createUnlinkedProduits, createPayments, createRefund];
                     }
 
                     async.waterfall(waterFallTasks, eachCb);
@@ -1210,7 +1210,7 @@ module.exports = function (models, event) {
             });
         }
 
-        async.waterfall([getUnlinkedProducts, getWorkflow, getChartOfAccount, getCreditAccount, getOrders], function (err) {
+        async.waterfall([getUnlinkedProduits, getWorkflow, getChartOfAccount, getCreditAccount, getOrders], function (err) {
             if (err) {
                 return allCallback(err);
             }
@@ -1304,7 +1304,7 @@ module.exports = function (models, event) {
         ], callback);
     }
 
-    function exportProducts(opts, allCallback) {
+    function exportProduits(opts, allCallback) {
         var db = opts.dbName;
         var settings = opts.settings;
         var query = {
@@ -1318,17 +1318,17 @@ module.exports = function (models, event) {
         async.waterfall([
             function (wCb) {
                 // get only changed or created product for export
-                redisClient.sMembers(CONSTANTS.REDIS.CHANGED_PRODUCTS, function (err, values) {
+                redisClient.sMembers(CONSTANTS.REDIS.CHANGED_Produits, function (err, values) {
                     if (err) {
                         return wCb(err);
                     }
 
-                    redisClient.sMove(CONSTANTS.REDIS.CHANGED_PRODUCTS, values, function (err) {
+                    redisClient.sMove(CONSTANTS.REDIS.CHANGED_Produits, values, function (err) {
                         if (err) {
                             console.error(err);
                         }
 
-                        console.log('Redis_ChangedProducts cleared!');
+                        console.log('Redis_ChangedProduits cleared!');
                     });
 
                     wCb(null, values);
@@ -1346,28 +1346,28 @@ module.exports = function (models, event) {
                     _id: {$in: productObjectIds}
                 };
 
-                productService.getProductsForSyncToChannel({dbName: db, query: query}, function (err, products) {
+                Produitservice.getProduitsForSyncToChannel({dbName: db, query: query}, function (err, Produits) {
                     if (err) {
                         return wCb(err);
                     }
 
-                    if (!products || !products.length) {
+                    if (!Produits || !Produits.length) {
                         return allCallback();
                     }
 
-                    wCb(null, products);
+                    wCb(null, Produits);
                 });
             }
-        ], function (err, products) {
+        ], function (err, Produits) {
             if (err) {
                 return allCallback(err);
             }
 
-            if (!products || !products.length) {
+            if (!Produits || !Produits.length) {
                 return allCallback();
             }
 
-            async.eachLimit(products, 10, function (product, eCb) {
+            async.eachLimit(Produits, 10, function (product, eCb) {
 
                 var channelLinksObj = {
                     product: product._id,
@@ -1385,7 +1385,7 @@ module.exports = function (models, event) {
                     }
 
                     function findPrice(waterFallCb) {
-                        productsPriceService.findOne({
+                        ProduitsPriceService.findOne({
                             priceLists: link.priceList,
                             product   : product._id
                         }, {
@@ -1429,7 +1429,7 @@ module.exports = function (models, event) {
                         }
 
                         if (link.linkId) {
-                            uri = settings.products ? settings.products.put : '/listing';
+                            uri = settings.Produits ? settings.Produits.put : '/listing';
 
                             model = {
                                 title   : product.name,
@@ -1460,7 +1460,7 @@ module.exports = function (models, event) {
                     }
 
                     function exportProductImages(waterFallCb) {
-                        var listingImageUri = settings.products ? settings.products.create + '/' + link.linkId + '/images' : '/listing/' + link.linkId + '/images';
+                        var listingImageUri = settings.Produits ? settings.Produits.create + '/' + link.linkId + '/images' : '/listing/' + link.linkId + '/images';
                         var etsyImage = [];
 
                         oauthService.get({
@@ -1503,12 +1503,12 @@ module.exports = function (models, event) {
 
         async.series([
             function (sCb) {
-                importProducts(opts, function (err) {
+                importProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
 
-                    console.log('Etsy -> Products is imported');
+                    console.log('Etsy -> Produits is imported');
                     sCb();
                 });
             },
@@ -1536,7 +1536,7 @@ module.exports = function (models, event) {
     function unpublishProduct(opts, callback) {
         var productId = opts.productId;
         var settings = opts.settings;
-        var productUri = settings && settings.products ? settings.products.delete + '/' : '/listings/';
+        var productUri = settings && settings.Produits ? settings.Produits.delete + '/' : '/listings/';
         var baseUrl = CONSTANTS.INTEGRATION.ETSY_BASE_URL;
         var secret = opts.secret;
         var token = opts.token;
@@ -1549,13 +1549,13 @@ module.exports = function (models, event) {
             uri    : productUri,
             baseUrl: baseUrl
         }, function (err, docs) {
-            var products;
+            var Produits;
 
             if (err) {
                 return callback(err);
             }
 
-            products = docs ? docs.results : [];
+            Produits = docs ? docs.results : [];
 
             callback();
         });
@@ -1569,7 +1569,7 @@ module.exports = function (models, event) {
 
         async.series([
             function (sCb) {
-                exportProducts(opts, function (err) {
+                exportProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
@@ -1579,12 +1579,12 @@ module.exports = function (models, event) {
                 });
             },
             function (sCb) {
-                importProducts(opts, function (err) {
+                importProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
 
-                    console.log('Etsy -> Products imported');
+                    console.log('Etsy -> Produits imported');
                     sCb();
                 });
             },
@@ -1614,18 +1614,18 @@ module.exports = function (models, event) {
         });
     }
 
-    function getOnlyProducts(opts, callback) {
+    function getOnlyProduits(opts, callback) {
         var uId = opts.userId;
         var dbName = opts.dbName;
 
         async.series([
             function (sCb) {
-                importProducts(opts, function (err) {
+                importProduits(opts, function (err) {
                     if (err) {
                         return sCb(err);
                     }
 
-                    console.log('Etsy -> Products imported');
+                    console.log('Etsy -> Produits imported');
                     sCb();
                 });
             }], function (err) {
@@ -1633,7 +1633,7 @@ module.exports = function (models, event) {
                 return callback(err);
             }
 
-            console.log('Etsy -> import products is complete!');
+            console.log('Etsy -> import Produits is complete!');
 
             event.emit('getAllDone', {uId: uId, dbName: dbName});
 
@@ -1685,7 +1685,7 @@ module.exports = function (models, event) {
                 quantity            : 1,
                 state               : 'draft'
             };
-            var uri = settings.products ? settings.products.create : '/listing';
+            var uri = settings.Produits ? settings.Produits.create : '/listing';
 
             oauthService.post({
                 uri: uri
@@ -1702,7 +1702,7 @@ module.exports = function (models, event) {
         }
 
         function getImageForProduct(listingId, wCb) {
-            var uri = settings.products ? settings.products.create : '/listing';
+            var uri = settings.Produits ? settings.Produits.create : '/listing';
             var formData;
             var images;
             var query;
@@ -1773,10 +1773,10 @@ module.exports = function (models, event) {
     }
 
     return {
-        importProducts     : importProducts,
+        importProduits     : importProduits,
         syncChannel        : syncChannel,
-        exportProducts     : exportProducts,
-        getOnlyProducts    : getOnlyProducts,
+        exportProduits     : exportProduits,
+        getOnlyProduits    : getOnlyProduits,
         importOrders       : importOrders,
         getAll             : getAll,
         publishProduct     : publishProduct,

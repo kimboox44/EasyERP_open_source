@@ -223,11 +223,11 @@ define([
 
             var data = this.collection.toJSON();
 
-            d3.select('.products > *').remove();
+            d3.select('.Produits > *').remove();
 
             for (i = data.length; i--;) {
                 array[i] = {
-                    supplier: data[i].products,
+                    supplier: data[i].Produits,
                     total   : data[i].incomingStock
                 };
             }
@@ -265,7 +265,7 @@ define([
                 })
                 .tickValues(d3.range(array.length));
 
-            chart = d3.select('.products')
+            chart = d3.select('.Produits')
                 .attr({
                     'width' : width + margin.left + margin.right,
                     'height': height + margin.top + margin.bottom

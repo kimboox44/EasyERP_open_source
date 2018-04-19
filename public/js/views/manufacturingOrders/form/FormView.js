@@ -4,7 +4,7 @@ define([
     'jQuery',
     'views/dialogViewBase',
     'views/manufacturingOrders/CreateView',
-    'views/Products/orderRows/ProductItems',
+    'views/Produits/orderRows/ProductItems',
     'text!templates/manufacturingOrders/form/FormTemplate.html',
     'text!templates/manufacturingOrders/ConsumedTemplate.html',
     'models/goodsOutNotesModel',
@@ -73,7 +73,7 @@ define([
         saveItem: function (invoiceCb) {
             var self = this;
             var $el = this.$el;
-            var productsDd = $el.find('#productsDd').attr('data-id');
+            var ProduitsDd = $el.find('#ProduitsDd').attr('data-id');
             var billOfMaterial = $el.find('#billOfMaterial').attr('data-id');
             var routing = $el.find('#routing').attr('data-id');
             var deadlineStart = $el.find('#deadlineStart').val();
@@ -83,10 +83,10 @@ define([
             var warehouseDd = $el.find('#warehouseDd').attr('data-id');
             var warehouseTo = this.$el.find('#warehouseToDd').attr('data-id');
             var workflow = $el.find('#workflowsDd').attr('data-id');
-            var allocateProducts = [];
-            var products = [];
-            var selectedProducts = $el.find('.productItem');
-            var selectedLength = selectedProducts.length;
+            var allocateProduits = [];
+            var Produits = [];
+            var selectedProduits = $el.find('.productItem');
+            var selectedLength = selectedProduits.length;
             var quantityAvailable;
             var productId;
             var quantity;
@@ -95,7 +95,7 @@ define([
             var id;
             var i;
 
-            if (!productsDd) {
+            if (!ProduitsDd) {
                 return App.render({
                     type   : 'error',
                     message: 'Product can\'t be empty'
@@ -111,9 +111,9 @@ define([
 
             if (selectedLength) {
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = $(selectedProducts[i]);
+                    targetEl = $(selectedProduits[i]);
                     id = targetEl.attr('data-id');
-                    productId = targetEl.find('.productsDd').attr('data-id');
+                    productId = targetEl.find('.ProduitsDd').attr('data-id');
 
                     if (productId) {
                         quantity = $.trim(targetEl.find('[data-name="quantity"]').text());
@@ -121,7 +121,7 @@ define([
                         quantity = parseFloat(quantity);
                         quantityAvailable = parseFloat(quantityAvailable);
 
-                        products.push({
+                        Produits.push({
                             id       : id,
                             warehouse: this.warehouse,
                             product  : productId,
@@ -140,9 +140,9 @@ define([
                 source        : source || null,
                 warehouse     : warehouseDd,
                 warehouseTo   : warehouseTo,
-                product       : productsDd,
+                product       : ProduitsDd,
                 workflow      : workflow,
-                orderRows     : products
+                orderRows     : Produits
             };
 
             this.formModel.save(data, {
@@ -164,8 +164,8 @@ define([
 
                     }
 
-                    if (allocateProducts && allocateProducts.length) {
-                        self.createAllocation(allocateProducts, callBack);
+                    if (allocateProduits && allocateProduits.length) {
+                        self.createAllocation(allocateProduits, callBack);
                     } else {
                         callBack();
                     }
@@ -191,7 +191,7 @@ define([
         cancelOrder: function (e) {
             var self = this;
             var canceledObj;
-            var answer = confirm('Do you really want to Cancel Order? All products will be returned.');
+            var answer = confirm('Do you really want to Cancel Order? All Produits will be returned.');
 
             if (!answer) {
                 return false;
@@ -242,7 +242,7 @@ define([
                 rows.push({
                     orderRowId: $(this).attr('data-id'),
                     quantity  : 0,
-                    product   : $(this).find('.productsDd').attr('data-id'),
+                    product   : $(this).find('.ProduitsDd').attr('data-id'),
                     warehouse : self.$el.find('#warehouseDd').attr('data-id')
 
                 });
@@ -288,7 +288,7 @@ define([
             var rows = [];
             var answer;
             var data;
-            var products = formModel.products;
+            var Produits = formModel.Produits;
 
             if (!this.checkActiveClass(e)) {
                 return false;
@@ -299,11 +299,11 @@ define([
 
             rowId.each(function () {
                 var allocatedAll = parseInt($(this).find('[data-name="quantity"] span').text(), 10);
-                var product = $(this).find('.productsDd').attr('data-id');
+                var product = $(this).find('.ProduitsDd').attr('data-id');
                 var onHand = parseInt($.trim($(this).find('[data-name="availabilityQuantity"] span').text()), 10);
                 var lastQuantity;
                 var self = this;
-                var item = products.find(function (el) {
+                var item = Produits.find(function (el) {
                     return el.product._id === $(self).attr('data-id');
                 });
 
@@ -370,7 +370,7 @@ define([
                             var message = err.message;
 
                             if (err.status === 404) {
-                                message = 'Not enough available products';
+                                message = 'Not enough available Produits';
                             }
                             App.render({
                                 type   : 'error',
@@ -393,7 +393,7 @@ define([
             var formModel = this.formModel.toJSON();
             var data = {};
             var currentBill;
-            var products = formModel.products;
+            var Produits = formModel.Produits;
 
             dataService.getData('/billOfMaterials/byProduct', {
                 _id      : productId,
@@ -412,7 +412,7 @@ define([
 
                     if (resp.data && resp.data.length) {
 
-                        if (id === 'productsDd') {
+                        if (id === 'ProduitsDd') {
                             self.$el.find('#billOfMaterial').html(currentBill.name).attr('data-id', currentBill._id);
 
                             if (resp.data[0].routing) {
@@ -456,10 +456,10 @@ define([
                 this.cancelOrder(e);
             }
 
-            if (id === 'productsDd' || id === 'warehouseDd') {
+            if (id === 'ProduitsDd' || id === 'warehouseDd') {
                 warehouse = this.$el.find('#warehouseDd').attr('data-id');
                 bill = this.$el.find('#billOfMaterial').attr('data-id');
-                productId = this.$el.find('#productsDd').attr('data-id');
+                productId = this.$el.find('#ProduitsDd').attr('data-id');
                 this.renderComponents(warehouse, productId, bill, id);
             } else if (id === 'billOfMaterial') {
                 currentBillObject = _.find(self.responseObj['#billOfMaterial'], function (el) {
@@ -496,7 +496,7 @@ define([
             $thisEl.html(this.formTemplate(formModel));
 
             if (!this.onlyView) {
-                populate.get('#productsDd', '/products/getProductsNames', {}, 'name', this, true, false, null);
+                populate.get('#ProduitsDd', '/Produits/getProduitsNames', {}, 'name', this, true, false, null);
                 populate.get('#source', '/manufacturingOrders', {}, 'name', this, true, true, null);
                 populate.getWorkflow('#workflowsDd', '#workflowNamesDd', CONSTANTS.URLS.WORKFLOWS_FORDD, {
                     id    : 'Sales Order',

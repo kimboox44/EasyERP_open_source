@@ -1444,7 +1444,7 @@ describe('Profiles Specs', function () {
                         'link'     : true,
                         'visible'  : true,
                         'ancestors': [],
-                        'href'     : 'productSettings'
+                        'href'     : 'Produitsettings'
                     }, '_id': '56b5b626a8a87b5f503aa102', 'access': {'del': true, 'editWrite': true, 'read': true}
                 }, {
                     'module': {
@@ -2126,7 +2126,7 @@ describe('Profiles Specs', function () {
                         'link'     : true,
                         'visible'  : true,
                         'ancestors': [],
-                        'href'     : 'productSettings'
+                        'href'     : 'Produitsettings'
                     }, '_id': '56b5b626a8a87b5f503aa102', 'access': {'del': true, 'editWrite': true, 'read': true}
                 }, {
                     'module': {
@@ -3492,7 +3492,7 @@ describe('Profiles Specs', function () {
                         'link'     : true,
                         'visible'  : true,
                         'ancestors': [],
-                        'href'     : 'productSettings'
+                        'href'     : 'Produitsettings'
                     }, '_id': '56b5b626a8a87b5f503aa102', 'access': {'del': true, 'editWrite': true, 'read': true}
                 }, {
                     'module': {

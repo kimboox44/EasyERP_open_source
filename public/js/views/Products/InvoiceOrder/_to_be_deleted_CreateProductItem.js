@@ -5,7 +5,7 @@ define([
     'Backbone',
     'jQuery',
     'Underscore',
-    'text!templates/Products/InternalMoves.html',
+    'text!templates/Produits/InternalMoves.html',
     'collections/Persons/PersonsCollection',
     'collections/Departments/DepartmentsCollection',
     'models/PersonsModel',

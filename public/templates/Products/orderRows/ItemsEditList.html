@@ -1,8 +1,8 @@
 <%
     var firstProduct = true
-    var singleProduct = products.length === 1;
+    var singleProduct = Produits.length === 1;
 %>
-<% products.forEach(function(product){ %>
+<% Produits.forEach(function(product){ %>
 <% var colorRow = (product.quantity === product.shipped) ? '' : (product.onHand || (product.quantity === product.fulfilled))  ? 'green' : 'red' %>
 <%var rowSpan = product.product ? 2 : 0;%>
 <%var colSpan = 0;%>
@@ -19,8 +19,8 @@
         rowspan="<%=rowSpan%>">
             <% if (notEditable) { %>
                 <% if (product.product) { %>
-                <span class="_staticInfo productsDd"
-                      data-content="productsDd"
+                <span class="_staticInfo ProduitsDd"
+                      data-content="ProduitsDd"
                       data-id="<%= product && product.product ?
                                    product.product._id :
                                    null%>"><%= product && product.product && product.product.info ?
@@ -41,8 +41,8 @@
 
                 <% if (product.product) { %>
                     <% if(product.allocated || product.fulfilled) { %>
-                    <span class="productsDd"
-                          data-content="productsDd"
+                    <span class="ProduitsDd"
+                          data-content="ProduitsDd"
                           data-id="<%= product && product.product ?
                                        product.product._id :
                                        null %>"><%= product && product.product && product.product.info ?
@@ -53,8 +53,8 @@
                     <div class="_animateSelectBox">
                         <div class="_newSelectListWrap">
                             <a href="javascript:;"
-                               class="current-selected productsDd"
-                               data-content="productsDd"
+                               class="current-selected ProduitsDd"
+                               data-content="ProduitsDd"
                                data-id="<%= product && product.product ?
                                             product.product._id :
                                             null%>"><%= product && product.product && product.product.info ?
@@ -152,7 +152,7 @@
     <td data-name="quantity"
         class="<%=!forSales ? 'editable' : ''%> forNum">
         <%colSpan++;%>
-            <% if (notEditable) { console.log('/Products/orderRows/ItemsEditList.html',product);%>
+            <% if (notEditable) { console.log('/Produits/orderRows/ItemsEditList.html',product);%>
             <span class="_staticInfo"><%= product.quantity%></span>
             <% } else { %>
             <input type="text"
@@ -237,8 +237,8 @@
                        class="_alocated"
                        value="<%=product.allocated || 0%>"
                         <% availableVisible ?
-                           ' title="To allocate products enter required amount and press Save button or click Allocate all" ' :
-                           'disabled title="To allocate products go back to Order" ' %>
+                           ' title="To allocate Produits enter required amount and press Save button or click Allocate all" ' :
+                           'disabled title="To allocate Produits go back to Order" ' %>
                         />
                 <span>allocated,</span>
                 <span id="fullfilled"><%=(product.fulfilled || 0)%></span>

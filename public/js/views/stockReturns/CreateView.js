@@ -50,7 +50,7 @@ define([
 
         removeRow: function (e) {
             var $target = $(e.target);
-            var allRows = this.$el.find('#tbodyProducts').find('tr').length;
+            var allRows = this.$el.find('#tbodyProduits').find('tr').length;
             var closestTr = $target.closest('tr');
 
             if (allRows === 1) {
@@ -73,7 +73,7 @@ define([
 
         saveItem: function (e) {
             var self = this;
-            var tableRows = this.$el.find('#tbodyProducts').find('tr');
+            var tableRows = this.$el.find('#tbodyProduits').find('tr');
             var length = tableRows.length;
             var date = new Date(this.$el.find('#date').val());
             var data = [];

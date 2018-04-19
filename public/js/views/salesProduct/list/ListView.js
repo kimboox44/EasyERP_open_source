@@ -1,9 +1,9 @@
 define([
     'views/listViewBase',
-    'text!templates/Products/list/ListHeader.html',
-    'views/Products/CreateView',
+    'text!templates/Produits/list/ListHeader.html',
+    'views/Produits/CreateView',
     'views/salesProduct/list/ListItemView',
-    'views/Products/EditView',
+    'views/Produits/EditView',
     'models/ProductModel',
     'text!templates/Alpabet/AphabeticTemplate.html',
     'collections/salesProduct/filterCollection',
@@ -12,17 +12,17 @@ define([
     'dataService',
     'constants'
 ], function (ListViewBase, listTemplate, createView, listItemView, editView, productModel, aphabeticTemplate, contentCollection, FilterView, common, dataService, CONSTANT) {
-    var ProductsListView = ListViewBase.extend({
+    var ProduitsListView = ListViewBase.extend({
         createView              : createView,
         listTemplate            : listTemplate,
         listItemView            : listItemView,
         contentCollection       : contentCollection,
         FilterView              : FilterView,
-        totalCollectionLengthUrl: '/products/totalCollectionLength',
+        totalCollectionLengthUrl: '/Produits/totalCollectionLength',
         page                    : null, // if reload page, and in url is valid page
         contentType             : CONSTANT.SALESPRODUCT, // needs in view.prototype.changeLocationHash
-        exportToXlsxUrl         : '/Products/exportToXlsx',
-        exportToCsvUrl          : '/Products/exportToCsv',
+        exportToXlsxUrl         : '/Produits/exportToXlsx',
+        exportToCsvUrl          : '/Produits/exportToCsv',
 
         initialize: function (options) {
             this.startTime = options.startTime;
@@ -73,7 +73,7 @@ define([
             var model = new productModel({validate: false});
 
             e.preventDefault();
-            model.urlRoot = '/products/form';
+            model.urlRoot = '/Produits/form';
             model.fetch({
                 data   : {id: id},
                 success: function (model) {
@@ -89,5 +89,5 @@ define([
         }
     });
 
-    return ProductsListView;
+    return ProduitsListView;
 });

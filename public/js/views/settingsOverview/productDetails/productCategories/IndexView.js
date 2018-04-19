@@ -7,14 +7,14 @@ define([
     'models/Category',
     'views/settingsOverview/productDetails/productCategories/CreateView',
     'views/settingsOverview/productDetails/productCategories/EditView',
-    'collections/Products/ProductCategories',
+    'collections/Produits/ProductCategories',
     'helpers/eventsBinder',
     'dataService',
     'constants',
     'helpers/ga',
     'constants/googleAnalytics'
 ], function (Backbone, $, _, ContentTemplate, ItemTemplate, CurrentModel, CreateCategoryView, EditCategoryView, CategoryCollection, eventsBinder, dataService, CONSTANTS, ga, GA) {
-    var ProductsView = Backbone.View.extend({
+    var ProduitsView = Backbone.View.extend({
         el               : '#productCategoriesTab',
         thumbnailsView   : null,
         productCollection: null,
@@ -177,7 +177,7 @@ define([
             if (product.child && product.child.length) {
                 canDelete = false;
             } else {
-                if (product.productsCount > 0) {
+                if (product.ProduitsCount > 0) {
                     canDelete = false;
                 }
             }
@@ -195,7 +195,7 @@ define([
             });
         },
 
-        renderFoldersTree: function (products) {
+        renderFoldersTree: function (Produits) {
             var self = this;
             var $thisEl = this.$el;
             var selectedMain = '';
@@ -207,7 +207,7 @@ define([
                 currentCategory = App.filtersObject.filter.productCategory.value[App.filtersObject.filter.productCategory.value.length - 1];
             }
 
-            products.forEach(function (product) {
+            Produits.forEach(function (product) {
 
                 if (!currentCategory) {
                     selectedMain = 'selected';
@@ -327,11 +327,11 @@ define([
         },
 
         render: function () {
-            var products = this.collection.toJSON();
+            var Produits = this.collection.toJSON();
             this.$el.html(_.template(ContentTemplate));
-            this.renderFoldersTree(products);
+            this.renderFoldersTree(Produits);
         }
     });
 
-    return ProductsView;
+    return ProduitsView;
 });

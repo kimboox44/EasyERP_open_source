@@ -5,9 +5,9 @@ define([
     'text!templates/Invoices/InvoiceProductItems.html',
     'text!templates/Invoices/InvoiceProductInputContent.html',
     'text!templates/Proforma/EditInvoiceProductInputContent.html',
-    'text!templates/Products/InvoiceOrder/TotalAmount.html',
+    'text!templates/Produits/InvoiceOrder/TotalAmount.html',
     'text!templates/Invoices/EditInvoiceProductInputContent.html',
-    'collections/Products/products',
+    'collections/Produits/Produits',
     'populate',
     'helpers/keyValidator',
     'helpers',
@@ -18,18 +18,18 @@ define([
         el: '#invoiceItemsHolder',
 
         events: {
-            'click .addProductItem'                                           : 'getProducts',
+            'click .addProductItem'                                           : 'getProduits',
             'click .newSelectList li:not(.miniStylePagination)'               : 'chooseOption',
             'click .newSelectList li.miniStylePagination'                     : 'notHide',
             'click .newSelectList li.miniStylePagination .next:not(.disabled)': 'nextSelect',
             'click .newSelectList li.miniStylePagination .prev:not(.disabled)': 'prevSelect',
-            'click .current-selected'                                         : 'showProductsSelect',
+            'click .current-selected'                                         : 'showProduitsSelect',
             'keyup td[data-name=price] input'                                 : 'priceChange',
             'keypress .forNum'                                                : 'keypressHandler'
         },
 
         initialize: function (options) {
-            var products;
+            var Produits;
 
             this.responseObj = {};
             this.taxesRate = 0;
@@ -48,10 +48,10 @@ define([
 
             this.render();
 
-            products = new ProductCollection(options);
-            products.bind('reset', function () {
-                this.products = products;
-                this.filterProductsForDD();
+            Produits = new ProductCollection(options);
+            Produits.bind('reset', function () {
+                this.Produits = Produits;
+                this.filterProduitsForDD();
             }, this);
 
             this.priceChange = _.debounce(this.priceChange, 250);
@@ -59,7 +59,7 @@ define([
 
         template: _.template(productItemTemplate),
 
-        getProducts: function (e) {
+        getProduits: function (e) {
             var target = $(e.target);
             var parrent = target.closest('tbody');
             var parrentRow = parrent.find('.productItem').last();
@@ -79,12 +79,12 @@ define([
             return false;
         },
 
-        filterProductsForDD: function () {
-            var id = '.productsDd';
-            var products = this.products.toJSON();
+        filterProduitsForDD: function () {
+            var id = '.ProduitsDd';
+            var Produits = this.Produits.toJSON();
 
             this.responseObj[id] = [];
-            this.responseObj[id] = this.responseObj[id].concat(_.map(products, function (item) {
+            this.responseObj[id] = this.responseObj[id].concat(_.map(Produits, function (item) {
                 return {_id: item._id, name: item.name, level: item.projectShortDesc || ''};
             }));
 
@@ -120,8 +120,8 @@ define([
             this.recalculateTaxes(parent);
         },
 
-        showProductsSelect: function (e, prev, next) {
-            populate.showProductsSelect(e, prev, next, this);
+        showProduitsSelect: function (e, prev, next) {
+            populate.showProduitsSelect(e, prev, next, this);
 
             return false;
         },
@@ -132,7 +132,7 @@ define([
             var trEl = target.parents('tr');
             var parrents = trEl.find('td');
             var _id = target.attr('id');
-            var model = this.products.get(_id);
+            var model = this.Produits.get(_id);
             var selectedProduct = model.toJSON();
             var taxes;
             var price;
@@ -231,7 +231,7 @@ define([
         },
 
         quantityRetriver: function ($parent) {
-            var selectedProduct = this.products || new Backbone.Collection();
+            var selectedProduct = this.Produits || new Backbone.Collection();
             var id;
             var quantity;
 
@@ -251,24 +251,24 @@ define([
         },
 
         nextSelect: function (e) {
-            this.showProductsSelect(e, false, true);
+            this.showProduitsSelect(e, false, true);
         },
 
         prevSelect: function (e) {
-            this.showProductsSelect(e, true, false);
+            this.showProduitsSelect(e, true, false);
         },
 
         render: function (options) {
             var self = this;
-            var productsContainer;
+            var ProduitsContainer;
             var totalAmountContainer;
             var thisEl = this.$el;
-            var products;
+            var Produits;
             var currency;
             var productTemplate = this.forSales ? ProductItemsEditList : ProductItemsEditListProforma;
 
             if (options && options.model) {
-                products = options.model.products;
+                Produits = options.model.Produits;
                 currency = options.model.currency;
 
                 thisEl.html(_.template(productItemTemplate, {
@@ -278,10 +278,10 @@ define([
                     notAddItem: this.notAddItem
                 }));
 
-                if (products) {
-                    productsContainer = thisEl.find('#productList');
-                    productsContainer.prepend(_.template(productTemplate, {
-                        products        : products,
+                if (Produits) {
+                    ProduitsContainer = thisEl.find('#productList');
+                    ProduitsContainer.prepend(_.template(productTemplate, {
+                        Produits        : Produits,
                         forSales        : self.forSales,
                         isPaid          : self.isPaid,
                         notAddItem      : this.notAddItem,

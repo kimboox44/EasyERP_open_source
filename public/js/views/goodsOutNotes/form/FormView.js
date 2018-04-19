@@ -6,7 +6,7 @@ define([
     'text!templates/goodsOutNotes/temps/documentTemp.html',
     'views/dialogViewBase',
     'views/Assignees/AssigneesView',
-    'views/Products/InvoiceOrder/ProductItems',
+    'views/Produits/InvoiceOrder/ProductItems',
     'views/goodsOutNotes/PackNote',
     'views/NoteEditor/NoteView',
     'views/Editor/AttachView',

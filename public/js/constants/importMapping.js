@@ -25,7 +25,7 @@
             'nestingLevel',
             'sequence',
             'main',
-            'productsCount',
+            'ProduitsCount',
             'externalId',
             ''
         ],
@@ -50,7 +50,7 @@
             ''
         ],
 
-        Products: [
+        Produits: [
             'reason',
             'externalId',
             'wTrack',
@@ -117,7 +117,7 @@
             'paymentInfo.total',
             'paymentInfo.unTaxed',
             'paymentInfo.taxes',
-            'products',
+            'Produits',
             'workflow',
             'whoCanRW',
             'attachments',
@@ -151,7 +151,7 @@
             'paymentInfo.total',
             'paymentInfo.unTaxed',
             'paymentInfo.taxes',
-            'products',
+            'Produits',
             'workflow',
             'whoCanRW',
             'attachments',
@@ -483,7 +483,7 @@
             'paymentInfo.balance',
             'paymentInfo.unTaxed',
             'paymentInfo.taxes',
-            'products',
+            'Produits',
             'workflow',
             'whoCanRW',
             'creationDate',

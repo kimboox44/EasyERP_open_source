@@ -13,7 +13,7 @@ define([
     'helpers',
     'views/Notes/AttachView',
     'views/Notes/NoteView',
-    'views/Products/InvoiceOrder/ProductItems'
+    'views/Produits/InvoiceOrder/ProductItems'
 ], function (Backbone, $, _, ParentView, CreateTemplate, InvoiceModel, populate, InvoiceItemView, AssigneesView, ListHederInvoice, CONSTANTS, helpers, AttachView, NoteView, ProductItemView) {
     'use strict';
 
@@ -67,9 +67,9 @@ define([
             var mid = 56;
             var $currentEl = this.$el;
 
-            var selectedProducts = $currentEl.find('.productItem');
-            var products = [];
-            var selectedLength = selectedProducts.length;
+            var selectedProduits = $currentEl.find('.productItem');
+            var Produits = [];
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var productId;
             var quantity;
@@ -121,7 +121,7 @@ define([
 
             if (selectedLength) {
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = $(selectedProducts[i]);
+                    targetEl = $(selectedProduits[i]);
                     productId = targetEl.data('id');
                     if (productId) {
                         quantity = targetEl.find('[data-name="quantity"] input').val();
@@ -145,7 +145,7 @@ define([
                             });
                         }
 
-                        products.push({
+                        Produits.push({
                             product    : productId,
                             description: description,
                             unitPrice  : price,
@@ -185,7 +185,7 @@ define([
                 paymentTerms         : paymentTermId,
                 notes                : notes,
 
-                products   : products,
+                Produits   : Produits,
                 paymentInfo: payments,
                 currency   : currency,
 

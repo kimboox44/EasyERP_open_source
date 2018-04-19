@@ -595,10 +595,10 @@ describe('Filter Specs', function () {
                 });
         });
 
-        it('should get Filters for Products', function (done) {
+        it('should get Filters for Produits', function (done) {
 
             aggent
-                .get('filter/Products')
+                .get('filter/Produits')
                 .expect(200)
                 .end(function (err, res) {
                     var body = res.body;
@@ -632,7 +632,7 @@ describe('Filter Specs', function () {
                             .and.to.have.deep.property('[0].name')
                             .and.to.exist;
                     } else {
-                        console.log('Products: Body object is empty, so in this case filters is empty too on UI\n');
+                        console.log('Produits: Body object is empty, so in this case filters is empty too on UI\n');
                     }
 
                     done();

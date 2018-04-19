@@ -176,7 +176,7 @@ define([
                 wait   : true,
                 success: function (model) {
                     Backbone.history.fragment = '';
-                    Backbone.history.navigate('#easyErp/productSettings', {trigger: true});
+                    Backbone.history.navigate('#easyErp/Produitsettings', {trigger: true});
                 },
 
                 error: function (model, xhr) {

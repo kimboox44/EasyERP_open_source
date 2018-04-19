@@ -6,7 +6,7 @@ define([
     'text!templates/Orders/EditTemplate.html',
     'text!templates/salesOrders/ViewTemplate.html',
     'views/Assignees/AssigneesView',
-    'views/Products/InvoiceOrder/ProductItems',
+    'views/Produits/InvoiceOrder/ProductItems',
     'common',
     'custom',
     'dataService',
@@ -169,10 +169,10 @@ define([
             var self = this;
             var mid = 55;
             var thisEl = this.$el;
-            var selectedProducts = thisEl.find('.productItem');
-            var products = [];
+            var selectedProduits = thisEl.find('.productItem');
+            var Produits = [];
             var data;
-            var selectedLength = selectedProducts.length;
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var productId;
             var quantity;
@@ -234,7 +234,7 @@ define([
 
             if (selectedLength) {
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = $(selectedProducts[i]);
+                    targetEl = $(selectedProduits[i]);
                     productId = targetEl.data('id');
                     if (productId) {  // added more info for save
                         quantity = $.trim(targetEl.find('[data-name="quantity"]').text()) || targetEl.find('[data-name="quantity"] input').val();
@@ -263,7 +263,7 @@ define([
                             });
                         }
 
-                        products.push({
+                        Produits.push({
                             product       : productId,
                             unitPrice     : price,
                             quantity      : quantity,
@@ -282,7 +282,7 @@ define([
                 currency         : currency,
                 supplier         : supplier,
                 supplierReference: supplierReference,
-                products         : products,
+                Produits         : Produits,
                 orderDate        : helpers.setTimeToDate(orderDate),
                 expectedDate     : expectedDate,
                 destination      : destination || null,

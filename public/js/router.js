@@ -68,7 +68,7 @@ define([
 
         routes: {
             home                                                                                            : 'any',
-            'easyErp/Products/thumbnails(/c=:countPerPage)(/filter=:filter)'                                : 'goToProduct',
+            'easyErp/Produits/thumbnails(/c=:countPerPage)(/filter=:filter)'                                : 'goToProduct',
             'easyErp/import/list(/p=:page)(/c=:countPerPage)'                                               : 'goToImport',
             'login(?password=:password&dbId=:dbId&email=:email)(?ir_hash=:ir_hash)'                         : 'login',
             'easyErp/gatherInfo'                                                                            : 'goToGatherInfo',
@@ -87,15 +87,15 @@ define([
             'easyErp/myProfile'                                                                             : 'goToUserPages',
             'easyErp/Workflows'                                                                             : 'goToWorkflows',
             'easyErp/Accounts(/:type)'                                                                      : 'goToAccounts',
-            'easyErp/productsSettings'                                                                      : 'goToProductSettings',
+            'easyErp/ProduitsSettings'                                                                      : 'goToProduitsettings',
             'easyErp/settingsOverview'                                                                      : 'goToSettingsOverview',
             'easyErp/reports(/:modelId)'                                                                    : 'goToReports',
-            //'easyErp/productsReports'                                                                       : 'goToProductsReports',
+            //'easyErp/ProduitsReports'                                                                       : 'goToProduitsReports',
             'easyErp/inventoryReports'                                                                      : 'goToInventoryReports',
             'easyErp/salesReports'                                                                          : 'goToSalesReports',
             'easyErp/integrations(/:type)(/syncLog/:id)'                                                    : 'goToIntegrations',
             'easyErp/resolveConflicts'                                                                      : 'resolveConflicts',
-            'easyErp/unlinkedProducts(/filter=:filter)(?fromIntegration=:fromIntegration)'                  : 'unlinkedProducts',
+            'easyErp/unlinkedProduits(/filter=:filter)(?fromIntegration=:fromIntegration)'                  : 'unlinkedProduits',
             'easyErp/Dashboard'                                                                             : 'goToDashboard',
             'easyErp/reportsDashboard'                                                                      : 'goToCustomDashboard',
             'easyErp/dashboards'                                                                            : 'goToDashboards',
@@ -1013,13 +1013,13 @@ define([
             ga && ga.send(Backbone.history.fragment);
         },
 
-        unlinkedProducts: function (filter) {
+        unlinkedProduits: function (filter) {
             var self = this;
 
             function goConflicts(context) {
                 var startTime = new Date();
-                var contentViewUrl = 'views/ConflictAndUnlinkedProducts/ContentView';
-                var topBarViewUrl = 'views/ConflictAndUnlinkedProducts/TopBarView';
+                var contentViewUrl = 'views/ConflictAndUnlinkedProduits/ContentView';
+                var topBarViewUrl = 'views/ConflictAndUnlinkedProduits/TopBarView';
                 var fromIntegration = filter.fromIntegration;
                 //var self = context;
 
@@ -1225,17 +1225,17 @@ define([
             ga && ga.send(Backbone.history.fragment);
         },
 
-        goToProductSettings: function () {
+        goToProduitsettings: function () {
             var self = this;
             var currentUser = App.currentUser || {};
 
-            // FlurryAgent.logEvent('Products Settings');
+            // FlurryAgent.logEvent('Produits Settings');
 
             tracker.track({
                 date       : new Date(),
                 eventType  : 'userFlow',
-                name       : 'Products Settings',
-                message    : 'productsSettings',
+                name       : 'Produits Settings',
+                message    : 'ProduitsSettings',
                 email      : currentUser.email,
                 login      : currentUser.login,
                 mobilePhone: currentUser.mobilePhone
@@ -1269,17 +1269,17 @@ define([
                         context.changeView(contentView);
                         context.changeTopBarView(topBarView);
 
-                        url = '#easyErp/productsSettings';
+                        url = '#easyErp/ProduitsSettings';
 
                         Backbone.history.navigate(url, {replace: true});
                     });
                 }
 
                 if (context.mainView === null) {
-                    context.main('productsSettings');
+                    context.main('ProduitsSettings');
                     context.mainView.on('rendered', renderView);
                 } else {
-                    context.mainView.updateMenu('productsSettings');
+                    context.mainView.updateMenu('ProduitsSettings');
                     renderView();
                 }
 
@@ -1734,13 +1734,13 @@ define([
             var self = this;
             var currentUser = App.currentUser || {};
 
-            // FlurryAgent.logEvent('Products');
+            // FlurryAgent.logEvent('Produits');
 
             tracker.track({
                 date       : new Date(),
                 eventType  : 'userFlow',
-                name       : 'Products',
-                message    : 'Products',
+                name       : 'Produits',
+                message    : 'Produits',
                 email      : currentUser.email,
                 login      : currentUser.login,
                 mobilePhone: currentUser.mobilePhone
@@ -1756,11 +1756,11 @@ define([
 
             function goProduct(context) {
                 var startTime = new Date();
-                var contentViewUrl = 'views/Products/IndexView';
-                var topBarViewUrl = 'views/Products/category/TopBarView';
-                var collectionUrl = 'collections/Products/ProductCategories';
+                var contentViewUrl = 'views/Produits/IndexView';
+                var topBarViewUrl = 'views/Produits/category/TopBarView';
+                var collectionUrl = 'collections/Produits/ProductCategories';
                 var self = context;
-                var contentType = 'Products';
+                var contentType = 'Produits';
 
                 if (context.mainView === null) {
                     context.main(contentType);
@@ -1829,7 +1829,7 @@ define([
                         context.changeView(contentView);
                         context.changeTopBarView(topBarView);
 
-                        url = '#easyErp/Products';
+                        url = '#easyErp/Produits';
 
                         Backbone.history.navigate(url, {replace: true});
                     }
@@ -2131,7 +2131,7 @@ define([
                     return 'collections/' + contentType + '/filterCollection';
                 case 'integrationUnlinkedOrders':
                     return 'collections/order/filterCollection';
-                case 'integrationUnlinkedProducts':
+                case 'integrationUnlinkedProduits':
                     return 'collections/conflicts/filterCollection';
                 default:
                     return 'collections/' + contentType + '/filterCollection';
@@ -2874,14 +2874,14 @@ define([
                         Backbone.history.navigate(location + '/c=' + countPerPage + '/filter=' + encodeURI(JSON.stringify(filter)), {replace: true});
                     }
 
-                    if (contentType === 'salesProducts') {
+                    if (contentType === 'salesProduits') {
                         filter = {
                             canBeSold: {
                                 key  : 'canBeSold',
                                 value: ['true']
                             }
                         };
-                    } else if (contentType === 'Products') {
+                    } else if (contentType === 'Produits') {
                         filter = {
                             canBePurchased: {
                                 key  : 'canBePurchased',

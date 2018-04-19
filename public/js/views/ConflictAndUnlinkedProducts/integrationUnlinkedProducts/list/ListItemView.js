@@ -1,7 +1,7 @@
 ﻿define([
     'Backbone',
     'Underscore',
-    'text!templates/integrationUnlinkedProducts/list/ListTemplate.html'
+    'text!templates/integrationUnlinkedProduits/list/ListTemplate.html'
 ], function (Backbone, _, listTemplate) {
     var unlinkedListItemView = Backbone.View.extend({
         el: '#listTable',
@@ -13,7 +13,7 @@
 
         render: function () {
             this.$el.append(_.template(listTemplate, {
-                unlinkedProducts: this.collection.toJSON(),
+                unlinkedProduits: this.collection.toJSON(),
                 fromIntegration : this.fromIntegration
             }));
         }

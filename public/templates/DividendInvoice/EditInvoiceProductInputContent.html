@@ -1,7 +1,7 @@
-<% products.forEach(function(product){ %>
+<% Produits.forEach(function(product){ %>
 <tr class="productItem" data-id="<%=product.product ? product.product._id : 'err'%>">
     <td data-name="productName">
-        <a class="productsDd" href="javascript:;"><%=product.product ? product.product.name.first + ' ' +
+        <a class="ProduitsDd" href="javascript:;"><%=product.product ? product.product.name.first + ' ' +
             product.product.name.last : '- - -' %></a>
     </td>
     <% if (forSales) {%>
@@ -16,7 +16,7 @@
     </td>
     <% } %>
     <%var currencyClassVal;%>
-    <%currencyClassVal = currencyClass(products.currency._id)%>
+    <%currencyClassVal = currencyClass(Produits.currency._id)%>
     <td data-name="price" class="<%=currencyClassVal%>"><span><%=product.unitPrice ? currencySplitter(product.unitPrice.toString()): ''%></span>
     </td>
     <%var taxes = (product.taxes && product.taxes.length && product.taxes[0]) || null;%>

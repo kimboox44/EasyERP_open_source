@@ -503,7 +503,7 @@ define([
             "link": true,
             "visible": true,
             "ancestors": [],
-            "href": "productSettings"
+            "href": "Produitsettings"
         }, {
             "_id": 73,
             "mname": "DashBoardVacation",
@@ -529,7 +529,7 @@ define([
             invoice: {
                 _id: "5731ecef00766a001927a456",
                 _type: "payRollInvoice",
-                products: [
+                Produits: [
                     {
                         paid: 1100,
                         product: "56600af06226e3c43108cc2b"
@@ -589,7 +589,7 @@ define([
             invoice: {
                 _id: "5731ed0200766a001927a458",
                 _type: "payRollInvoice",
-                products: [
+                Produits: [
                     {
                         paid: 300,
                         product: "56600af06226e3c43108cc33"

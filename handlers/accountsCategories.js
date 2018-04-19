@@ -249,12 +249,12 @@ var Categories = function (models, event) {
         var _id = req.param('id');
         var parentId;
 
-        AccountsCategory.findById(_id, {productsCount: 1}, function (err, result) {
+        AccountsCategory.findById(_id, {ProduitsCount: 1}, function (err, result) {
             if (err) {
                 return next(err);
             }
 
-            if (!result.productsCount) {
+            if (!result.ProduitsCount) {
                 AccountsCategory.findOneAndRemove({_id: _id}, function (err, result) {
                     if (err) {
                         return next(err);

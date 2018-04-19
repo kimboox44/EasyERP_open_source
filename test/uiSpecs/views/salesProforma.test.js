@@ -181,7 +181,7 @@ define([
         project     : {
             _id: "562beda846bca6e4591f4930"
         },
-        products    : [
+        Produits    : [
             {
                 unitPrice  : 700000,
                 subTotal   : 700000,
@@ -906,7 +906,7 @@ define([
             },
             whoCanRW    : "everyOne",
             workflow    : "55647b962e4aa3804a765ec6",
-            products    : [
+            Produits    : [
                 {
                     scheduledDate: "",
                     jobs         : "566424cd08ed794128637c23",

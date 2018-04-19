@@ -22,7 +22,7 @@ define([
         hasPagination  : false,
         noNeedCreatedIn: true,
 
-        el: '#scarceProducts',
+        el: '#scarceProduits',
 
         initialize: function (options) {
             this.collection = options.collection;
@@ -50,7 +50,7 @@ define([
             this.startDate = dateArray[0];
             this.endDate = dateArray[1];
 
-            dataService.getData('/reports/scarceProducts', {
+            dataService.getData('/reports/scarceProduits', {
                 startDate: this.startDate,
                 endDate  : this.endDate
             }, function (resp) {

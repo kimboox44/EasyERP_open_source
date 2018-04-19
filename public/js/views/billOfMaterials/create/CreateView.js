@@ -38,7 +38,7 @@ define([
             _.bindAll(this, 'saveItem', 'render');
             this.model = new BillOfMaterialsModel();
             this.responseObj = {};
-            this.products = [];
+            this.Produits = [];
 
             this.render();
         },
@@ -51,15 +51,15 @@ define([
 
             if (id === 'product') {
 
-                if (this.products.indexOf($targetId) > -1) {
+                if (this.Produits.indexOf($targetId) > -1) {
                     return App.render({
                         type   : 'error',
                         message: 'Please choose another product'
                     });
                 }
-                this.products.push($targetId);
-                if (this.products.indexOf(dataId) > -1) {
-                    this.products.splice(this.products.indexOf(dataId), 1);
+                this.Produits.push($targetId);
+                if (this.Produits.indexOf(dataId) > -1) {
+                    this.Produits.splice(this.Produits.indexOf(dataId), 1);
                 }
             }
 
@@ -204,7 +204,7 @@ define([
             productItemContainer.append(
                 new ComponentItemView({
                     responseObj: this.responseObj,
-                    products   : this.products,
+                    Produits   : this.Produits,
                     context    : this
                 }).render().el
             );
@@ -241,7 +241,7 @@ define([
 
             this.renderAssignees(this.model);
 
-            populate.get('#product', 'products/getProductsNames', {}, 'name', this, true, false, null);
+            populate.get('#product', 'Produits/getProduitsNames', {}, 'name', this, true, false, null);
             populate.get('#routing', 'routing/getNames', {}, 'name', this, true, true, null);
 
             this.createComponentView();

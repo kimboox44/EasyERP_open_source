@@ -471,14 +471,14 @@ module.exports = function (models) {
                         from        : 'matchMagento',
                         localField  : 'fields.product',
                         foreignField: '_id',
-                        as          : 'unlinkedProducts'
+                        as          : 'unlinkedProduits'
                     }
                 }, {
-                    $unwind: '$unlinkedProducts'
+                    $unwind: '$unlinkedProduits'
                 }, {
                     $project: {
-                        _id   : '$unlinkedProducts._id',
-                        fields: '$unlinkedProducts.fields'
+                        _id   : '$unlinkedProduits._id',
+                        fields: '$unlinkedProduits.fields'
                     }
                 }
             ], function (err, result) {

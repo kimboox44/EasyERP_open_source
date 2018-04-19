@@ -980,7 +980,7 @@ define([
                     spyResponse = mainSpy.args[1][0];
 
                     expect(spyResponse).to.have.property('type', 'error');
-                    expect(spyResponse).to.have.property('message', 'Products can not be empty.');
+                    expect(spyResponse).to.have.property('message', 'Produits can not be empty.');
 
                 });
 

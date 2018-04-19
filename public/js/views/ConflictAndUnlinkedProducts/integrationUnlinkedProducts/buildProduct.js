@@ -3,7 +3,7 @@ define([
     'jQuery',
     'Underscore',
     'views/dialogViewBase',
-    'text!templates/integrationUnlinkedProducts/BuildProductTemplate.html'
+    'text!templates/integrationUnlinkedProduits/BuildProductTemplate.html'
 ], function (Backbone,
              $,
              _,
@@ -12,7 +12,7 @@ define([
     'use strict';
     var BuildProductView = ParentView.extend({
         el         : '#content-holder',
-        contentType: 'integrationUnlinkedProducts',
+        contentType: 'integrationUnlinkedProduits',
         template   : _.template(BuildProductTemplate),
         events     : {},
 

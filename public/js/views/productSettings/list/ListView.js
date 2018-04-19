@@ -3,13 +3,13 @@ define([
     'jQuery',
     'Underscore',
     'views/listViewBase',
-    'text!templates/productSettings/list/ListHeader.html',
+    'text!templates/Produitsettings/list/ListHeader.html',
     'text!templates/stages.html',
-    'views/productSettings/CreateView',
-    'views/productSettings/list/ListItemView',
-    'views/productSettings/EditView',
+    'views/Produitsettings/CreateView',
+    'views/Produitsettings/list/ListItemView',
+    'views/Produitsettings/EditView',
     'models/OptionsModel',
-    'collections/productSettings/filterCollection',
+    'collections/Produitsettings/filterCollection',
     'common',
     'constants'
 ], function (
@@ -28,12 +28,12 @@ define([
              CONSTANTS) {
     'use strict';
 
-    var SettingsProductsListView = listViewBase.extend({
+    var SettingsProduitsListView = listViewBase.extend({
         listTemplate     : listTemplate,
         ListItemView     : ListItemView,
         contentCollection: contentCollection,
-        formUrl          : '#easyErp/productSettings/tform/',
-        contentType      : CONSTANTS.PRODUCTS_SETTINGS,
+        formUrl          : '#easyErp/Produitsettings/tform/',
+        contentType      : CONSTANTS.Produits_SETTINGS,
         hasPagination    : false,
 
         events: {
@@ -151,5 +151,5 @@ define([
         }
     });
 
-    return SettingsProductsListView;
+    return SettingsProduitsListView;
 });

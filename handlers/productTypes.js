@@ -3,8 +3,8 @@ var async = require('async');
 var _ = require('lodash');
 
 var ProductOptions = function (models) {
-    var ProductsOptionsSchema = mongoose.Schemas.ProductOptions;
-    var ProductsOptionsValuesSchema = mongoose.Schemas.ProductOptionsValues;
+    var ProduitsOptionsSchema = mongoose.Schemas.ProductOptions;
+    var ProduitsOptionsValuesSchema = mongoose.Schemas.ProductOptionsValues;
     var ProductTypesSchema = mongoose.Schemas.productTypes;
     var pageHelper = require('../helpers/pageHelper');
     var ObjectId = mongoose.Types.ObjectId;
@@ -232,10 +232,10 @@ var ProductOptions = function (models) {
 
         ProductTypesModel.aggregate([{
             $lookup: {
-                from        : 'Products',
+                from        : 'Produits',
                 localField  : '_id',
                 foreignField: 'info.productType',
-                as          : 'Products'
+                as          : 'Produits'
             }
         }, {
             $unwind: {
@@ -251,7 +251,7 @@ var ProductOptions = function (models) {
             }
         }, {
             $project: {
-                countProducts: {$size: '$Products'},
+                countProduits: {$size: '$Produits'},
                 name         : '$name',
                 opts         : {$arrayElemAt: ['$productOptions', 0]}
             }
@@ -260,7 +260,7 @@ var ProductOptions = function (models) {
                 _id          : '$_id',
                 options      : {$push: '$opts'},
                 name         : {$first: '$name'},
-                countProducts: {$first: '$countProducts'}
+                countProduits: {$first: '$countProduits'}
             }
         }, {
             $group: {
@@ -278,7 +278,7 @@ var ProductOptions = function (models) {
                     _id          : '$root._id',
                     name         : '$root.name',
                     options      : '$root.options',
-                    countProducts: '$root.countProducts'
+                    countProduits: '$root.countProduits'
                 }
             }
         }, {

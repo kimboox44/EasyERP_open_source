@@ -24,19 +24,19 @@
         },
 
         Persons: {
-            isCustomer   : 'Check this checkbox if you provide any services or sell any products to this customer',
-            isSupplier   : 'Check this checkbox if this customer supplies any products or services to you',
+            isCustomer   : 'Check this checkbox if you provide any services or sell any Produits to this customer',
+            isSupplier   : 'Check this checkbox if this customer supplies any Produits or services to you',
             departmentDd : 'Select department related to this customer',
-            employeesDd  : 'Assign the Salesperson who sold the products or services to this customer',
+            employeesDd  : 'Assign the Salesperson who sold the Produits or services to this customer',
             implementedBy: '',
             reference    : ''
         },
 
         Companies: {
-            isCustomer   : 'Check this checkbox if you provide any services or sell any products to this customer',
-            isSupplier   : 'Check this checkbox if this customer supplies any products or services to you',
+            isCustomer   : 'Check this checkbox if you provide any services or sell any Produits to this customer',
+            isSupplier   : 'Check this checkbox if this customer supplies any Produits or services to you',
             departmentDd : 'Select department related to this customer',
-            employeesDd  : 'Assign the Salesperson who sold the products or services to this customer',
+            employeesDd  : 'Assign the Salesperson who sold the Produits or services to this customer',
             implementedBy: '',
             reference    : ''
         },
@@ -48,7 +48,7 @@
             orderDate           : 'Select the order date. Please pay attention that it is impossible to set future date',
             expectDate          : 'Set the deadline when this order should be paid by your customer',
             priceList           : 'Select the appropriate price list for this order.',
-            warehouseDd         : 'Select the warehouse from which you are going to add products to this order',
+            warehouseDd         : 'Select the warehouse from which you are going to add Produits to this order',
             currencyDd          : 'Set the currency for this order. Please note that this currency will be used later for generating Invoice',
             assignedTo          : 'Assign the person who will be responsible for this order',
             selectShippingMethod: 'Select the shipping method that will be using  to ship this order',
@@ -82,7 +82,7 @@
             orderDate    : 'Select the order date. Please pay attention that it is impossible to set future date',
             expectDate   : 'Set the deadline when this order should be paid by your customer',
             priceList    : 'Select the appropriate price list for this order',
-            warehouseDd  : 'Select the warehouse from which you are going to add products to this order',
+            warehouseDd  : 'Select the warehouse from which you are going to add Produits to this order',
             currencyDd   : 'Set the currency for this order. Please note that this currency will be used later for generating Invoice',
             assignedTo   : 'Assign the person who will be responsible for this order'
         },
@@ -104,7 +104,7 @@
             creditAccount: 'Select the account of type Assets / Current Assets / Bank and Cash  from Chart of Accounts for receiving'
         },
 
-        Products: {
+        Produits: {
             product                : 'This product name will be shown for end users on your storefront',
             sold                   : 'Check this checkbox if you resell this product in future',
             expensed               : '',
@@ -119,12 +119,12 @@
         },
 
         stockTransactions: {
-            warehouseFrom: 'Select the warehouse where you will transfer products from',
-            warehouseTo  : 'Select the warehouse where you will transfer products to'
+            warehouseFrom: 'Select the warehouse where you will transfer Produits from',
+            warehouseTo  : 'Select the warehouse where you will transfer Produits to'
         },
 
         Invoices: {
-            supplier            : 'Select the person who supplies the products or services to you',
+            supplier            : 'Select the person who supplies the Produits or services to you',
             supplier_invoice_num: 'Enter the Invoice number you have paid for this expense'
         },
 
@@ -189,7 +189,7 @@
             apishop       : 'Shop name as it is shown on ETSY platform',
             apiuser       : 'API keystring used for connection app on ETSY with EasyERP',
             apipassword   : 'API shared secret string for connection app on ETSY with EasyERP',
-            warehouse     : 'Warehouse that will be used for synchronizing the products between EasyERP and this ETSY store',
+            warehouse     : 'Warehouse that will be used for synchronizing the Produits between EasyERP and this ETSY store',
             location      : 'Location from warehouse that will be used for synchronization with ETSY',
             priceList     : 'Price list that will be used for this integration',
             bankAccount   : 'Bank account that wil be used for all payments linked to this ecommerce channel.',

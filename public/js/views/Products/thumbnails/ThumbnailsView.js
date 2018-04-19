@@ -2,10 +2,10 @@
     'Backbone',
     'jQuery',
     'Underscore',
-    'text!templates/Products/thumbnails/ThumbnailsItemTemplate.html',
+    'text!templates/Produits/thumbnails/ThumbnailsItemTemplate.html',
     'views/thumbnailsViewBase',
-    'views/Products/EditView',
-    'views/Products/CreateView',
+    'views/Produits/EditView',
+    'views/Produits/CreateView',
     'dataService',
     'models/ProductModel',
     'common',
@@ -13,7 +13,7 @@
 ], function (Backbone, $, _, thumbnailsItemTemplate, BaseView, EditView, CreateView, dataService, CurrentModel, common, CONSTANTS) {
     var ProductThumbnalView = BaseView.extend({
         template   : _.template(thumbnailsItemTemplate),
-        contentType: 'Products',
+        contentType: 'Produits',
 
         initialize: function (options) {
             this.EditView = EditView;
@@ -42,7 +42,7 @@
            /* var ids = _.map(collection.toJSON(), function (item) {
                 return item._id;
             });
-            common.getImages(ids, '/products/getProductsImages');*/
+            common.getImages(ids, '/Produits/getProduitsImages');*/
         },
 
         createItemProduct: function () {
@@ -130,7 +130,7 @@
             var self = this;
 
             data = {
-                products: self.collection.toJSON()
+                Produits: self.collection.toJSON()
             };
 
             dataService.postData(url, data, function (err, result) {
@@ -143,12 +143,12 @@
 
         exportToCsv: function () {
             //todo change after routes refactoring
-            window.location = '/Products/exportToCsv';
+            window.location = '/Produits/exportToCsv';
         },
 
         exportToXlsx: function () {
             //todo change after routes refactoring
-            window.location = '/Products/exportToXlsx';
+            window.location = '/Produits/exportToXlsx';
         }
 
     });

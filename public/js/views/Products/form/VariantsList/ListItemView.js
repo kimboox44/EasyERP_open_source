@@ -1,11 +1,11 @@
 define([
     'Backbone',
     'Underscore',
-    'text!templates/Products/form/VariantsList/ListTemplate.html'
+    'text!templates/Produits/form/VariantsList/ListTemplate.html'
 ], function (Backbone, _, ListTemplate) {
     'use strict';
 
-    var SettingsProductsTypesListItemView = Backbone.View.extend({
+    var SettingsProduitsTypesListItemView = Backbone.View.extend({
         el: '#listTableVariants',
 
         initialize: function (options) {
@@ -25,5 +25,5 @@ define([
         }
     });
 
-    return SettingsProductsTypesListItemView;
+    return SettingsProduitsTypesListItemView;
 });

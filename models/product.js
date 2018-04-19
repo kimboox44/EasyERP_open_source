@@ -7,7 +7,7 @@ module.exports = (function () {
         quantity: {type: Number, default: 0}
     };
 
-    var productSchema = new mongoose.Schema({
+    var Produitschema = new mongoose.Schema({
         isBundle         : {type: Boolean, default: false},
         isVariant        : {type: Boolean, default: false},
         groupId          : {type: String, default: null},
@@ -24,7 +24,7 @@ module.exports = (function () {
             default: null
         },
 
-        //bundlesProducts: {type: Array, default: []},
+        //bundlesProduits: {type: Array, default: []},
 
         name: {type: String, default: ''},
 
@@ -85,13 +85,13 @@ module.exports = (function () {
         attachments: {type: Array, default: []},
 
         ID: Number
-    }, {collection: 'Products'});
+    }, {collection: 'Produits'});
 
-    mongoose.model('Product', productSchema);
+    mongoose.model('Product', Produitschema);
 
     if (!mongoose.Schemas) {
         mongoose.Schemas = {};
     }
 
-    mongoose.Schemas.Products = productSchema;
+    mongoose.Schemas.Produits = Produitschema;
 })();

@@ -6,7 +6,7 @@ define([
     'text!templates/invoice/baseForm/baseFormTemplate.html',
     'views/Notes/AttachView',
     'views/Notes/NoteView',
-    'views/Products/orderRows/ProductItems',
+    'views/Produits/orderRows/ProductItems',
     'views/Payment/CreateView',
     'views/salesInvoices/EmailView',
     'common',
@@ -86,7 +86,7 @@ define([
             var $thisEl = this.$el;
 
             var errors = $thisEl.find('.errorContent');
-            var selectedProducts = $thisEl.find('.productItem');
+            var selectedProduits = $thisEl.find('.productItem');
             var data;
             var currency = {
                 _id : $thisEl.find('#currencyDd').attr('data-id'),
@@ -324,7 +324,7 @@ define([
             this.notAddItem = true;
 
             if (this.isWtrack) {
-                wTracks = _.map(model.products, function (product) {
+                wTracks = _.map(model.Produits, function (product) {
                     return product.product;
                 });
                 project = model.project;

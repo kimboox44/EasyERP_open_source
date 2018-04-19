@@ -25,7 +25,7 @@ define([
 
         parse: function (response) {
             var payments;
-            var products;
+            var Produits;
             var balance;
             var paid;
             var total;
@@ -37,7 +37,7 @@ define([
 
             if (response) {
                 payments = response.payments;
-                products = response.products;
+                Produits = response.Produits;
 
                 if (response.currency && response.currency._id && response.currency._id.decPlace) {
                     decimalPlace = response.currency._id.decPlace;
@@ -64,8 +64,8 @@ define([
                     response.paymentInfo.paid = paid;
                 }
 
-                if (products) {
-                    products = _.map(products, function (product) {
+                if (Produits) {
+                    Produits = _.map(Produits, function (product) {
 
                         unitPrice = product.unitPrice || 0;
                         subTotal = product.subTotal || 0;
@@ -161,7 +161,7 @@ define([
             dueDate    : '',
             account    : '',
             journal    : '',
-            products   : [],
+            Produits   : [],
             paymentInfo: {
                 total  : 0,
                 taxes  : 0,

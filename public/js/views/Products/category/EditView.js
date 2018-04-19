@@ -11,7 +11,7 @@ define([
 ], function (Backbone, _, $, ParentView, EditTemplate, common, Custom, populate, dataService) {
     var EditView = ParentView.extend({
         el         : '#content-holder',
-        contentType: 'Products',
+        contentType: 'Produits',
         template   : _.template(EditTemplate),
 
         initialize: function (options) {
@@ -94,7 +94,7 @@ define([
                 wait   : true,
                 success: function () {
                     Backbone.history.fragment = '';
-                    Backbone.history.navigate('#easyErp/Products', {trigger: true});
+                    Backbone.history.navigate('#easyErp/Produits', {trigger: true});
                 },
 
                 error: function (model, xhr) {

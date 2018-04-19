@@ -14,7 +14,7 @@ define([
         },
 
         urlRoot: function () {
-            return CONSTANTS.URLS.SETTINGS_PRODUCTS_VALUES;
+            return CONSTANTS.URLS.SETTINGS_Produits_VALUES;
         }
     });
     return OptionsValuesModel;

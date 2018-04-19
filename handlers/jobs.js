@@ -17,7 +17,7 @@ var Module = function (models, event) {
     var FilterMapper = require('../helpers/filterMapper');
     var filterMapper = new FilterMapper();
 
-    var ProductService = require('../services/products')(models);
+    var Produitservice = require('../services/Produits')(models);
     var AvailabilityService = require('../services/productAvailability')(models);
     var JournalEntryHandler = require('./journalEntry');
     var jobsService = require('../services/jobs')(models);
@@ -461,7 +461,7 @@ var Module = function (models, event) {
                 }
             };
 
-            ProductService.createProduct({
+            Produitservice.createProduct({
                 body  : body,
                 dbName: req.session.lastDb,
                 uId   : req.session.uId
@@ -1761,14 +1761,14 @@ var Module = function (models, event) {
                                 query : {job: jobId}
                             };
 
-                            ProductService.findOneAndRemove(options, wCb);
+                            Produitservice.findOneAndRemove(options, wCb);
                         },
 
                         /*function (opt, wCb) {
                             var options = {
                                 dbName   : dbName,
                                 query    : {_id: {$in: opt.categoriesIds}},
-                                setObject: {$inc: {productsCount: -1}}
+                                setObject: {$inc: {ProduitsCount: -1}}
                             };
 
                             product = opt.product;
@@ -1844,7 +1844,7 @@ var Module = function (models, event) {
         };
         var project;
         var query;
-        var products;
+        var Produits;
         var type;
 
         if (id) {
@@ -1886,7 +1886,7 @@ var Module = function (models, event) {
                             }
                         }, {
                             $lookup: {
-                                from        : 'Products',
+                                from        : 'Produits',
                                 localField  : '_id',
                                 foreignField: 'job',
                                 as          : 'product'
@@ -1931,7 +1931,7 @@ var Module = function (models, event) {
                         job   : id
                     };
 
-                    ProductService.getAvailabilityByJob(options, function (err, opt) {
+                    Produitservice.getAvailabilityByJob(options, function (err, opt) {
                         if (err) {
                             return wCb(err);
                         }
@@ -1981,11 +1981,11 @@ var Module = function (models, event) {
                     callBack();
                 }
             });
-        } else if (data.products && data.products.length) {
-            products = JSON.parse(data.products);
+        } else if (data.Produits && data.Produits.length) {
+            Produits = JSON.parse(data.Produits);
             type = data.type;
 
-            async.each(products, function (product, cb) {
+            async.each(Produits, function (product, cb) {
 
                 JobsModel.findByIdAndUpdate(product.jobs, {
                     type    : type,

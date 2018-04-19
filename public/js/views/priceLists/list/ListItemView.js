@@ -5,7 +5,7 @@ define([
 ], function (Backbone, _, ListTemplate) {
     'use strict';
 
-    var SettingsProductsTypesListItemView = Backbone.View.extend({
+    var SettingsProduitsTypesListItemView = Backbone.View.extend({
         el: '#listTable',
 
         initialize: function (options) {
@@ -25,5 +25,5 @@ define([
         }
     });
 
-    return SettingsProductsTypesListItemView;
+    return SettingsProduitsTypesListItemView;
 });

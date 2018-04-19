@@ -5,7 +5,7 @@ define([
     'text!templates/Quotations/form/EditTemplate.html',
     'views/dialogViewBase',
     'views/Assignees/AssigneesView',
-    'views/Products/InvoiceOrder/ProductItems',
+    'views/Produits/InvoiceOrder/ProductItems',
     'common',
     'custom',
     'dataService',
@@ -100,9 +100,9 @@ define([
             var self = this;
             var mid = this.forSales ? 62 : 55;
             var thisEl = this.$el;
-            var selectedProducts = thisEl.find('.productItem');
-            var products = [];
-            var selectedLength = selectedProducts.length;
+            var selectedProduits = thisEl.find('.productItem');
+            var Produits = [];
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var productId;
             var quantity;
@@ -159,7 +159,7 @@ define([
 
             if (selectedLength) {
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = $(selectedProducts[i]);
+                    targetEl = $(selectedProduits[i]);
                     productId = targetEl.data('id');
 
                     if (productId) {
@@ -199,7 +199,7 @@ define([
                         }
 
                         if (jobs) {
-                            products.push({
+                            Produits.push({
                                 product       : productId,
                                 unitPrice     : price,
                                 quantity      : quantity,
@@ -216,7 +216,7 @@ define([
                                 message: "Jobs can't be empty."
                             });
                         } else {
-                            products.push({
+                            Produits.push({
                                 product      : productId,
                                 unitPrice    : price,
                                 quantity     : quantity,
@@ -236,7 +236,7 @@ define([
                 supplier         : supplier,
                 supplierReference: supplierReference,
                 deliverTo        : deliverTo,
-                products         : products,
+                Produits         : Produits,
                 project          : project,
                 orderDate        : orderDate,
                 expectedDate     : expectedDate,

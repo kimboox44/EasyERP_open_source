@@ -84,7 +84,7 @@ define([
                 });
                 if ($atachments.length === 0) {
 
-                    if (this.contentType === CONSTANTS.PRODUCTS) {
+                    if (this.contentType === CONSTANTS.Produits) {
                         self.hideDialog();
                         return;
                     }
@@ -164,7 +164,7 @@ define([
                             status.hide();
                             self.hideDialog();
 
-                            if (self.contentType === CONSTANTS.PRODUCTS) {
+                            if (self.contentType === CONSTANTS.Produits) {
                                 return;
                             }
 

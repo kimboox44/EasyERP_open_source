@@ -1,14 +1,14 @@
-var Products = function (models, event) {
+var Produits = function (models, event) {
     'use strict';
 
     var mongoose = require('mongoose');
 
-    var ProductSchema = mongoose.Schemas.Products;
+    var Produitschema = mongoose.Schemas.Produits;
     var CategorySchema = mongoose.Schemas.ProductCategory;
     var ProductPricesSchema = mongoose.Schemas.ProductPrices;
     var DepartmentSchema = mongoose.Schemas.Department;
     var ProductTypesSchema = mongoose.Schemas.productTypes;
-    var AvailabilitySchema = mongoose.Schemas.productsAvailability;
+    var AvailabilitySchema = mongoose.Schemas.ProduitsAvailability;
     // var GoodsInNoteSchema = mongoose.Schemas.GoodsInNote;
     // var GoodsOutNoteSchema = mongoose.Schemas.GoodsOutNote;
 
@@ -19,7 +19,7 @@ var Products = function (models, event) {
     var _ = require('lodash');
     var fs = require('fs');
     var exportDecorator = require('../helpers/exporter/exportDecorator');
-    var exportMap = require('../helpers/csvMap').Products;
+    var exportMap = require('../helpers/csvMap').Produits;
     var pageHelper = require('../helpers/pageHelper');
     var Integration = require('../helpers/requestMagento.js')();
     var FilterMapper = require('../helpers/filterMapper');
@@ -36,7 +36,7 @@ var Products = function (models, event) {
     var redis = require('../helpers/redisClient');
     var _getHelper = require('../helpers/integrationHelperRetriever')(models, event);
 
-    var ProductService = require('../services/products')(models);
+    var Produitservice = require('../services/Produits')(models);
     var ImagesService = require('../services/images')(models);
     var ProductCategoryService = require('../services/productCategory')(models);
     var ProductPriceService = require('../services/productPrice')(models);
@@ -53,7 +53,7 @@ var Products = function (models, event) {
 
     function updateOnlySelectedFields(req, res, next, id, data) {
         var db = req.session.lastDb;
-        var Product = models.get(db, 'Product', ProductSchema);
+        var Product = models.get(db, 'Product', Produitschema);
         var ProductCategory = models.get(db, 'ProductCategory', CategorySchema);
         var ProductPriceModel = models.get(db, 'ProductPrice', ProductPricesSchema);
         var prices = data.prices;
@@ -136,7 +136,7 @@ var Products = function (models, event) {
             },
 
             function (productId, wCb) {
-                redis.sAdd(CONSTANTS.REDIS.CHANGED_PRODUCTS, productId.toString(), wCb);
+                redis.sAdd(CONSTANTS.REDIS.CHANGED_Produits, productId.toString(), wCb);
                 wCb(null);
             }
 
@@ -150,7 +150,7 @@ var Products = function (models, event) {
     }
 
     function getProductImages(req, res, next, data) {
-        var query = models.get(req.session.lastDb, 'Products', ProductSchema).find({});
+        var query = models.get(req.session.lastDb, 'Produits', Produitschema).find({});
         query.where('_id').in(data.ids).select('_id imageSrc').exec(function (error, response) {
             if (error) {
                 next(error);
@@ -202,7 +202,7 @@ var Products = function (models, event) {
                 return callback(err);
             }
 
-            ProductService.findOne({_id: id}, {dbName: dbName}, function (err, product) {
+            Produitservice.findOne({_id: id}, {dbName: dbName}, function (err, product) {
                 if (err) {
                     return callback(err);
                 }
@@ -218,7 +218,7 @@ var Products = function (models, event) {
                             query : {_id: id}
                         };
 
-                        ProductService.findOneAndRemove(options, function (err, product) {
+                        Produitservice.findOneAndRemove(options, function (err, product) {
                             if (err) {
                                 return wCb(err);
                             }
@@ -249,7 +249,7 @@ var Products = function (models, event) {
                     },
 
                     function (wCb) {
-                        redis.sMove(CONSTANTS.REDIS.CHANGED_PRODUCTS, id.toString(), function (err) {
+                        redis.sMove(CONSTANTS.REDIS.CHANGED_Produits, id.toString(), function (err) {
                             if (err) {
                                 return wCb(err);
                             }
@@ -261,7 +261,7 @@ var Products = function (models, event) {
                     function (wCb) {
                         var groupId = removedProduct.groupId;
 
-                        ProductService.find({groupId: groupId}, {dbName: dbName})
+                        Produitservice.find({groupId: groupId}, {dbName: dbName})
                             .count()
                             .exec(function (err, count) {
                                 if (err) {
@@ -289,7 +289,7 @@ var Products = function (models, event) {
     }
 
     function getAll(req, res, next) {
-        var Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+        var Product = models.get(req.session.lastDb, 'Product', Produitschema);
         var queryObject = {};
         var query = req.query;
         var doNotGetImage = query.doNotGetImage || false;
@@ -342,38 +342,38 @@ var Products = function (models, event) {
                     name: 1,
                     info: 1
                 }
-            }], function (err, products) {
+            }], function (err, Produits) {
                 if (err) {
                     return next(err);
                 }
 
-                res.status(200).send({success: products});
+                res.status(200).send({success: Produits});
             });
         } else {
             // queryObject.job = null;
             Product.find(queryObject, projection)
                 .populate('variants')
-                .exec(function (err, products) {
+                .exec(function (err, Produits) {
                     var i = 0;
 
                     if (err) {
                         return next(err);
                     }
 
-                    for (i; i < products.length; i++) {
+                    for (i; i < Produits.length; i++) {
                         if (doNotGetImage) {
-                            products[i].imageSrc = '';
+                            Produits[i].imageSrc = '';
                         }
                     }
 
-                    res.status(200).send({success: products});
+                    res.status(200).send({success: Produits});
                 });
         }
 
     }
 
-    function getProductsForBundles(req, res, next) {
-        var Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+    function getProduitsForBundles(req, res, next) {
+        var Product = models.get(req.session.lastDb, 'Product', Produitschema);
         var query = req.query;
         var searchValue = query.filter && query.filter.value;
         var searchRegExp = new RegExp(searchValue, 'ig');
@@ -418,7 +418,7 @@ var Products = function (models, event) {
         });
     }
 
-    function getProductsFilter(req, res, next) {
+    function getProduitsFilter(req, res, next) {
         var mid = req.query.contentType === 'salesProduct' ? 65 : 58;
         var Product;
         var query = req.query || {};
@@ -453,7 +453,7 @@ var Products = function (models, event) {
             delete filter.productId;
         }
 
-        Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+        Product = models.get(req.session.lastDb, 'Product', Produitschema);
 
         if (query && query.sort) {
             key = Object.keys(query.sort)[0].toString();
@@ -490,18 +490,18 @@ var Products = function (models, event) {
             matchObject.name = {$regex: regExp};
         }
 
-        contentSearcher = function (productsIds, waterfallCallback) {
+        contentSearcher = function (ProduitsIds, waterfallCallback) {
             var aggregation;
             var matchAggregationArray = [];
             var aggregationArray;
 
-            optionsObject.$and.push({_id: {$in: productsIds}});
+            optionsObject.$and.push({_id: {$in: ProduitsIds}});
 
             if (!toExpand) {
                 aggregationArray = [{
                     $lookup: {
                         from        : 'productTypes',
-                        localField  : 'products.info.productType',
+                        localField  : 'Produits.info.productType',
                         foreignField: '_id',
                         as          : 'ProductTypes'
                     }
@@ -512,13 +512,13 @@ var Products = function (models, event) {
                     }
                 }, {
                     $unwind: {
-                        path                      : '$products.info.categories',
+                        path                      : '$Produits.info.categories',
                         preserveNullAndEmptyArrays: true
                     }
                 }, {
                     $lookup: {
                         from        : 'ProductCategories',
-                        localField  : 'products.info.categories',
+                        localField  : 'Produits.info.categories',
                         foreignField: '_id',
                         as          : 'productCategories'
                     }
@@ -530,18 +530,18 @@ var Products = function (models, event) {
                 }, {
                     $lookup: {
                         from        : 'Images',
-                        localField  : 'products.imageSrc',
+                        localField  : 'Produits.imageSrc',
                         foreignField: '_id',
-                        as          : 'products.image'
+                        as          : 'Produits.image'
                     }
                 }, {
                     $unwind: {
-                        path                      : '$products.image',
+                        path                      : '$Produits.image',
                         preserveNullAndEmptyArrays: true
                     }
                 }, {
                     $group: {
-                        _id              : '$products._id',
+                        _id              : '$Produits._id',
                         productCategories: {
                             $push: {
                                 _id : '$productCategories._id',
@@ -551,19 +551,19 @@ var Products = function (models, event) {
 
                         variantsCount: {$first: '$variantsCount'},
                         ProductTypes : {$first: '$ProductTypes'},
-                        products     : {$first: '$products'},
+                        Produits     : {$first: '$Produits'},
                         image        : {$first: '$image'},
                         count        : {$first: '$count'}
                     }
                 }, {
                     $unwind: {
-                        path                      : '$products.variants',
+                        path                      : '$Produits.variants',
                         preserveNullAndEmptyArrays: true
                     }
                 }, {
                     $lookup: {
                         from        : 'ProductOptionsValues',
-                        localField  : 'products.variants',
+                        localField  : 'Produits.variants',
                         foreignField: '_id',
                         as          : 'variants'
                     }
@@ -586,36 +586,36 @@ var Products = function (models, event) {
                     }
                 }, {
                     $group: {
-                        _id              : '$products._id',
+                        _id              : '$Produits._id',
                         variants         : {$push: '$variants'},
                         count            : {$first: '$count'},
                         ProductTypes     : {$first: '$ProductTypes'},
                         productCategories: {$first: '$productCategories'},
-                        products         : {$first: '$products'},
+                        Produits         : {$first: '$Produits'},
                         variantsCount    : {$first: '$variantsCount'}
                     }
                 }, {
                     $project: {
                         count: 1,
                         data : {
-                            _id              : '$products._id',
-                            info             : '$products.info',
-                            bundles          : '$products.bundles',
-                            inventory        : '$products.inventory',
-                            name             : '$products.name',
-                            imageSrc         : '$products.image.imageSrc',
-                            isBundle         : '$products.isBundle',
+                            _id              : '$Produits._id',
+                            info             : '$Produits.info',
+                            bundles          : '$Produits.bundles',
+                            inventory        : '$Produits.inventory',
+                            name             : '$Produits.name',
+                            imageSrc         : '$Produits.image.imageSrc',
+                            isBundle         : '$Produits.isBundle',
                             ProductTypesId   : '$ProductTypes._id',
                             ProductTypesName : '$ProductTypes.name',
                             ProductCategories: '$productCategories',
                             variants         : '$variants',
-                            createdBy        : '$products.createdBy',
-                            groupId          : '$products.groupId',
+                            createdBy        : '$Produits.createdBy',
+                            groupId          : '$Produits.groupId',
                             variantsCount    : {
                                 $filter: {
                                     input: '$variantsCount',
                                     as   : 'variant',
-                                    cond : {$eq: ['$products.groupId', '$$variant.groupId']}
+                                    cond : {$eq: ['$Produits.groupId', '$$variant.groupId']}
                                 }
                             }
                         }
@@ -675,7 +675,7 @@ var Products = function (models, event) {
                     $group: {
                         _id          : '$groupId',
                         variantsCount: {$sum: 1},
-                        products     : {$first: '$$ROOT'}
+                        Produits     : {$first: '$$ROOT'}
                     }
                 }, {
                     $group: {
@@ -688,16 +688,16 @@ var Products = function (models, event) {
                         },
 
                         count   : {$sum: 1},
-                        products: {$push: '$products'}
+                        Produits: {$push: '$Produits'}
                     }
                 }, {
-                    $unwind: '$products'
+                    $unwind: '$Produits'
                 }];
             } else {
                 aggregationArray = [{
                     $lookup: {
                         from        : 'productTypes',
-                        localField  : 'products.info.productType',
+                        localField  : 'Produits.info.productType',
                         foreignField: '_id',
                         as          : 'ProductTypes'
                     }
@@ -708,13 +708,13 @@ var Products = function (models, event) {
                     }
                 }, {
                     $unwind: {
-                        path                      : '$products.info.categories',
+                        path                      : '$Produits.info.categories',
                         preserveNullAndEmptyArrays: true
                     }
                 }, {
                     $lookup: {
                         from        : 'ProductCategories',
-                        localField  : 'products.info.categories',
+                        localField  : 'Produits.info.categories',
                         foreignField: '_id',
                         as          : 'productCategories'
                     }
@@ -726,18 +726,18 @@ var Products = function (models, event) {
                 }, {
                     $lookup: {
                         from        : 'Images',
-                        localField  : 'products.imageSrc',
+                        localField  : 'Produits.imageSrc',
                         foreignField: '_id',
-                        as          : 'products.image'
+                        as          : 'Produits.image'
                     }
                 }, {
                     $unwind: {
-                        path                      : '$products.image',
+                        path                      : '$Produits.image',
                         preserveNullAndEmptyArrays: true
                     }
                 }, {
                     $group: {
-                        _id              : '$products._id',
+                        _id              : '$Produits._id',
                         productCategories: {
                             $push: {
                                 _id : '$productCategories._id',
@@ -747,18 +747,18 @@ var Products = function (models, event) {
 
                         variantsCount: {$first: '$variantsCount'},
                         ProductTypes : {$first: '$ProductTypes'},
-                        products     : {$first: '$products'},
+                        Produits     : {$first: '$Produits'},
                         count        : {$first: '$count'}
                     }
                 }, {
                     $unwind: {
-                        path                      : '$products.variants',
+                        path                      : '$Produits.variants',
                         preserveNullAndEmptyArrays: true
                     }
                 }, {
                     $lookup: {
                         from        : 'ProductOptionsValues',
-                        localField  : 'products.variants',
+                        localField  : 'Produits.variants',
                         foreignField: '_id',
                         as          : 'variants'
                     }
@@ -807,12 +807,12 @@ var Products = function (models, event) {
                     }
                 }, {
                     $group: {
-                        _id              : '$products._id',
+                        _id              : '$Produits._id',
                         variants         : {$push: '$variants'},
                         count            : {$first: '$count'},
                         ProductTypes     : {$first: '$ProductTypes'},
                         productCategories: {$first: '$productCategories'},
-                        products         : {$first: '$products'},
+                        Produits         : {$first: '$Produits'},
                         variantsCount    : {$first: '$variantsCount'},
                         channelLinks     : {
                             $addToSet: {
@@ -825,25 +825,25 @@ var Products = function (models, event) {
                     $project: {
                         count: 1,
                         data : {
-                            _id              : '$products._id',
-                            info             : '$products.info',
-                            bundles          : '$products.bundles',
-                            inventory        : '$products.inventory',
-                            name             : '$products.name',
-                            imageSrc         : '$products.image.imageSrc',
-                            isBundle         : '$products.isBundle',
+                            _id              : '$Produits._id',
+                            info             : '$Produits.info',
+                            bundles          : '$Produits.bundles',
+                            inventory        : '$Produits.inventory',
+                            name             : '$Produits.name',
+                            imageSrc         : '$Produits.image.imageSrc',
+                            isBundle         : '$Produits.isBundle',
                             ProductTypesId   : '$ProductTypes._id',
                             ProductTypesName : '$ProductTypes.name',
                             ProductCategories: '$productCategories',
                             variants         : '$variants',
-                            createdBy        : '$products.createdBy',
+                            createdBy        : '$Produits.createdBy',
                             channelLinks     : '$channelLinks',
-                            groupId          : '$products.groupId',
+                            groupId          : '$Produits.groupId',
                             variantsCount    : {
                                 $filter: {
                                     input: '$variantsCount',
                                     as   : 'variant',
-                                    cond : {$eq: ['$products.groupId', '$$variant.groupId']}
+                                    cond : {$eq: ['$Produits.groupId', '$$variant.groupId']}
                                 }
                             }
                         }
@@ -907,10 +907,10 @@ var Products = function (models, event) {
                         $group: {
                             _id     : null,
                             count   : {$sum: 1},
-                            products: {$push: '$$ROOT'}
+                            Produits: {$push: '$$ROOT'}
                         }
                     }, {
-                        $unwind: '$products'
+                        $unwind: '$Produits'
                     }];
                 } else {
                     matchAggregationArray = [{
@@ -919,10 +919,10 @@ var Products = function (models, event) {
                         $group: {
                             _id     : null,
                             count   : {$sum: 1},
-                            products: {$push: '$$ROOT'}
+                            Produits: {$push: '$$ROOT'}
                         }
                     }, {
-                        $unwind: '$products'
+                        $unwind: '$Produits'
                     }];
                 }
             }
@@ -976,19 +976,19 @@ var Products = function (models, event) {
 
         waterfallTasks = [accessRollSearcher, contentSearcher];
 
-        async.waterfall(waterfallTasks, function (err, products) {
+        async.waterfall(waterfallTasks, function (err, Produits) {
             if (err) {
                 return next(err);
             }
 
-            res.status(200).send(products);
+            res.status(200).send(Produits);
         });
     }
 
-    function getProductsById(req, res, next) {
+    function getProduitsById(req, res, next) {
         var db = req.session.lastDb;
         var id = req.query.id || req.params.id;
-        var Product = models.get(db, 'Products', ProductSchema);
+        var Product = models.get(db, 'Produits', Produitschema);
         var departmentSearcher;
         var contentIdsSearcher;
         var contentSearcher;
@@ -1022,7 +1022,7 @@ var Products = function (models, event) {
             var matchQuery = {
                 $or: whoCanRw
             };
-            var Model = models.get(req.session.lastDb, 'Product', ProductSchema);
+            var Model = models.get(req.session.lastDb, 'Product', Produitschema);
 
             Model.aggregate({
                 $match: matchQuery
@@ -1033,29 +1033,29 @@ var Products = function (models, event) {
             }, waterfallCallback);
         };
 
-        contentSearcher = function (productsIds, waterfallCallback) {
+        contentSearcher = function (ProduitsIds, waterfallCallback) {
             Product.aggregate([{
                 $match: {
                     _id: objectId(id)
                 }
             }, {
                 $lookup: {
-                    from        : 'Products',
+                    from        : 'Produits',
                     localField  : 'groupId',
                     foreignField: 'groupId',
-                    as          : 'products'
+                    as          : 'Produits'
                 }
             }, {
-                $unwind: '$products'
+                $unwind: '$Produits'
             }, {
                 $unwind: {
-                    path                      : '$products.bundles',
+                    path                      : '$Produits.bundles',
                     preserveNullAndEmptyArrays: true
                 }
             }, {
                 $lookup: {
-                    from        : 'Products',
-                    localField  : 'products.bundles._id',
+                    from        : 'Produits',
+                    localField  : 'Produits.bundles._id',
                     foreignField: '_id',
                     as          : 'BundlessProduct'
                 }
@@ -1067,44 +1067,44 @@ var Products = function (models, event) {
             }, {
                 $lookup: {
                     from        : 'Images',
-                    localField  : 'products.imageSrc',
+                    localField  : 'Produits.imageSrc',
                     foreignField: '_id',
-                    as          : 'products.image'
+                    as          : 'Produits.image'
                 }
             }, {
                 $unwind: {
-                    path                      : '$products.image',
+                    path                      : '$Produits.image',
                     preserveNullAndEmptyArrays: true
                 }
             }, {
                 $project: {
-                    _id      : '$products._id',
-                    info     : '$products.info',
-                    name     : '$products.name',
-                    isBundle : '$products.isBundle',
-                    isVariant: '$products.isVariant',
-                    inventory: '$products.inventory',
-                    imageSrc : '$products.image.imageSrc',
-                    variants : '$products.variants',
+                    _id      : '$Produits._id',
+                    info     : '$Produits.info',
+                    name     : '$Produits.name',
+                    isBundle : '$Produits.isBundle',
+                    isVariant: '$Produits.isVariant',
+                    inventory: '$Produits.inventory',
+                    imageSrc : '$Produits.image.imageSrc',
+                    variants : '$Produits.variants',
 
                     bundles: {
                         _id     : '$BundlessProduct._id',
                         name    : '$BundlessProduct.name',
-                        quantity: '$products.bundles.quantity'
+                        quantity: '$Produits.bundles.quantity'
                     },
 
-                    workflow         : '$products.workflow',
-                    whoCanRW         : '$products.whoCanRW',
-                    groups           : '$products.groups',
-                    creationDate     : '$products.creationDate',
-                    createdBy        : '$products.createdBy',
-                    editedBy         : '$products.editedBy',
-                    attachments      : '$products.attachments',
-                    canBeSold        : '$products.canBeSold',
-                    canBeExpensed    : '$products.canBeExpensed',
-                    eventSubscription: '$products.eventSubscription',
-                    canBePurchased   : '$products.canBePurchased',
-                    groupId          : '$products.groupId'
+                    workflow         : '$Produits.workflow',
+                    whoCanRW         : '$Produits.whoCanRW',
+                    groups           : '$Produits.groups',
+                    creationDate     : '$Produits.creationDate',
+                    createdBy        : '$Produits.createdBy',
+                    editedBy         : '$Produits.editedBy',
+                    attachments      : '$Produits.attachments',
+                    canBeSold        : '$Produits.canBeSold',
+                    canBeExpensed    : '$Produits.canBeExpensed',
+                    eventSubscription: '$Produits.eventSubscription',
+                    canBePurchased   : '$Produits.canBePurchased',
+                    groupId          : '$Produits.groupId'
                 }
             }, {
                 $group: {
@@ -1482,9 +1482,9 @@ var Products = function (models, event) {
         });
     }
 
-    function getProductsAvailable(req, res, next) {
+    function getProduitsAvailable(req, res, next) {
         var query = req.query;
-        var Availability = models.get(req.session.lastDb, 'productsAvailability', AvailabilitySchema);
+        var Availability = models.get(req.session.lastDb, 'ProduitsAvailability', AvailabilitySchema);
 
         var departmentSearcher;
         var contentIdsSearcher;
@@ -1514,7 +1514,7 @@ var Products = function (models, event) {
             var matchQuery = {
                 $or: whoCanRw
             };
-            var Model = models.get(req.session.lastDb, 'Product', ProductSchema);
+            var Model = models.get(req.session.lastDb, 'Product', Produitschema);
 
             Model.aggregate([{
                 $match: matchQuery
@@ -1525,7 +1525,7 @@ var Products = function (models, event) {
             }], waterfallCallback);
         };
 
-        contentSearcher = function (productsIds, waterfallCallback) {
+        contentSearcher = function (ProduitsIds, waterfallCallback) {
             var product = query.product ? objectId(query.product) : null;
             var warehouse = query.warehouse ? objectId(query.warehouse) : null;
 
@@ -1616,8 +1616,8 @@ var Products = function (models, event) {
         });
     }
 
-    function getProductsAlphabet(req, response, next) {
-        var Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+    function getProduitsAlphabet(req, response, next) {
+        var Product = models.get(req.session.lastDb, 'Product', Produitschema);
         var queryObject = {};
         var query;
 
@@ -1675,7 +1675,7 @@ var Products = function (models, event) {
 
     this.deleteImage = function (req, res, next) {
         var db = req.session.lastDb;
-        //var Product = models.get(db, 'Product', ProductSchema);
+        //var Product = models.get(db, 'Product', Produitschema);
         //var ProductCategory = models.get(db, 'ProductCategory', CategorySchema);
         //var ProductPriceModel = models.get(db, 'ProductPrice', ProductPricesSchema);
         var body = req.body;
@@ -1688,7 +1688,7 @@ var Products = function (models, event) {
 
     this.create = function (req, res, next) {
         var db = req.session.lastDb;
-        var Product = models.get(db, 'Product', ProductSchema);
+        var Product = models.get(db, 'Product', Produitschema);
         var ProductCategory = models.get(db, 'ProductCategory', CategorySchema);
         var ProductPriceModel = models.get(db, 'ProductPrice', ProductPricesSchema);
         var body = req.body;
@@ -1775,13 +1775,13 @@ var Products = function (models, event) {
 
                 body.imageSrc = result;
 
-                ProductService.createProduct({body: body, dbName: req.session.lastDb, uId: req.session.uId}, wCb);
+                Produitservice.createProduct({body: body, dbName: req.session.lastDb, uId: req.session.uId}, wCb);
             },
 
             function (product, wCb) {
                 var id = product._id;
                 // set changed and created product id to redis for integration sync
-                redis.sAdd(CONSTANTS.REDIS.CHANGED_PRODUCTS, id.toString(), function (err) {
+                redis.sAdd(CONSTANTS.REDIS.CHANGED_Produits, id.toString(), function (err) {
                     if (err) {
                         return wCb(err);
                     }
@@ -1920,7 +1920,7 @@ var Products = function (models, event) {
         var variants = body.variants;
         var isNew = body.isNew;
         var productId = req.params.id;
-        var Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+        var Product = models.get(req.session.lastDb, 'Product', Produitschema);
         var ProductPrices = models.get(req.session.lastDb, 'ProductPrices', ProductPricesSchema);
         var Category = models.get(req.session.lastDb, 'ProductCategory', CategorySchema);
         var modelJSON;
@@ -2052,7 +2052,7 @@ var Products = function (models, event) {
             createVariants,
             createProductPrice,
             function (ids, wCb) {
-                redis.sAdd(CONSTANTS.REDIS.CHANGED_PRODUCTS, ids, wCb);
+                redis.sAdd(CONSTANTS.REDIS.CHANGED_Produits, ids, wCb);
             }
         ], function (err) {
             if (err) {
@@ -2064,7 +2064,7 @@ var Products = function (models, event) {
 
     };
 
-    this.productsUpdateOnlySelectedFields = function (req, res, next) {
+    this.ProduitsUpdateOnlySelectedFields = function (req, res, next) {
         var id = req.params._id;
         var data = req.body;
         var emptyArray = [];
@@ -2088,7 +2088,7 @@ var Products = function (models, event) {
         updateOnlySelectedFields(req, res, next, id, data);
     };
 
-    this.getProductsImages = function (req, res, next) {
+    this.getProduitsImages = function (req, res, next) {
         var data = {};
         data.ids = req.query.ids || [];
 
@@ -2153,7 +2153,7 @@ var Products = function (models, event) {
         }
 
         if (id && id.length >= 24) {
-            return getProductsById(req, res, next);
+            return getProduitsById(req, res, next);
         } else if (id && id.length < 24) {
             return res.status(400).send();
         }
@@ -2161,13 +2161,13 @@ var Products = function (models, event) {
         switch (viewType) {
             case 'list':
             case 'thumbnails':
-                getProductsFilter(req, res, next);
+                getProduitsFilter(req, res, next);
                 break;
             case 'form':
-                getProductsById(req, res, next);
+                getProduitsById(req, res, next);
                 break;
             case 'forBundle':
-                getProductsForBundles(req, res, next);
+                getProduitsForBundles(req, res, next);
                 break;
             default:
                 getAll(req, res, next);
@@ -2175,23 +2175,23 @@ var Products = function (models, event) {
         }
     };
 
-    this.getProductsTypeForDd = function (req, res, next) {
+    this.getProduitsTypeForDd = function (req, res, next) {
 
         getForDd(req, res, next);
     };
 
-    this.getProductsAlphabet = function (req, res, next) {
+    this.getProduitsAlphabet = function (req, res, next) {
 
-        getProductsAlphabet(req, res, next);
+        getProduitsAlphabet(req, res, next);
     };
 
-    this.getProductsAvailable = function (req, res, next) {
+    this.getProduitsAvailable = function (req, res, next) {
 
-        getProductsAvailable(req, res, next);
+        getProduitsAvailable(req, res, next);
     };
 
-    this.getProductsNames = function (req, res, next) {
-        var Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+    this.getProduitsNames = function (req, res, next) {
+        var Product = models.get(req.session.lastDb, 'Product', Produitschema);
 
         Product.aggregate([
             {
@@ -2210,8 +2210,8 @@ var Products = function (models, event) {
         });
     };
 
-    this.getProductsDimension = function (req, res, next) {
-        var Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+    this.getProduitsDimension = function (req, res, next) {
+        var Product = models.get(req.session.lastDb, 'Product', Produitschema);
 
         Product.aggregate([
             {
@@ -2234,7 +2234,7 @@ var Products = function (models, event) {
         var data = req.query || {};
         var filter = data.filter;
         var contentType = data.contentType;
-        var Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+        var Product = models.get(req.session.lastDb, 'Product', Produitschema);
         var optionsObject = {};
         var result = {};
 
@@ -2277,7 +2277,7 @@ var Products = function (models, event) {
                     }
                 ]
             };
-            var Model = models.get(req.session.lastDb, 'Product', ProductSchema);
+            var Model = models.get(req.session.lastDb, 'Product', Produitschema);
 
             Model.aggregate(
                 {
@@ -2292,9 +2292,9 @@ var Products = function (models, event) {
             );
         };
 
-        contentSearcher = function (productsIds, waterfallCallback) {
+        contentSearcher = function (ProduitsIds, waterfallCallback) {
             var query;
-            optionsObject._id = {$in: productsIds};
+            optionsObject._id = {$in: ProduitsIds};
 
             query = Product.find(optionsObject);
             query.exec(waterfallCallback);
@@ -2302,12 +2302,12 @@ var Products = function (models, event) {
 
         waterfallTasks = [departmentSearcher, contentIdsSearcher, contentSearcher];
 
-        async.waterfall(waterfallTasks, function (err, products) {
+        async.waterfall(waterfallTasks, function (err, Produits) {
             if (err) {
                 return next(err);
             }
 
-            result.count = products.length;
+            result.count = Produits.length;
             res.status(200).send(result);
 
         });
@@ -2317,7 +2317,7 @@ var Products = function (models, event) {
         var db = req.session.lastDb;
         var headers = req.headers;
         var id = headers.modelid || 'empty';
-        var contentType = headers.modelname || 'products';
+        var contentType = headers.modelname || 'Produits';
         var files = req.files && req.files.attachfile ? req.files.attachfile : null;
         var dir;
         var err;
@@ -2348,7 +2348,7 @@ var Products = function (models, event) {
     };
 
     this.updateSkuForGroup = function (req, res, next) {
-        var Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+        var Product = models.get(req.session.lastDb, 'Product', Produitschema);
         var body = req.body;
         var skus = body.skus;
 
@@ -2372,7 +2372,7 @@ var Products = function (models, event) {
     this.publishToChannel = function (req, res, next) {
         var body = req.body;
         var shippingTemplate = body.shippingTemplate;
-        var productIds = body.products;
+        var productIds = body.Produits;
         var channel = body.channel;
         var priceList = body.priceList;
         var dbName = req.session.lastDb;
@@ -2397,32 +2397,32 @@ var Products = function (models, event) {
                 });
         }
 
-        function getProducts(productQuery, pCb) {
+        function getProduits(productQuery, pCb) {
             if (type === 'magento' || type === 'etsy') {
 
-                return ProductService.getProductsForSyncToChannel({
+                return Produitservice.getProduitsForSyncToChannel({
                     query             : productQuery,
                     populateCategories: true,
                     dbName            : dbName
-                }, function (err, products) {
+                }, function (err, Produits) {
                     if (err) {
                         return pCb(err);
                     }
 
-                    pCb(null, products);
+                    pCb(null, Produits);
                 });
 
             }
 
-            ProductService.getProductsWithVariants({
+            Produitservice.getProduitsWithVariants({
                 query : productQuery,
                 dbName: dbName
-            }, function (err, products) {
+            }, function (err, Produits) {
                 if (err) {
                     return pCb(err);
                 }
 
-                pCb(null, products);
+                pCb(null, Produits);
             });
         }
 
@@ -2466,7 +2466,7 @@ var Products = function (models, event) {
             });
         }
 
-        function getNativeProducts(wCb) {
+        function getNativeProduits(wCb) {
             var productPricesQuery = {
                 priceLists: objectId(priceList),
                 product   : {$in: productIds.objectID()}
@@ -2477,16 +2477,16 @@ var Products = function (models, event) {
 
             async.parallel({
                 getProductPrices: async.apply(getProductPrices, productPricesQuery),
-                getProducts     : async.apply(getProducts, productQuery)
+                getProduits     : async.apply(getProduits, productQuery)
             }, function (err, parallelRes) {
                 var productPrices = parallelRes.getProductPrices;
-                var products = parallelRes.getProducts;
+                var Produits = parallelRes.getProduits;
 
                 if (err) {
                     return wCb(err);
                 }
 
-                products = products.map(function (product) {
+                Produits = Produits.map(function (product) {
                     var needProductPrice = _.find(productPrices, {product: product._id});
 
                     product.productPrices = needProductPrice;
@@ -2494,11 +2494,11 @@ var Products = function (models, event) {
                     return product;
                 });
 
-                wCb(null, products);
+                wCb(null, Produits);
             });
         }
 
-        function createProductsOnChannel(products, wCb) {
+        function createProduitsOnChannel(Produits, wCb) {
             var integrationHelper = getHelper(type);
             var opts = {
                 dbName: dbName
@@ -2508,7 +2508,7 @@ var Products = function (models, event) {
             opts = _.assign(opts, channelSettings);
             opts.settings = urlSettings;
 
-            async.eachLimit(products, 1, function (product, eCb) {
+            async.eachLimit(Produits, 1, function (product, eCb) {
                 var channelLinksObj = {
                     product     : product._id,
                     channel     : objectId(channel),
@@ -2557,8 +2557,8 @@ var Products = function (models, event) {
         waterfallTasks = [
             getChannelSettings,
             getUrlSettings,
-            getNativeProducts,
-            createProductsOnChannel
+            getNativeProduits,
+            createProduitsOnChannel
         ];
 
         async.waterfall(waterfallTasks, function (err) {
@@ -2573,7 +2573,7 @@ var Products = function (models, event) {
     this.unlinkFromChannel = function (req, res, next) {
         var body = req.body;
         var channel = body.channel;
-        var productIds = body.products;
+        var productIds = body.Produits;
         var criteria = {
             channel: objectId(channel),
             product: {$in: productIds.objectID()}
@@ -2595,7 +2595,7 @@ var Products = function (models, event) {
     this.unpublishFromChannel = function (req, res, next) {
         var body = req.body;
         var channel = body.channel;
-        var productIds = body.products;
+        var productIds = body.Produits;
         var dbName = req.session.lastDb;
         var channelSettings;
         var waterfallTasks;
@@ -2723,7 +2723,7 @@ var Products = function (models, event) {
                 return next(err);
             }
 
-            res.status(200).send({success: 'Products unpublished success'});
+            res.status(200).send({success: 'Produits unpublished success'});
         });
     };
 
@@ -2733,7 +2733,7 @@ var Products = function (models, event) {
             dbName: req.session.lastDb
         };
 
-        ProductService.getInventoryForProduct(options, function (err, result) {
+        Produitservice.getInventoryForProduct(options, function (err, result) {
             if (err) {
                 return next(err);
             }
@@ -2743,7 +2743,7 @@ var Products = function (models, event) {
     };
 
     this.getForManufacturing = function (req, res, next) {
-        var Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+        var Product = models.get(req.session.lastDb, 'Product', Produitschema);
 
         Product.find({}).exec(function (err, result) {
             if (err) {
@@ -2754,7 +2754,7 @@ var Products = function (models, event) {
         });
     };
 
-    // this.getProductsAvailability = function (req, res, next) {
+    // this.getProduitsAvailability = function (req, res, next) {
     //     var body = req.body;
     //     var startDate = body.startDate ? new Date(body.startDate) : new Date();
     //     var endDate = body.endDate ? new Date(body.endDate) : new Date();
@@ -2836,4 +2836,4 @@ var Products = function (models, event) {
     // }
 };
 
-module.exports = Products;
+module.exports = Produits;

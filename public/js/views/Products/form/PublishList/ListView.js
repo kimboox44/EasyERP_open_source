@@ -3,9 +3,9 @@ define([
     'jQuery',
     'Underscore',
     'views/listViewBase',
-    'text!templates/Products/form/PublishList/ListHeader.html',
-    'views/Products/form/PublishList/ListItemView',
-    'views/Products/publishProductView',
+    'text!templates/Produits/form/PublishList/ListHeader.html',
+    'views/Produits/form/PublishList/ListItemView',
+    'views/Produits/publishProductView',
     'views/selectView/selectView',
     'collections/integrations/filterCollection',
     'dataService'
@@ -65,7 +65,7 @@ define([
         },
 
         publishProduct: function (options) {
-            options.products = [this.product._id];
+            options.Produits = [this.product._id];
 
             this.makeTheAction(options, 'published', dataService.postData);
         },
@@ -74,7 +74,7 @@ define([
             var $target = $(e.target);
             var channel = $target.closest('tr').attr('id');
             var data = {
-                products: [this.product._id],
+                Produits: [this.product._id],
                 channel : channel
             };
 
@@ -84,7 +84,7 @@ define([
         makeTheAction: function (data, status, sendRequest) {
             var urlHash = window.location.hash;
 
-            sendRequest('/products/channelLinks', data, function (err) {
+            sendRequest('/Produits/channelLinks', data, function (err) {
                 if (err) {
                     return this.errorNotification(err);
                 }

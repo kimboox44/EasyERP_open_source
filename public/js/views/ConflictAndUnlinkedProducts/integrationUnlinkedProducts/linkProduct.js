@@ -3,8 +3,8 @@ define([
     'jQuery',
     'Underscore',
     'views/dialogViewBase',
-    'text!templates/integrationUnlinkedProducts/LinkProductTemplate.html',
-    'collections/Products/filterCollection'
+    'text!templates/integrationUnlinkedProduits/LinkProductTemplate.html',
+    'collections/Produits/filterCollection'
 ], function (Backbone,
              $,
              _,
@@ -14,7 +14,7 @@ define([
     'use strict';
     var LinkProductView = ParentView.extend({
         el         : '#content-holder',
-        contentType: 'integrationUnlinkedProducts',
+        contentType: 'integrationUnlinkedProduits',
         template   : _.template(LinkProductTemplate),
         events     : {
             'click #searchBtn'  : 'searchProduct',
@@ -33,7 +33,7 @@ define([
         searchProduct: function (e) {
             var $target = e ? $(e.target) : null;
             var $searchContainer = $target && $target.closest('.searchContainer');
-            var $search = $target && $searchContainer.find('#searchProducts');
+            var $search = $target && $searchContainer.find('#searchProduits');
             var searchValue = $target ? $search.val() : '';
             var filterOpts = {
                 value: searchValue
@@ -50,15 +50,15 @@ define([
 
             if (!this.searchProdCollection) {
                 this.searchProdCollection = new SearchCollection(collectionOpts);
-                this.searchProdCollection.bind('reset', _.bind(this.renderSearchProducts, this));
+                this.searchProdCollection.bind('reset', _.bind(this.renderSearchProduits, this));
             } else {
                 this.searchProdCollection.getFirstPage(collectionOpts);
             }
         },
 
-        renderSearchProducts: function () {
+        renderSearchProduits: function () {
             var $thisEl = this.$el;
-            var $container = $thisEl.find('#productsForLink');
+            var $container = $thisEl.find('#ProduitsForLink');
             var array = this.searchProdCollection.toJSON();
 
             if (!array.length) {

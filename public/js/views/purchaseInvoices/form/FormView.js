@@ -309,7 +309,7 @@ define([
             }
 
             if (this.isWtrack) {
-                wTracks = _.map(model.products, function (product) {
+                wTracks = _.map(model.Produits, function (product) {
                     return product.product;
                 });
                 project = model.project;

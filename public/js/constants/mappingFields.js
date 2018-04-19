@@ -21,7 +21,7 @@ define([], function () {
             'nestingLevel'  : 'Nesting level',
             'sequence'      : 'Sequence',
             'main'          : 'Main',
-            'productsCount' : 'Product count',
+            'ProduitsCount' : 'Product count',
             'externalId'    : 'Import ID',
             ''              : '',
             'reason'        : 'Reason'
@@ -47,7 +47,7 @@ define([], function () {
             'reason'                  : 'Reason'
         },
 
-        Products: {
+        Produits: {
             'externalId'                  : 'Import ID',
             'wTrack'                      : 'W-Track',
             'canBeSold'                   : 'Can be sold',
@@ -145,7 +145,7 @@ define([], function () {
             'paymentInfo.total'  : 'Payment info Total',
             'paymentInfo.unTaxed': 'Payment info unTaxed',
             'paymentInfo.taxes'  : 'Payment info Taxes',
-            'products'           : 'Products',
+            'Produits'           : 'Produits',
             'workflow'           : 'Workflow',
             'whoCanRW'           : 'Editor',
             'attachments'        : 'Attachments',
@@ -179,7 +179,7 @@ define([], function () {
             'paymentInfo.total'  : 'Payment info Total',
             'paymentInfo.unTaxed': 'Payment info unTaxed',
             'paymentInfo.taxes'  : 'Payment info Taxes',
-            'products'           : 'Products',
+            'Produits'           : 'Produits',
             'workflow'           : 'Workflow ID',
             'whoCanRW'           : 'Editor',
             'attachments'        : 'Attachments',
@@ -214,7 +214,7 @@ define([], function () {
             'paymentInfo.balance'   : 'Payment Info Balance',
             'paymentInfo.unTaxed'   : 'Payment Info unTaxed',
             'paymentInfo.taxes'     : 'Payment Info taxes',
-            'products'              : 'Products',
+            'Produits'              : 'Produits',
             'workflow'              : 'Workflow ID',
             'whoCanRW'              : 'Who Can RW',
             'creationDate'          : 'Creation Date',

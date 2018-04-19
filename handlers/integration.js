@@ -8,7 +8,7 @@ var redisClient = require('../helpers/redisClient');
 var Module = function (models, event) {
     var ConflictService = require('../services/conflict')(models);
     var IntegrationService = require('../services/integration')(models);
-    var productService = require('../services/products')(models);
+    var Produitservice = require('../services/Produits')(models);
     var SettingsService = require('../services/settings')(models, event);
     var _getHelper = require('../helpers/integrationHelperRetriever')(models, event);
     var getHelper = _getHelper.getHelper;
@@ -66,7 +66,7 @@ var Module = function (models, event) {
 
                 options.body.groupId = groupId;
 
-                productService.createProduct(options, function (err, createdProduct) {
+                Produitservice.createProduct(options, function (err, createdProduct) {
                     if (err) {
                         return wCb(err);
                     }
@@ -201,7 +201,7 @@ var Module = function (models, event) {
                     dbName: dbName
                 };
 
-                productService.findOneAndUpdate(query, updateObj, options, function (err, oldProduct) {
+                Produitservice.findOneAndUpdate(query, updateObj, options, function (err, oldProduct) {
                     if (err) {
                         return wCb(err);
                     }
@@ -320,7 +320,7 @@ var Module = function (models, event) {
 
     function getDataForManageConflicts(opts, allCallback) {
         var db = opts.dbName;
-        var conflictProducts = [];
+        var conflictProduits = [];
         var sortObject = opts.sortObject;
         var channel = opts.channel;
 
@@ -339,24 +339,24 @@ var Module = function (models, event) {
                         return wCb(null, null, null); // todo change it
                     }
 
-                    conflictProducts = _.pluck(conflicts, 'fields');
-                    skus = _.pluck(conflictProducts, 'info.SKU');
+                    conflictProduits = _.pluck(conflicts, 'fields');
+                    skus = _.pluck(conflictProduits, 'info.SKU');
 
-                    wCb(null, skus, conflictProducts);
+                    wCb(null, skus, conflictProduits);
                 });
 
             },
 
             function (skus, conflictItems, wCb) {
-                if (!skus || !skus.length || !conflictProducts) {
+                if (!skus || !skus.length || !conflictProduits) {
                     return wCb();
                 }
 
-                productService.find({'info.SKU': {$in: skus}}, {
+                Produitservice.find({'info.SKU': {$in: skus}}, {
                     dbName: db,
                     info  : 1,
                     name  : 1
-                }, function (err, products) {
+                }, function (err, Produits) {
                     if (err) {
                         return wCb(err);
                     }
@@ -365,8 +365,8 @@ var Module = function (models, event) {
                         conflictItems = _.sortByOrder(conflictItems, sortObject.field[0], sortObject.value[0]);
                     }
 
-                    conflictProducts = conflictItems.concat(products);
-                    conflictProducts = _.groupBy(conflictProducts, 'info.SKU');
+                    conflictProduits = conflictItems.concat(Produits);
+                    conflictProduits = _.groupBy(conflictProduits, 'info.SKU');
 
                     wCb();
                 });
@@ -376,11 +376,11 @@ var Module = function (models, event) {
                 return allCallback(err);
             }
 
-            allCallback(null, conflictProducts);
+            allCallback(null, conflictProduits);
         });
     }
 
-    function saveConflictedProducts(opts, allCallback) {
+    function saveConflictedProduits(opts, allCallback) {
         var conflicts = opts.conflicts;
         var dbName = opts.dbName;
 
@@ -579,7 +579,7 @@ var Module = function (models, event) {
             conflicts: body.conflicts
         };
 
-        saveConflictedProducts(opts, function (err, result) {
+        saveConflictedProduits(opts, function (err, result) {
             if (err) {
                 return next(err);
             }
@@ -635,7 +635,7 @@ var Module = function (models, event) {
         });
     };
 
-    this.getUnlinkedProducts = function (req, res, next) {
+    this.getUnlinkedProduits = function (req, res, next) {
         var query = req.query;
         var dbName = req.session.lastDb;
         var filter = query.filter;
@@ -664,12 +664,12 @@ var Module = function (models, event) {
                 'fields.channel': ObjectId(channel)
             }, {
                 dbName: dbName
-            }, function (err, unlinkedProducts) {
+            }, function (err, unlinkedProduits) {
                 if (err) {
                     return next(err);
                 }
 
-                res.status(200).send(unlinkedProducts);
+                res.status(200).send(unlinkedProduits);
             });
         }
 
@@ -677,12 +677,12 @@ var Module = function (models, event) {
         filterObj.entity = 'OrderRow';
         filterObj.type = 'unlinked';
 
-        ConflictService.getUnlinkedProdByOrder(dbName, filterObj, function (err, unlinkedProducts) {
+        ConflictService.getUnlinkedProdByOrder(dbName, filterObj, function (err, unlinkedProduits) {
             if (err) {
                 return next(err);
             }
 
-            res.status(200).send(unlinkedProducts);
+            res.status(200).send(unlinkedProduits);
         });
     };
 
@@ -748,7 +748,7 @@ var Module = function (models, event) {
                     body.imageSrc = fields.imageSrc;
                 }
 
-                productService.createProduct({
+                Produitservice.createProduct({
                     dbName: dbName,
                     body  : body
                 }, function (err, result) {
@@ -1250,18 +1250,18 @@ var Module = function (models, event) {
 
                         productIds = _.pluck(orderRows, 'fields.product');
 
-                        ConflictService.find({_id: {$in: productIds}}, {dbName: dbName}, function (err, unlinkedProducts) {
+                        ConflictService.find({_id: {$in: productIds}}, {dbName: dbName}, function (err, unlinkedProduits) {
                             if (err) {
                                 return wCb(err);
                             }
 
-                            wCb(null, unlinkedProducts);
+                            wCb(null, unlinkedProduits);
                         });
                     });
             },
 
-            function (unlinkedProducts, wCb) {
-                async.each(unlinkedProducts, function (unlinkedProduct, eCb) {
+            function (unlinkedProduits, wCb) {
+                async.each(unlinkedProduits, function (unlinkedProduct, eCb) {
                     var fields = unlinkedProduct.fields;
                     var linkedProductId = fields.linkedProductId;
 
@@ -1290,7 +1290,7 @@ var Module = function (models, event) {
                         return wCb(err);
                     }
 
-                    wCb(null, _.pluck(unlinkedProducts, '_id'));
+                    wCb(null, _.pluck(unlinkedProduits, '_id'));
                 });
             },
 

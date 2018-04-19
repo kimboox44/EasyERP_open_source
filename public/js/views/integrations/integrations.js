@@ -43,10 +43,10 @@ define([
             'click .resConflicts'                   : 'resolveConflicts',
             'click .settingsContainer'              : 'onSettingsClick',
             'click .btn.action'                     : 'onActionFire',
-            'click .goListProducts:not(.disable)'   : 'goListProducts',
+            'click .goListProduits:not(.disable)'   : 'goListProduits',
             'click .goUnlinkedOrders:not(.disable)' : 'goUnlinkedOrders',
             'click .goToOrders:not(.disable)'       : 'goToOrders',
-            'click .goUnlinkedProducts'             : 'goUnlinkedProducts',
+            'click .goUnlinkedProduits'             : 'goUnlinkedProduits',
             'click .connectionSwitcher'             : 'disconnect'
         },
 
@@ -205,9 +205,9 @@ define([
             Backbone.history.navigate(href, {trigger: true});
         },
 
-        goListProducts: function (e) {
+        goListProduits: function (e) {
             var $target = $(e.target);
-            var hash = '#easyErp/Products/list/filter=';
+            var hash = '#easyErp/Produits/list/filter=';
             var channel = $target.closest('.app').attr('data-id');
 
             var filter = {
@@ -256,9 +256,9 @@ define([
             Backbone.history.navigate(href, {trigger: true});
         },
 
-        goUnlinkedProducts: function (e) {
+        goUnlinkedProduits: function (e) {
             var $target = $(e.target);
-            var hash = 'easyErp/unlinkedProducts/filter=';
+            var hash = 'easyErp/unlinkedProduits/filter=';
             var channel = $target.closest('.app').attr('data-id');
             var filter = {
                 channel        : channel,
@@ -269,8 +269,8 @@ define([
             tracker.track({
                 date       : new Date(),
                 eventType  : 'userFlow',
-                name       : 'unlinkeProducts',
-                message    : 'unlinked products',
+                name       : 'unlinkeProduits',
+                message    : 'unlinked Produits',
                 email      : App.currentUser.email,
                 login      : App.currentUser.login,
                 mobilePhone: App.currentUser.mobilePhone
@@ -312,9 +312,9 @@ define([
         },
 
         renderCount: function (options) {
-            var importedProductsArr;
+            var importedProduitsArr;
             var importedOrdersArr;
-            var conflictedProductsArr;
+            var conflictedProduitsArr;
             var unlinkedOrdersArr;
             var $container;
             var self = this;
@@ -325,21 +325,21 @@ define([
             }
 
             $container = $el.find('._appsWrap');
-            importedProductsArr = options.importedProducts;
+            importedProduitsArr = options.importedProduits;
             importedOrdersArr = options.importedOrders;
-            conflictedProductsArr = options.conflictProducts;
+            conflictedProduitsArr = options.conflictProduits;
             unlinkedOrdersArr = options.unlinkedOrders;
 
-            importedProductsArr.forEach(function (elementData) {
-                self.updateProductsCount($container, elementData);
+            importedProduitsArr.forEach(function (elementData) {
+                self.updateProduitsCount($container, elementData);
             });
 
             importedOrdersArr.forEach(function (elementData) {
                 self.updateOrdersCount($container, elementData);
             });
 
-            conflictedProductsArr.forEach(function (elementData) {
-                self.updateConflictedProductsCount($container, elementData);
+            conflictedProduitsArr.forEach(function (elementData) {
+                self.updateConflictedProduitsCount($container, elementData);
             });
 
             unlinkedOrdersArr.forEach(function (elementData) {
@@ -356,43 +356,43 @@ define([
             Backbone.history.navigate(window.location.hash, {trigger: true});
         },
 
-        updateProductsCount: function ($targetEl, elementData) {
+        updateProduitsCount: function ($targetEl, elementData) {
             var $container;
-            var $importedProductsContainer;
+            var $importedProduitsContainer;
 
             if ($targetEl && elementData) {
                 $container = $targetEl.find('[data-id="' + elementData._id + '"]');
-                $importedProductsContainer = $container.find('[data-content="list"] .channelRowValue span');
-                $importedProductsContainer.text(elementData.count);
+                $importedProduitsContainer = $container.find('[data-content="list"] .channelRowValue span');
+                $importedProduitsContainer.text(elementData.count);
             }
         },
 
         updateOrdersCount: function ($targetEl, elementData) {
             var $container;
-            var $importedProductsContainer;
+            var $importedProduitsContainer;
 
             if ($targetEl && elementData) {
                 $container = $targetEl.find('[data-id="' + elementData._id + '"]');
-                $importedProductsContainer = $container.find('[data-content="order"] .channelRowValue span');
-                $importedProductsContainer.text(elementData.count);
+                $importedProduitsContainer = $container.find('[data-content="order"] .channelRowValue span');
+                $importedProduitsContainer.text(elementData.count);
             }
         },
 
-        updateConflictedProductsCount: function ($targetEl, elementData) {
+        updateConflictedProduitsCount: function ($targetEl, elementData) {
             var $container;
-            var $conflictedProductsContainer;
-            var $goUnlinkedProducts;
+            var $conflictedProduitsContainer;
+            var $goUnlinkedProduits;
             var count;
 
             if ($targetEl && elementData) {
                 count = elementData.count;
                 $container = $targetEl.find('[data-id="' + elementData._id + '"]');
-                $goUnlinkedProducts = $container.find('.goUnlinkedProducts');
-                $conflictedProductsContainer = $goUnlinkedProducts.find('.channelRowValue span');
-                $conflictedProductsContainer.text(count);
+                $goUnlinkedProduits = $container.find('.goUnlinkedProduits');
+                $conflictedProduitsContainer = $goUnlinkedProduits.find('.channelRowValue span');
+                $conflictedProduitsContainer.text(count);
 
                 if (count) {
-                    $goUnlinkedProducts.removeClass('disable');
+                    $goUnlinkedProduits.removeClass('disable');
                 }
             }
         },

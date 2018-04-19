@@ -45,7 +45,7 @@
                     </li>
                     <li class="<%=classNameCancel%>">
                         <a id="cancelOrder" class="cancelOrder"><span class="fontBold">Cancel</span>
-                            <span class="help">Cancel Order and return all products to warehouse</span>
+                            <span class="help">Cancel Order and return all Produits to warehouse</span>
                         </a>
                     </li>
                 </ul>
@@ -63,18 +63,18 @@
                     <div class="_animateInputBox _withInfo">
                         <span class="_staticLabel">Product</span>
 
-                        <span class="_staticInfo" id="productsDd" data-id="<%=product._id%>"><%=product.name + '( ' + product.info.SKU + ')'%></span>
+                        <span class="_staticInfo" id="ProduitsDd" data-id="<%=product._id%>"><%=product.name + '( ' + product.info.SKU + ')'%></span>
 
-                        <span class="tips icon-info" data-id="productsDd"></span>
+                        <span class="tips icon-info" data-id="ProduitsDd"></span>
                     </div>
                     <%} else {%>
                     <div class="_animateSelectBox _withInfo">
                         <span class="_selectTitle">Product</span>
                         <div class="_newSelectListWrap">
-                            <a id="productsDd" class="current-selected" href="javascript:;"
+                            <a id="ProduitsDd" class="current-selected" href="javascript:;"
                                data-id="<%=product._id%>"><%=product.name + '( ' + product.info.SKU + ')'%></a>
                         </div>
-                        <span class="tips icon-info" data-id="productsDd"></span>
+                        <span class="tips icon-info" data-id="ProduitsDd"></span>
                     </div>
                     <%}%>
                     <%if (onlyView) {%>
@@ -168,13 +168,13 @@
                     <%}%>
                     <%if (onlyView) {%>
                     <div class="_animateInputBox _withInfo">
-                        <span class="_staticLabel">Warehouse to manufacture products</span>
+                        <span class="_staticLabel">Warehouse to manufacture Produits</span>
                         <span class="_staticInfo" id="warehouseToDd" data-id="<%=warehouseTo && warehouseTo._id%>"><%=warehouseTo && warehouseTo.name|| 'Not Selected'%></span>
                         <span class="tips icon-info" data-id="warehouseDd"></span>
                     </div>
                     <%} else {%>
                     <div class="_animateSelectBox _withInfo">
-                        <span class="_selectTitle">Warehouse to manufacture products</span>
+                        <span class="_selectTitle">Warehouse to manufacture Produits</span>
                         <div class="_newSelectListWrap">
                             <a id="warehouseToDd" class="current-selected" href="javascript:;"
                                data-id="<%=warehouseTo && warehouseTo._id%>"><%=warehouseTo && warehouseTo.name|| 'Not Selected'%></a>

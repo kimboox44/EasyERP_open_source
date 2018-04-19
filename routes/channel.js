@@ -20,7 +20,7 @@ module.exports = function (models, event) {
     router.get('/test', integrations.getTestConnection);
     router.get('/import', integrations.getImportConnection);
     router.get('/getForDD', integrations.getForDd);
-    router.get('/getOnlyProducts', integrations.getOnlyProducts);
+    router.get('/getOnlyProduits', integrations.getOnlyProduits);
 
     router.get('/:type?', integrations.getCredentials);
 

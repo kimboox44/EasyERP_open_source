@@ -1,7 +1,7 @@
-<div class="_productSliderWrap productSliderWrap">
-    <div class="productSlider _productSlider">
-        <div class="productSlide bgSlide _productSlide"></div>
-        <div class="productSlide activeSlide _productSlide"
+<div class="_ProduitsliderWrap ProduitsliderWrap">
+    <div class="Produitslider _Produitslider">
+        <div class="Produitslide bgSlide _Produitslide"></div>
+        <div class="Produitslide activeSlide _Produitslide"
              style="background-image: url('<%= images && images.length ? images[0].imageSrc : '' %>')"
              data-id="<%= images && images.length ? images[0]._id : '' %>"></div>
         <div class="controls _controls">
@@ -62,7 +62,7 @@
     <input type="file" value="Edit" id="File1">
 </canvas>
 
-<div id="sliderThumbnails" class="_productSliderThumbnails">
+<div id="sliderThumbnails" class="_ProduitsliderThumbnails">
     <% var i = 0; %>
     <% images.forEach(function (thumb) { %>
     <div class="slideThumbnail _slideThumbnail"

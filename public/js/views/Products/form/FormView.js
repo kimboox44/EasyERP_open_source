@@ -2,20 +2,20 @@ define([
     'Backbone',
     'Underscore',
     'jQuery',
-    'text!templates/Products/EditTemplate.html',
-    'text!templates/Products/PreviewVariantsTemplate.html',
-    'text!templates/Products/EditForPrewiewVariantTemplate.html',
-    'text!templates/Products/EditPreviewVariantsTemplate.html',
-    'text!templates/Products/EditingValuesTemplate.html',
-    'text!templates/Products/AddOptionsTemplate.html',
-    'collections/Products/filterCollection',
+    'text!templates/Produits/EditTemplate.html',
+    'text!templates/Produits/PreviewVariantsTemplate.html',
+    'text!templates/Produits/EditForPrewiewVariantTemplate.html',
+    'text!templates/Produits/EditPreviewVariantsTemplate.html',
+    'text!templates/Produits/EditingValuesTemplate.html',
+    'text!templates/Produits/AddOptionsTemplate.html',
+    'collections/Produits/filterCollection',
     'models/ProductModel',
     'views/Notes/AttachView',
     'views/selectView/selectView',
-    'views/Products/EditView',
+    'views/Produits/EditView',
     'views/dialogViewBase',
-    'views/Products/form/VariantsList/ListView',
-    'views/Products/form/PublishList/ListView',
+    'views/Produits/form/VariantsList/ListView',
+    'views/Produits/form/PublishList/ListView',
     'views/imageViewBase',
     'common',
     'custom',
@@ -36,7 +36,7 @@ define([
             var self = this;
 
             this.formModel = options.model;
-            this.formModel.urlRoot = '/products/';
+            this.formModel.urlRoot = '/Produits/';
             this.bundleObj = {};
             this.allVariantsProduct = [];
 
@@ -89,17 +89,17 @@ define([
         getChannelData: function () {
             var $currentEl = this.$el;
             var $checked = $currentEl.find('input.checkVariants:checked');
-            var products = [];
+            var Produits = [];
             var data;
 
             $.each($checked, function () {
                 var $el = $(this);
 
-                products.push($el.val());
+                Produits.push($el.val());
             });
 
             data = {
-                products: products,
+                Produits: Produits,
                 channel : this.channel
             };
 
@@ -143,19 +143,19 @@ define([
             var productLength = this.allVariantsProduct.length;
             var changedProductArr = [];
             var self = this;
-            var $products;
+            var $Produits;
             var rendermsg = false;
 
             _.each(self.changedProductType.opts, function (opt) {
-                $products = $thisEl.find('.active.newOpt[data-optid="' + opt._id + '"]');
-                if ($products && $products.length) {
-                    if ($products.length !== productLength) {
+                $Produits = $thisEl.find('.active.newOpt[data-optid="' + opt._id + '"]');
+                if ($Produits && $Produits.length) {
+                    if ($Produits.length !== productLength) {
                         App.render({
                             type   : 'error',
                             message: 'Check all options please'
                         });
                     } else {
-                        $products.each(function (key, product) {
+                        $Produits.each(function (key, product) {
                             changedProductArr.push({
                                 product: $thisEl.find(product).attr('data-prodId'),
                                 value  : $thisEl.find(product).data('id')
@@ -173,7 +173,7 @@ define([
             }
 
             if (changedProductArr && changedProductArr.length) {
-                dataService.postData('products/newVariants', {changedProductArr: changedProductArr}, function () {
+                dataService.postData('Produits/newVariants', {changedProductArr: changedProductArr}, function () {
                     Backbone.history.fragment = '';
                     Backbone.history.navigate(window.location.hash, {trigger: true});
                 });
@@ -246,7 +246,7 @@ define([
         saveSKUs: function (e) {
             var $thisEl = this.$el;
             var editedValues = {};
-            var url = '/products/sku';
+            var url = '/Produits/sku';
             var formModel = this.editModel.toJSON();
             var arrayOfDifferent = [];
             var key;
@@ -272,7 +272,7 @@ define([
 
             dataService.postData(url, {skus: arrayOfDifferent}, function (result) {
                 Backbone.history.fragment = '';
-                Backbone.history.navigate('easyErp/Products/list', {trigger: true});
+                Backbone.history.navigate('easyErp/Produits/list', {trigger: true});
             });
         },
 
@@ -302,12 +302,12 @@ define([
         },
 
         saveVariants: function () {
-            var url = '/products/variants/' + this.editModel.id;
+            var url = '/Produits/variants/' + this.editModel.id;
 
             dataService.postData(url, {variants: this.variantsArr, isNew: true}, function (result) {
                 Backbone.history.fragment = '';
                 Backbone.history.navigate(window.location.hash, {trigger: true});
-                //Backbone.history.navigate('easyErp/Products/list', {trigger: true});
+                //Backbone.history.navigate('easyErp/Produits/list', {trigger: true});
             });
         },
 
@@ -321,7 +321,7 @@ define([
         startEditing: function (e) {
             var $thisEl = this.$el;
             var checkedBoxes = [];
-            var url = '/products/variants/' + this.editModel.id;
+            var url = '/Produits/variants/' + this.editModel.id;
             var $checkedVariants = $thisEl.find('.newVariantCheck');
             var checkbox;
 
@@ -337,7 +337,7 @@ define([
             dataService.postData(url, {variants: checkedBoxes, isNew: false}, function (result) {
                 Backbone.history.fragment = '';
                 Backbone.history.navigate(window.location.hash, {trigger: true});
-                //Backbone.history.navigate('easyErp/Products/list', {trigger: true});
+                //Backbone.history.navigate('easyErp/Produits/list', {trigger: true});
             });
         },
 
@@ -455,7 +455,7 @@ define([
         addToBundle: function (e) {
             var $thisEl = this.$el;
             var $target = $(e.target);
-            var $container = $thisEl.find('#productsBundle');
+            var $container = $thisEl.find('#ProduitsBundle');
             var val = $target.text();
             var id = $target.data('id');
 
@@ -472,7 +472,7 @@ define([
             var $thisEl = this.$el;
             var $target = $(e.target);
             var $searchContatiner = $target.closest('.searchContainer');
-            var $search = $searchContatiner.find('#searchProducts');
+            var $search = $searchContatiner.find('#searchProduits');
             var searchValue = $search.val();
             var filterOpts = {
                 value: searchValue
@@ -489,15 +489,15 @@ define([
 
             if (!this.searchProdCollection) {
                 this.searchProdCollection = new SearchCollection(collectionOpts);
-                this.searchProdCollection.bind('reset', _.bind(this.renderSearchProducts, this));
+                this.searchProdCollection.bind('reset', _.bind(this.renderSearchProduits, this));
             } else {
-                this.renderSearchProducts();
+                this.renderSearchProduits();
             }
         },
 
-        renderSearchProducts: function () {
+        renderSearchProduits: function () {
             var $thisEl = this.$el;
-            var $container = $thisEl.find('#productsForBundle');
+            var $container = $thisEl.find('#ProduitsForBundle');
             var variant = '';
 
             $container.html('');
@@ -687,7 +687,7 @@ define([
 
             if (CONSTANTS.PRODUCRSERVICE !== id.toString()) {
                 if (answer) {
-                    dataService.deleteData('/products/' + id, {}, function () {
+                    dataService.deleteData('/Produits/' + id, {}, function () {
                         self.hideDialog();
                         Backbone.history.fragment = '';
                         Backbone.history.navigate(window.location.hash, {trigger: true});
@@ -740,12 +740,12 @@ define([
         },
 
         renderVariantsTable: function (firstVariants) {
-            var products = this.formModel.toJSON().variantsArray;
-            var id = firstVariants ? firstVariants._id : products[0]._id;
-            var groupId = firstVariants ? firstVariants.groupId : products[0].groupId;
+            var Produits = this.formModel.toJSON().variantsArray;
+            var id = firstVariants ? firstVariants._id : Produits[0]._id;
+            var groupId = firstVariants ? firstVariants.groupId : Produits[0].groupId;
 
             return new VariantsArrayListView({
-                products       : products,
+                Produits       : Produits,
                 parentView     : this,
                 id             : id,
                 groupId        : groupId,
@@ -822,7 +822,7 @@ define([
 
             parallelTasks = {
                 availabilities: function (pCb) {
-                    dataService.getData('/products/stockInventory/' + currentProductId, {}, function (availabilities) {
+                    dataService.getData('/Produits/stockInventory/' + currentProductId, {}, function (availabilities) {
                         if (availabilities.error) {
                             return pCb(availabilities.error);
                         }
@@ -860,12 +860,12 @@ define([
                     });
 
                     if (firstVariants.groupId) {
-                        dataService.getData('/products/productVariants/' + firstVariants.groupId, {}, function (products) {
+                        dataService.getData('/Produits/productVariants/' + firstVariants.groupId, {}, function (Produits) {
 
-                            self.allVariantsProduct = products;
+                            self.allVariantsProduct = Produits;
 
                             $addOptionsBlock.html(_.template(AddOptionsTemplate, {
-                                productVariants   : products,
+                                productVariants   : Produits,
                                 changedProductType: self.changedProductType,
                                 checkedObj        : checkedObj
                             }));
@@ -894,14 +894,14 @@ define([
                     .addClass('active');
 
                 productCategoriesService.renderProductCategories.call(self, self.productCategoriesIds);
-                populate.getProductTypeOrCategory('#productType', '/products/getProductsTypeForDd', {}, 'name', self, true, false, null, productTypeId);
+                populate.getProductTypeOrCategory('#productType', '/Produits/getProduitsTypeForDd', {}, 'name', self, true, false, null, productTypeId);
 
                 self.delegateEvents(self.events);
 
                 self.imagesView = new ImagesViewBase({
                     model      : firstVariants,
                     images     : self.groupImages,
-                    contentType: 'products',
+                    contentType: 'Produits',
                     parent     : self
                 });
 
@@ -929,7 +929,7 @@ define([
 
                 if (!self.changedProductType) {
                     parallelTasks.changedProductType = function (pCb) {
-                        dataService.getData('/products/productTypes/' + typeId, {}, function (changedProductType) {
+                        dataService.getData('/Produits/productTypes/' + typeId, {}, function (changedProductType) {
                             if (changedProductType.error) {
                                 return pCb(changedProductType.error);
                             }
@@ -983,7 +983,7 @@ define([
                     mid: mid
                 },
                 success: function () {
-                    Backbone.history.navigate('#easyErp/Products/thumbnails', {trigger: true});
+                    Backbone.history.navigate('#easyErp/Produits/thumbnails', {trigger: true});
                 }
             });
         }

@@ -52,14 +52,14 @@
         <th class="deleteCell"></th>
     </tr>
     </thead>
-    <tbody id="tbodyProducts">
+    <tbody id="tbodyProduits">
 
     <%goodsNotes.forEach(function(elem){%>
     <tr class="productItem deleteRow" id="<%=elem._id%>">
 
         <td data-name="productName" class="">
 
-            <span class="current-selected" id="productsDd" href="javascript:;" data-id="">
+            <span class="current-selected" id="ProduitsDd" href="javascript:;" data-id="">
 <%= elem ? elem.name : ''%>
             </span>
         </td>

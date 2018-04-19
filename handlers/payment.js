@@ -977,7 +977,7 @@ var Module = function (models, event) {
         mapBody = function (cb) {
             var totalAmount = 0;
             var suppliers = [];
-            var products = [];
+            var Produits = [];
             var resultObject = {};
 
             _.map(body, function (_payment) {
@@ -994,13 +994,13 @@ var Module = function (models, event) {
 
                 totalAmount += _payment.paidAmount;
                 suppliers.push(supplierObject);
-                products.push(productObject);
+                Produits.push(productObject);
 
                 return true;
             });
             resultObject.currency = body[0].currency;
             resultObject.suppliers = suppliers;
-            resultObject.products = products;
+            resultObject.Produits = Produits;
             resultObject.totalAmount = totalAmount;
 
             cb(null, resultObject);
@@ -1008,7 +1008,7 @@ var Module = function (models, event) {
 
         createInvoice = function (params, cb) {
             var invoice = new Invoice({
-                products: params.products,
+                Produits: params.Produits,
                 currency: {_id: objectId(params.currency)}
             });
 
@@ -2292,7 +2292,7 @@ var Module = function (models, event) {
 
         function updateWtrack(invoice, payment, waterfallCallback) {
             var paid = payment.paidAmount || 0;
-            var wTrackIds = _.pluck(invoice.products, 'product');
+            var wTrackIds = _.pluck(invoice.Produits, 'product');
 
             function updateWTrack(id, cb) {
                 var wTrack = models.get(req.session.lastDb, 'wTrack', wTrackSchema);
@@ -2447,15 +2447,15 @@ var Module = function (models, event) {
                                 paymentDate: data.date
                             },
                             {new: true}, function (err, result) {
-                                var products;
+                                var Produits;
 
                                 if (err) {
                                     return next(err);
                                 }
 
-                                products = result.get('products');
+                                Produits = result.get('Produits');
 
-                                async.each(products, function (product, callBack) {
+                                async.each(Produits, function (product, callBack) {
 
                                     JobsModel.findByIdAndUpdate(product.jobs, {type: type}, {new: true}, function (err, result) {
                                         if (err) {
@@ -2640,20 +2640,20 @@ var Module = function (models, event) {
                                             Invoice.findByIdAndUpdate(invoice._id, {
                                                 $set: query
                                             }, {new: true}, function (err, result) {
-                                                var products;
+                                                var Produits;
                                                 var payments;
 
                                                 if (err) {
                                                     return next(err);
                                                 }
 
-                                                products = result.get('products');
+                                                Produits = result.get('Produits');
 
                                                 payments = result.get('payments') ? result.get('payments') : [];
 
                                                 if (result._type !== 'expensesInvoice' && result._type !== 'dividendInvoice') {
 
-                                                    async.each(products, function (product) {
+                                                    async.each(Produits, function (product) {
 
                                                         JobsModel.findByIdAndUpdate(product.jobs, {payments: payments}, {new: true}, function (err, result) {
                                                             if (err) {
@@ -2688,7 +2688,7 @@ var Module = function (models, event) {
                                 return next(err);
                             }
 
-                            async.each(invoice.products, function (_payment, eachCb) {
+                            async.each(invoice.Produits, function (_payment, eachCb) {
                                 payrollExpensUpdater(db, _payment, -1, eachCb);
                                 journalEntry.removeByDocId({
                                     'sourceDocument.model': 'salaryPayment',
@@ -2863,20 +2863,20 @@ var Module = function (models, event) {
                                         Invoice.findByIdAndUpdate(invoice._id, {
                                             $set: query
                                         }, {new: true}, function (err, result) {
-                                            var products;
+                                            var Produits;
                                             var payments;
 
                                             if (err) {
                                                 return next(err);
                                             }
 
-                                            products = result.get('products');
+                                            Produits = result.get('Produits');
 
                                             payments = result.get('payments') ? result.get('payments') : [];
 
                                             if (result._type !== 'expensesInvoice' && result._type !== 'dividendInvoice') {
 
-                                                async.each(products, function (product) {
+                                                async.each(Produits, function (product) {
 
                                                     JobsModel.findByIdAndUpdate(product.jobs, {payments: payments}, {new: true}, function (err, result) {
                                                         if (err) {
@@ -2911,7 +2911,7 @@ var Module = function (models, event) {
                             return next(err);
                         }
 
-                        async.each(invoice.products, function (_payment, eachCb) {
+                        async.each(invoice.Produits, function (_payment, eachCb) {
                             payrollExpensUpdater(db, _payment, -1, eachCb);
                             journalEntry.removeByDocId({
                                 'sourceDocument.model': 'salaryPayment',

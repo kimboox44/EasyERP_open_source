@@ -1,14 +1,14 @@
 define([
     'Underscore',
     'views/topBarViewBase',
-    'text!templates/integrationUnlinkedProducts/TopBarTemplate.html',
+    'text!templates/integrationUnlinkedProduits/TopBarTemplate.html',
     'constants'
 ], function (_, BaseView, ContentTopBarTemplate, CONSTANTS) {
     'use strict';
 
     var TopBarView = BaseView.extend({
-        el           : '#unlinkedProductsTopBar',
-        contentHeader: 'Unlinked Products',
+        el           : '#unlinkedProduitsTopBar',
+        contentHeader: 'Unlinked Produits',
         contentType  : CONSTANTS.RESOLVECONFLICTS,
         template     : _.template(ContentTopBarTemplate)
     });

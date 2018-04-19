@@ -1,17 +1,17 @@
 define([
     'Backbone',
     'Underscore',
-    'text!templates/productsSettings/productsSettingsTemplate.html',
+    'text!templates/ProduitsSettings/ProduitsSettingsTemplate.html',
     'async',
     'dataService',
     'collections/paymentMethod/paymentMethods',
     'collections/currency/currencies',
     'collections/paymentTerms/paymentTerms',
     'collections/accountsCategories/filterCollection',
-    'views/productsSettings/paymentMethod/paymentMethodView',
-    'views/productsSettings/paymentTerms/paymentTermsView',
-    'views/productsSettings/currency/currencyView',
-    'views/productsSettings/accountsCategories/accCategoryView'
+    'views/ProduitsSettings/paymentMethod/paymentMethodView',
+    'views/ProduitsSettings/paymentTerms/paymentTermsView',
+    'views/ProduitsSettings/currency/currencyView',
+    'views/ProduitsSettings/accountsCategories/accCategoryView'
 ], function (Backbone, _, DashboardTemplate, async, dataService, PayMethodsCollection, CurrencyCollection, PaymentTermsCollection, AccountsCategoriesCollection, PaymentMethodView, PaymentTermsView, CurrencyView, AccCategoryView) {
     'use strict';
 

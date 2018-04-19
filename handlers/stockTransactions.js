@@ -45,7 +45,7 @@ var stockCorrections = function (models, event) {
                 });
             }
 
-            AvailabilityHelper.updateAvailableProducts({
+            AvailabilityHelper.updateAvailableProduits({
                 dbName: dbName,
                 doc   : doc.toJSON()
             }, callback);
@@ -285,13 +285,13 @@ var stockCorrections = function (models, event) {
             }
 
             if (data['status.shipped']) {
-                AvailabilityHelper.deliverProducts({
+                AvailabilityHelper.deliverProduits({
                     dbName      : dbName,
                     uId         : uId,
                     goodsOutNote: goodsNote
                 }, callback);
             } else if (data['status.received']) {
-                AvailabilityHelper.receiveProducts({
+                AvailabilityHelper.receiveProduits({
                     dbName     : dbName,
                     uId        : uId,
                     goodsInNote: goodsNote

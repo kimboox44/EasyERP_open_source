@@ -33,7 +33,7 @@ define([
             fiscalPosition: null,
             destination   : null,
             incoterm      : null,
-            products      : [],
+            Produits      : [],
             conflictTypes : []
         },
 
@@ -42,7 +42,7 @@ define([
         },
 
         parse: function (model) {
-            var products = model.products;
+            var Produits = model.Produits;
             var total;
             var unTaxed;
             var taxes;
@@ -71,8 +71,8 @@ define([
 
             }
 
-            if (products) {
-                products = _.map(products, function (product) {
+            if (Produits) {
+                Produits = _.map(Produits, function (product) {
                     var totalTaxesByRow = 0;
                     var newTaxes = [];
 

@@ -36,7 +36,7 @@ module.exports = (function () {
                 conflicted: {type: Number, default: 0}
             },
 
-            products: {
+            Produits: {
                 isComplete: {type: Boolean, default: true},
                 data      : [successSchema],
                 errors    : [errorSchema],
@@ -65,7 +65,7 @@ module.exports = (function () {
                 conflicted: {type: Number, default: 0}
             },
 
-            products: {
+            Produits: {
                 isComplete: {type: Boolean, default: true},
                 data      : [successSchema],
                 errors    : [errorSchema],

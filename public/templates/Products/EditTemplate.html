@@ -8,7 +8,7 @@
     </div>
     <form method="post"
           id="createEmployeeForm"
-          class="_mainProductsForm form">
+          class="_mainProduitsForm form">
         <ul class="dialog-tabs" data-class="mainTabs">
             <li><a class="active" href="javascript:;">Product Info</a></li>
             <li id="picturesTab"><a href="javascript:;">Images</a></li>
@@ -361,14 +361,14 @@
                 <div class="half-block left">
                     <div class="searchContainer">
                         <span>Name | SKU</span>
-                        <input type="text" id="searchProducts" class="_searchInput"/>
+                        <input type="text" id="searchProduits" class="_searchInput"/>
                         <button id="searchBtnEdit">Search</button>
-                        <ul id='productsForBundle'></ul>
+                        <ul id='ProduitsForBundle'></ul>
                     </div>
                 </div>
                 <div class="half-block right">
                     <span>Is this product</span>
-                    <ul id='productsBundle' class="_productsBundle">
+                    <ul id='ProduitsBundle' class="_ProduitsBundle">
                         <% _.each(product.bundles, function (item) { %>
                         <div class="bundle" data-id="<%= item._id %>">
                             <input value="<%= item.name || item._id %>">

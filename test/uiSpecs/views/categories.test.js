@@ -1,7 +1,7 @@
 define([
     'modules',
     'text!fixtures/index.html',
-    'collections/Products/ProductCategories',
+    'collections/Produits/ProductCategories',
     'views/main/MainView',
     'views/settingsProduct/ContentView',
     'views/settingsProduct/TopBarView',
@@ -260,7 +260,7 @@ define([
 
                 server.respondWith('GET', '/modules/', [200, {"Content-Type": "application/json"}, JSON.stringify(modules)]);
 
-                view = new MainView({el: $elFixture, contentType: 'productSettings'});
+                view = new MainView({el: $elFixture, contentType: 'Produitsettings'});
 
                 $expectedMenuEl = view.$el.find('#mainmenu-holder');
                 $expectedSubMenuEl = view.$el.find('#submenu-holder');
@@ -282,7 +282,7 @@ define([
                 $needAEl.click();
 
                 expect($expectedMenuEl).to.have.class('selected');
-                expect(window.location.hash).to.be.equals('#easyErp/productSettings');
+                expect(window.location.hash).to.be.equals('#easyErp/Produitsettings');
 
             });
 
@@ -306,7 +306,7 @@ define([
                 categoriesCollection = new CategoriesCollection({
                     count      : 0,
                     page       : 1,
-                    contentType: 'productSettings'
+                    contentType: 'Produitsettings'
 
                 });
                 server.respond();
@@ -375,7 +375,7 @@ define([
                     $deleteBtn.click();
                     server.respond();
 
-                    expect(window.location.hash).to.be.equals('#easyErp/productSettings');
+                    expect(window.location.hash).to.be.equals('#easyErp/Produitsettings');
 
                 });
 
@@ -410,7 +410,7 @@ define([
                     $saveBtn.click();
                     server.respond();
 
-                    expect(window.location.hash).to.be.equals('#easyErp/productSettings');
+                    expect(window.location.hash).to.be.equals('#easyErp/Produitsettings');
                 });
 
                 it('Try to delete current category', function () {
@@ -421,7 +421,7 @@ define([
                     $deleteBtn.click();
                     server.respond();
 
-                    expect(window.location.hash).to.be.equals('#easyErp/productSettings');
+                    expect(window.location.hash).to.be.equals('#easyErp/Produitsettings');
                     expect($('.ui-dialog')).to.not.exist;
 
                 });
@@ -457,7 +457,7 @@ define([
 
                     $('.ui-dialog').remove();
 
-                    expect(window.location.hash).to.be.equals('#easyErp/productSettings');
+                    expect(window.location.hash).to.be.equals('#easyErp/Produitsettings');
                 });
 
             });

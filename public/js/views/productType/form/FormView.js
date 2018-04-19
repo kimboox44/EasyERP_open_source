@@ -17,7 +17,7 @@ define([
 
         initialize: function (options) {
             this.formModel = options.model;
-            this.formModel.urlRoot = '/products/productTypes/';
+            this.formModel.urlRoot = '/Produits/productTypes/';
             //this.checkedOptions = this.formModel.toJSON().opts;
             this.checkedOptions = _.pluck(this.formModel.toJSON().opts, '_id');
             this.responseObj = {};
@@ -82,7 +82,7 @@ define([
             var $thisEl = this.$el;
             var formModel = this.formModel.toJSON();
 
-            dataService.getData('/products/options', {}, function (result) {
+            dataService.getData('/Produits/options', {}, function (result) {
 
                 $thisEl.html(_.template(ProductTypesFormTemplate, {
                     model         : formModel,

@@ -44,7 +44,7 @@ define([
             click                                   : 'hideNewSelect',
             'click #createOwn'                      : 'onCreatePriceList',
             'click #createWarehouse'                : 'onCreateWarehouse',
-            'click .syncProducts'                   : 'syncProducts'
+            'click .syncProduits'                   : 'syncProduits'
         },
 
         initialize: function (options) {
@@ -59,14 +59,14 @@ define([
             this.render(options);
         },
 
-        syncProducts: function (e) {
+        syncProduits: function (e) {
             var model = this.model.toJSON();
 
             App.render({type: 'notify', message: 'Please, wait few minutes. Your request is in process'});
 
             this.cancel();
 
-            dataService.getData('/channels/getOnlyProducts', {
+            dataService.getData('/channels/getOnlyProduits', {
                 type   : model.type,
                 channel: model._id
             }, function (response) {
@@ -85,7 +85,7 @@ define([
         removeChannelButtons: function (e, self, conflicted, unlinked) {
             var $target = e ? $(e.target) : null;
             var data = $target ? $target.attr('data-type') : 'remove';
-            var url = '#easyErp/unlinkedProducts/filter=';
+            var url = '#easyErp/unlinkedProduits/filter=';
             var filter = {
                 channel: this.model.toJSON()._id
             };
@@ -166,7 +166,7 @@ define([
             var bankAccount = $thisEl.find('#bankAccount').attr('data-id');
             var shippingStatus = $thisEl.find('#shippingStatus').prop('checked');
             var shippingMethod = $thisEl.find('#shippingMethod').prop('checked');
-            var isCreate = $thisEl.find('#automatingGetProducts').prop('checked');
+            var isCreate = $thisEl.find('#automatingGetProduits').prop('checked');
             var dateFrom = helpers.setTimeToDate(new Date($thisEl.find('#dateFrom').val()));
             var url = this.url + '/' + this.type;
             var model = this.model || new Model({type: this.type});
@@ -395,7 +395,7 @@ define([
 
             dialogContent = this.goToRemoveTemplate({model: this.model});
 
-            conflicted = stats && stats.products && stats.products.conflicted && stats.products.conflicted.count;
+            conflicted = stats && stats.Produits && stats.Produits.conflicted && stats.Produits.conflicted.count;
             unlinked = stats && stats.orders && stats.orders.unlinked && stats.orders.unlinked.count;
 
             if (conflicted || unlinked) {

@@ -256,20 +256,20 @@ var Countries = function (models) {
 
                     jobPriceQuotation: {
                         $filter: {
-                            input: '$quotation.products',
-                            as   : 'products',
+                            input: '$quotation.Produits',
+                            as   : 'Produits',
                             cond : {
-                                $eq: ['$$products.jobs', '$_id']
+                                $eq: ['$$Produits.jobs', '$_id']
                             }
                         }
                     },
 
                     jobPriceInvoice: {
                         $filter: {
-                            input: '$invoice.products',
-                            as   : 'products',
+                            input: '$invoice.Produits',
+                            as   : 'Produits',
                             cond : {
-                                $eq: ['$$products.jobs', '$_id']
+                                $eq: ['$$Produits.jobs', '$_id']
                             }
                         }
                     },

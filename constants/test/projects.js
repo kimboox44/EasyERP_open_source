@@ -7732,7 +7732,7 @@ define([], function () {
             name  : "Invoiced",
             status: "Done"
         },
-        products      : [
+        Produits      : [
             {
                 scheduledDate: "2015-01-15T14:09:21.796Z",
                 taxes        : 0,
@@ -8117,7 +8117,7 @@ define([], function () {
      status: "Done",
      name: "Paid"
      },
-     products: [
+     Produits: [
      {
      subTotal: 19600,
      unitPrice: 19600,
@@ -8209,7 +8209,7 @@ define([], function () {
      },
      whoCanRW: "everyOne",
      workflow: "55647b962e4aa3804a765ec6",
-     products: [
+     Produits: [
      {
      scheduledDate: "2015-01-15T14:09:21.796Z",
      taxes: 0,
@@ -8682,7 +8682,7 @@ define([], function () {
             name: "Not Ordered",
             status: "New"
         },
-        products: [
+        Produits: [
             {
                 scheduledDate: "",
                 jobs: {
@@ -9150,7 +9150,7 @@ define([], function () {
             status: "Done",
             name: "Paid"
         },
-        products: [
+        Produits: [
             {
                 subTotal: 19600,
                 unitPrice: 19600,
@@ -9342,7 +9342,7 @@ define([], function () {
             paymentMethod: "565f2e05ab70d49024242e07",
             name: "IOS/Android QA"
         },
-        products: [
+        Produits: [
             {
                 unitPrice: 44400,
                 subTotal: 44400,
@@ -9488,7 +9488,7 @@ define([], function () {
             paymentMethod: "565f2e05ab70d49024242e07",
             name: "IOS/Android QA"
         },
-        products: [
+        Produits: [
             {
                 unitPrice: 44400,
                 subTotal: 44400,
@@ -19555,7 +19555,7 @@ define([], function () {
             name: "Not Invoiced",
             status: "New"
         },
-        products: [
+        Produits: [
             {
                 scheduledDate: "",
                 jobs: {
@@ -19641,7 +19641,7 @@ define([], function () {
             name  : "Not Invoiced",
             status: "New"
         },
-        products       : [
+        Produits       : [
             {
                 scheduledDate: "",
                 jobs         : {
@@ -19978,7 +19978,7 @@ define([], function () {
             paymentMethod: "565f2e05ab70d49024242e07",
             name: "IOS/Android QA"
         },
-        products: [
+        Produits: [
             {
                 unitPrice: 33300,
                 subTotal: 33300,
@@ -20127,7 +20127,7 @@ define([], function () {
             paymentMethod: "565f2e05ab70d49024242e07",
             name: "IOS/Android QA"
         },
-        products: [
+        Produits: [
             {
                 unitPrice: 12312300,
                 subTotal: 12312300,

@@ -37,7 +37,7 @@ define([
             fiscalPosition: null,
             destination   : null,
             incoterm      : null,
-            products      : []
+            Produits      : []
         },
 
         urlRoot: function () {
@@ -45,7 +45,7 @@ define([
         },
 
         parse: function (model) {
-            var products = model.products;
+            var Produits = model.Produits;
             var total;
             var unTaxed;
             var taxes;
@@ -76,8 +76,8 @@ define([
                 model.paymentInfo.taxes = taxes;
             }
 
-            if (products) {
-                products = _.map(products, function (product) {
+            if (Produits) {
+                Produits = _.map(Produits, function (product) {
 
                     if (product.scheduledDate) {
                         product.scheduledDate = common.utcDateToLocaleDate(new Date(product.scheduledDate));

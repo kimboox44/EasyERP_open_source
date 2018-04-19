@@ -10,7 +10,7 @@ define([
         el           : '#resolveConflictsTopBar',
         contentHeader: 'Resolve Conflicts',
         template     : _.template(ContentTopBarTemplate),
-        contentType  : CONSTANTS.INTEGRATIONUNLINKEDPRODUCTS
+        contentType  : CONSTANTS.INTEGRATIONUNLINKEDProduits
     });
 
     return topBarView;

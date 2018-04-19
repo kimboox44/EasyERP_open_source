@@ -2,13 +2,13 @@ define([
     'Backbone',
     'modules',
     'text!fixtures/index.html',
-    'collections/Products/filterCollection',
+    'collections/Produits/filterCollection',
     'views/main/MainView',
-    'views/Products/thumbnails/ThumbnailsView',
-    'views/Products/list/ListView',
-    'views/Products/CreateView',
-    'views/Products/EditView',
-    'views/Products/TopBarView',
+    'views/Produits/thumbnails/ThumbnailsView',
+    'views/Produits/list/ListView',
+    'views/Produits/CreateView',
+    'views/Produits/EditView',
+    'views/Produits/TopBarView',
     'helpers/eventsBinder',
     'jQuery',
     'chai',
@@ -17,7 +17,7 @@ define([
 ], function (Backbone, modules, fixtures, ProductCollection, MainView, ThumbnailsView, ListView, CreateView, EditView, TopBarView, eventsBinder, $, chai, chaiJquery, sinonChai) {
     'use strict';
 
-    var fakeProducts = {
+    var fakeProduits = {
         total: 100,
 
         data: [
@@ -254,7 +254,7 @@ define([
                     {
                         _id         : "577a0791f12e8625105a1620",
                         name        : "56bc8ecf3cb4e57134ff2a01(2).jpeg",
-                        shortPas    : "uploads%2Fproducts%2F571083980ef992fd74828c9e%2F56bc8ecf3cb4e57134ff2a01(2).jpeg",
+                        shortPas    : "uploads%2FProduits%2F571083980ef992fd74828c9e%2F56bc8ecf3cb4e57134ff2a01(2).jpeg",
                         size        : "0.008&nbsp;Mb",
                         uploadDate  : "2016-07-04T06:52:01.375Z",
                         uploaderName: "admin"
@@ -332,7 +332,7 @@ define([
             {
                 _id: "577a0791f12e8625105a1620",
                 name: "56bc8ecf3cb4e57134ff2a01(2).jpeg",
-                shortPas: "uploads%2Fproducts%2F571083980ef992fd74828c9e%2F56bc8ecf3cb4e57134ff2a01(2).jpeg",
+                shortPas: "uploads%2FProduits%2F571083980ef992fd74828c9e%2F56bc8ecf3cb4e57134ff2a01(2).jpeg",
                 size: "0.008&nbsp;Mb",
                 uploadDate: "2016-07-04T06:52:01.375Z",
                 uploaderName: "admin"
@@ -925,7 +925,7 @@ define([
             }
         ]
     };
-    var fakeProductsList = {
+    var fakeProduitsList = {
         success: [
             {
                 _id              : "55c0e4a30343b37542000005",
@@ -1106,7 +1106,7 @@ define([
             });
 
             it('Try to fetch collection with error', function () {
-                var productUrl = new RegExp('\/products\/', 'i');
+                var productUrl = new RegExp('\/Produits\/', 'i');
                 server.respondWith('GET', productUrl, [401, {'Content-Type': 'application/json'}, JSON.stringify({})]);
 
                 historyNavigateSpy.reset();
@@ -1123,9 +1123,9 @@ define([
             });
 
             it('Try to create TopBarView', function () {
-                var productUrl = new RegExp('\/products\/', 'i');
+                var productUrl = new RegExp('\/Produits\/', 'i');
 
-                server.respondWith('GET', productUrl, [200, {'Content-Type': 'application/json'}, JSON.stringify(fakeProducts)]);
+                server.respondWith('GET', productUrl, [200, {'Content-Type': 'application/json'}, JSON.stringify(fakeProduits)]);
                 productCollection = new ProductCollection({
                     viewType   : 'thumbnails',
                     contentType: 'Product',
@@ -1181,7 +1181,7 @@ define([
             describe('INITIALIZE', function () {
 
                 it('Try to product ThumbnailsView', function (done) {
-                    var productAlphabetUrl = new RegExp('/products/getProductsAlphabet', 'i');
+                    var productAlphabetUrl = new RegExp('/Produits/getProduitsAlphabet', 'i');
                     var $firstEl;
 
                     server.respondWith('GET', productAlphabetUrl, [200, {'Content-Type': 'application/json'}, JSON.stringify(fakeAlphabet)]);
@@ -1234,8 +1234,8 @@ define([
 
                 it('Try to open editView', function () {
                     var $needItem = $thisEl.find('.product').first();
-                    var productFormUrl = new RegExp('\/products\/', 'i');
-                    var productUrl = '/products//getProductsTypeForDd';
+                    var productFormUrl = new RegExp('\/Produits\/', 'i');
+                    var productUrl = '/Produits//getProduitsTypeForDd';
                     var usersForDDUrl = '/users/forDd';
                     var categoryUrl = '/category';
 
@@ -1376,7 +1376,7 @@ define([
                 });
 
                 it('Try to open CreateView', function () {
-                    var productUrl = '/product/getProductsTypeForDd';
+                    var productUrl = '/product/getProduitsTypeForDd';
                     var usersForDDUrl = '/users/forDd';
                     var categoryUrl = '/category';
                     var $createBtn = topBarView.$el.find('#top-bar-createBtn');
@@ -1507,10 +1507,10 @@ define([
 
                 it('Try to create Product ListView', function () {
                     var productListUrl = new RegExp('\/product\/list', 'i');
-                    var productAlphabetUrl = new RegExp('/product/getProductsAlphabet', 'i');
+                    var productAlphabetUrl = new RegExp('/product/getProduitsAlphabet', 'i');
                     var productTotal = new RegExp('\/product\/totalCollectionLength', 'i');
 
-                    server.respondWith('GET', productListUrl, [200, {'Content-Type': 'application/json'}, JSON.stringify(fakeProductsList)]);
+                    server.respondWith('GET', productListUrl, [200, {'Content-Type': 'application/json'}, JSON.stringify(fakeProduitsList)]);
                     productListCollection = new ProductCollection({
                         viewType   : 'list',
                         contentType: 'Product',

@@ -2545,14 +2545,14 @@ template, [hidden] {
   @include rem('font-size', 16px);
 }
 
-._productsForBundle,
-._productsBundle {
+._ProduitsForBundle,
+._ProduitsBundle {
   height: 300px;
   overflow: auto;
   border: 1px solid #7eadcc;
 }
 
-._productsForBundle {
+._ProduitsForBundle {
 
   > li.itemForLink { //todo hack
     &.focus {
@@ -2587,7 +2587,7 @@ template, [hidden] {
   }
 }
 
-._productsBundle {
+._ProduitsBundle {
   padding: 5px 10px;
 
   ._bundle {

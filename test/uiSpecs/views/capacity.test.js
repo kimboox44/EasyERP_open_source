@@ -503,7 +503,7 @@ define([
             "link": true,
             "visible": true,
             "ancestors": [],
-            "href": "productSettings"
+            "href": "Produitsettings"
         }, {
             "_id": 73,
             "mname": "DashBoardVacation",

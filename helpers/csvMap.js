@@ -381,7 +381,7 @@ module.exports = (function () {
             paymentTerms         : 'Payment Term',
             paymentInfo          : 'Payment Info',
             payments             : 'Payment',
-            products             : 'Products',
+            Produits             : 'Produits',
             'workflow.name'      : 'Workflow Name',
             'workflow.status'    : 'Workflow Status',
             whoCanRW             : 'Who Can RW',
@@ -575,8 +575,8 @@ module.exports = (function () {
     };
 
     var product = {
-        collections: 'Products',
-        schema     : 'Products',
+        collections: 'Produits',
+        schema     : 'Produits',
         aliases    : {
             wTrack                    : 'wTrack',
             canBeSold                 : 'Can Be Sold',
@@ -634,7 +634,7 @@ module.exports = (function () {
         Project     : project,
         Industry    : industry,
         Tasks       : task,
-        Products    : product,
+        Produits    : product,
         journalEntry: journalEntry,
         jobs        : jobs
     };

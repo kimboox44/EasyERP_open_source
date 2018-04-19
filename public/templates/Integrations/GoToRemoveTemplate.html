@@ -3,8 +3,8 @@
 <!--
     <button class="removeChannelButtons btn blue slim" data-type="remove">Remove Channel</button>
 -->
-    <span>You have some conflicted Orders or Unlinked Products. Please, resolve conflicts before removing Channel or just disconnect it.</span>
-    <%if ((stats && stats.products && stats.products.conflicted && stats.products.conflicted.count) || (stats && stats.orders && stats.orders.unlinked && stats.orders.unlinked.count)) {%>
+    <span>You have some conflicted Orders or Unlinked Produits. Please, resolve conflicts before removing Channel or just disconnect it.</span>
+    <%if ((stats && stats.Produits && stats.Produits.conflicted && stats.Produits.conflicted.count) || (stats && stats.orders && stats.orders.unlinked && stats.orders.unlinked.count)) {%>
     <button class="removeChannelButtons btn blue slim" data-type="resolve"> Resolve Conflicts</button>
     <%}%>
 </div>

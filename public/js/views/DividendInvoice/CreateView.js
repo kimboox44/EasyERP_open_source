@@ -48,9 +48,9 @@ define([
             var mid = 100;
             var $currentEl = this.$el;
             var errors = $currentEl.find('.errorContent');
-            var selectedProducts = $currentEl.find('.productItem');
-            var products = [];
-            var selectedLength = selectedProducts.length;
+            var selectedProduits = $currentEl.find('.productItem');
+            var Produits = [];
+            var selectedLength = selectedProduits.length;
             var targetEl;
             var productId;
             var quantity;
@@ -89,7 +89,7 @@ define([
 
             if (selectedLength) {
                 for (i = selectedLength - 1; i >= 0; i--) {
-                    targetEl = $(selectedProducts[i]);
+                    targetEl = $(selectedProduits[i]);
                     productId = targetEl.data('id');
                     if (productId) {
                         price = 100 * parseFloat(targetEl.find('[data-name="price"] input').val());
@@ -105,7 +105,7 @@ define([
                             });
                         }
 
-                        products.push({
+                        Produits.push({
                             product    : productId,
                             description: description,
                             unitPrice  : price,
@@ -138,7 +138,7 @@ define([
                 invoiceDate: invoiceDate,
                 dueDate    : dueDate,
                 journal    : null,
-                products   : products,
+                Produits   : Produits,
                 paymentInfo: payments,
                 currency   : currency,
                 groups     : {

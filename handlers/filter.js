@@ -1950,10 +1950,10 @@ var Filters = function (models) {
         });
     };
 
-    this.getProductsFilters = function (req, res, next) {
+    this.getProduitsFilters = function (req, res, next) {
         var lastDB = req.session.lastDb;
-        var ProductSchema = mongoose.Schemas.Products;
-        var Product = models.get(lastDB, 'Products', ProductSchema);
+        var Produitschema = mongoose.Schemas.Produits;
+        var Product = models.get(lastDB, 'Produits', Produitschema);
         var pipeLine;
         var aggregation;
 
@@ -2032,7 +2032,7 @@ var Filters = function (models) {
                 }
             ];
 
-            result.filterInfo = FILTER_CONSTANTS.Products;
+            result.filterInfo = FILTER_CONSTANTS.Produits;
 
             res.status(200).send(result);
         });
@@ -4335,7 +4335,7 @@ var Filters = function (models) {
             $match: query
         }, {
             $lookup: {
-                from        : 'Products',
+                from        : 'Produits',
                 localField  : 'sourceDocument._id',
                 foreignField: '_id',
                 as          : 'product'
@@ -4671,10 +4671,10 @@ var Filters = function (models) {
         });
     };
 
-    this.getProductsAvailabilityFilters = function (req, res, next) {
+    this.getProduitsAvailabilityFilters = function (req, res, next) {
         var lastDB = req.session.lastDb;
-        var AvailabilitySchema = mongoose.Schemas.productsAvailability;
-        var Availability = models.get(lastDB, 'productsAvailability', AvailabilitySchema);
+        var AvailabilitySchema = mongoose.Schemas.ProduitsAvailability;
+        var Availability = models.get(lastDB, 'ProduitsAvailability', AvailabilitySchema);
         var aggregation;
 
         var pipeLine = [{
@@ -4695,7 +4695,7 @@ var Filters = function (models) {
             }
         }, {
             $lookup: {
-                from        : 'Products',
+                from        : 'Produits',
                 localField  : 'product',
                 foreignField: '_id',
                 as          : 'product'
@@ -4878,7 +4878,7 @@ var Filters = function (models) {
         var pipelines = [
             {
                 $lookup: {
-                    from        : 'Products',
+                    from        : 'Produits',
                     localField  : 'product',
                     foreignField: '_id',
                     as          : 'product'

@@ -39,7 +39,7 @@ module.exports = function (models) {
                 $match: query
             }, {
                 $lookup: {
-                    from        : 'Products',
+                    from        : 'Produits',
                     localField  : '_id',
                     foreignField: 'job',
                     as          : 'product'

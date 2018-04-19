@@ -43,7 +43,7 @@ define([
             'click #backBtn'                        : 'goToBack',
             'click .dialog-tabs a'                  : 'changeTab',
             'click #importMagentoBtn'               : 'importMagento',
-            'click #matchMyProducts'                : 'insertConflicts',
+            'click #matchMyProduits'                : 'insertConflicts',
             'click .item'                           : 'checkItem',
             'click #saveChanges'                    : 'saveChanges',
             'click .newSelectList li'               : 'chooseOption',

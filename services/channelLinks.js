@@ -228,7 +228,7 @@ module.exports = function (models) {
             });
         };
 
-        this.importedProducts = function (dbName, callback) {
+        this.importedProduits = function (dbName, callback) {
             var Model;
 
             if (typeof callback !== 'function') {

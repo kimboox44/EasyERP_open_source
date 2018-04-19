@@ -3,8 +3,8 @@ define([
     'jQuery',
     'Underscore',
     'views/listViewBase',
-    'text!templates/Products/form/VariantsList/ListHeader.html',
-    'views/Products/form/VariantsList/ListItemView',
+    'text!templates/Produits/form/VariantsList/ListHeader.html',
+    'views/Produits/form/VariantsList/ListItemView',
     'common',
     'constants',
     'services/productCategories',
@@ -32,7 +32,7 @@ define([
 
             options.startTime = new Date();
             this.noNeedCreatedIn = options.noNeedCreatedIn;
-            this.products = options.products;
+            this.Produits = options.Produits;
             this.sort = options.sort;
             this.filter = options.filter;
             this.stages = [];
@@ -57,7 +57,7 @@ define([
             var mid = 58;
             var id = $target.closest('tr').attr('id');
             var answer = confirm('Really DELETE items ?!');
-            var editModel = new ProductModel(_.find(this.products, function (el) {
+            var editModel = new ProductModel(_.find(this.Produits, function (el) {
                 return el._id === id;
             }));
 
@@ -140,7 +140,7 @@ define([
             $currentEl.append(_.template(listTemplate));
 
             itemView = new this.ListItemView({
-                collection : this.products,
+                collection : this.Produits,
                 page       : this.page,
                 itemsNumber: this.collection.namberToShow,
                 id         : this.id

@@ -13,7 +13,7 @@ var PaymentMethodSchema = mongoose.Schemas.PaymentMethod;
 var cashTransferSchema = mongoose.Schemas.cashTransfer;
 var orgSettingsSchema = mongoose.Schemas.orgSettingsSchema;
 var InvoicePaymentSchema = mongoose.Schemas.InvoicePayment;
-var ProductSchema = mongoose.Schemas.Products;
+var Produitschema = mongoose.Schemas.Produits;
 var objectId = mongoose.Types.ObjectId;
 
 var LIABILITIES = objectId('584e47953d2d06b40d2e9dc0');
@@ -1579,7 +1579,7 @@ var Module = function (models, event) {
             var localDate = moment().year(year).month(month - 1).endOf('month');
             var jeDate = moment(localDate).subtract(3, 'hours');
             var waterlallTasks;
-            var productSales;
+            var Produitsales;
             var COGS;
             var rates;
 
@@ -1933,7 +1933,7 @@ var Module = function (models, event) {
                             credit = result[0] ? result[0].credit : 0;
                             balance = Math.abs(debit - credit);
 
-                            productSales = balance;
+                            Produitsales = balance;
 
                             body = {
                                 currency      : CONSTANTS.CURRENCY_USD,
@@ -2447,7 +2447,7 @@ var Module = function (models, event) {
                     credit = result[0] ? result[0].credit : 0;
                     // balance = Math.abs(debit - credit);
 
-                    balance = Math.abs(productSales - COGS);
+                    balance = Math.abs(Produitsales - COGS);
 
                     body = {
                         currency      : CONSTANTS.CURRENCY_USD,
@@ -2462,7 +2462,7 @@ var Module = function (models, event) {
                         amount: balance
                     };
 
-                    if (productSales - COGS < 0) {
+                    if (Produitsales - COGS < 0) {
                         body.reverse = true;
                     }
 
@@ -3178,7 +3178,7 @@ var Module = function (models, event) {
                             }
                         }, {
                             $lookup: {
-                                from        : 'Products',
+                                from        : 'Produits',
                                 localField  : 'jobs',
                                 foreignField: 'job',
                                 as          : 'product'
@@ -3557,7 +3557,7 @@ var Module = function (models, event) {
                     }
                 }, {
                     $lookup: {
-                        from        : 'Products',
+                        from        : 'Produits',
                         localField  : '_id',
                         foreignField: 'job',
                         as          : 'product'
@@ -4219,7 +4219,7 @@ var Module = function (models, event) {
             var sourceDocument = query._id;
             var date = query.date;
             var product;
-            var Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+            var Product = models.get(req.session.lastDb, 'Product', Produitschema);
 
             Product.findOne({job: sourceDocument}, {_id: 1}, function (err, result) {
                 if (err) {
@@ -5204,10 +5204,10 @@ var Module = function (models, event) {
             findJobs = function (wfCb) {
                 JobsModel.aggregate([{
                     $lookup: {
-                        from        : 'Products',
+                        from        : 'Produits',
                         localField  : '_id',
                         foreignField: 'job',
-                        as          : 'products'
+                        as          : 'Produits'
                     }
                 }, {
                     $lookup: {
@@ -5219,13 +5219,13 @@ var Module = function (models, event) {
                 }, {
                     $project: {
                         goodsNote: {$arrayElemAt: ['$goodsNote', 0]},
-                        products : 1
+                        Produits : 1
                     }
                 }, {
                     $project: {
                         orderRows: '$goodsNote.orderRows',
                         goodsId  : '$goodsNote._id',
-                        products : 1
+                        Produits : 1
                     }
                 }, {
                     $unwind: {
@@ -5242,38 +5242,38 @@ var Module = function (models, event) {
                 }, {
                     $project: {
                         orderRow: {$arrayElemAt: ['$orderRow', 0]},
-                        products: 1,
+                        Produits: 1,
                         goodsId : 1
                     }
                 }, {
                     $project: {
                         orderRow      : 1,
-                        products      : 1,
+                        Produits      : 1,
                         goodsId       : 1,
                         debitAccounts : '$orderRow.debitAccount',
                         creditAccounts: '$orderRow.creditAccount'
                     }
                 }, {
                     $unwind: {
-                        path                      : '$products',
+                        path                      : '$Produits',
                         preserveNullAndEmptyArrays: true
                     }
                 }, {
                     $group: {
                         _id           : null,
-                        products      : {$addToSet: '$products._id'},
+                        Produits      : {$addToSet: '$Produits._id'},
                         debitAccounts : {$addToSet: '$debitAccounts'},
                         creditAccounts: {$addToSet: '$creditAccounts'},
                         goodsId       : {$addToSet: '$goodsId'}
                     }
                 }], function (err, result) {
-                    var products;
+                    var Produits;
 
                     if (err) {
                         return wfCb(err);
                     }
 
-                    products = result && result.length ? result[0].products : [];
+                    Produits = result && result.length ? result[0].Produits : [];
                     debitAccounts = result && result.length ? result[0].debitAccounts.objectID() : [];
                     creditAccounts = result && result.length ? result[0].creditAccounts.objectID() : [];
 
@@ -5281,11 +5281,11 @@ var Module = function (models, event) {
 
                     accounts = debitAccounts.concat(creditAccounts);
 
-                    wfCb(null, products);
+                    wfCb(null, Produits);
                 });
             };
 
-            composeReport = function (products, wfCb) {
+            composeReport = function (Produits, wfCb) {
                 var parallelTasks;
 
                 var getOpening = function (pCb) {
@@ -5293,7 +5293,7 @@ var Module = function (models, event) {
                         $match: {
                             date                  : {$lte: startDate},
                             debit                 : {$gt: 0},
-                            'sourceDocument._id'  : {$in: products},
+                            'sourceDocument._id'  : {$in: Produits},
                             'sourceDocument.model': 'product'
                         }
                     }, {
@@ -5308,7 +5308,7 @@ var Module = function (models, event) {
                         }
                     }, {
                         $lookup: {
-                            from        : 'Products',
+                            from        : 'Produits',
                             localField  : '_id',
                             foreignField: '_id',
                             as          : '_id'
@@ -5419,7 +5419,7 @@ var Module = function (models, event) {
                     }, {
                         $match: {
                             debit                 : {$gt: 0},
-                            'sourceDocument._id'  : {$in: products},
+                            'sourceDocument._id'  : {$in: Produits},
                             'sourceDocument.model': 'product'
                         }
                     }, {
@@ -5434,7 +5434,7 @@ var Module = function (models, event) {
                         }
                     }, {
                         $lookup: {
-                            from        : 'Products',
+                            from        : 'Produits',
                             localField  : '_id',
                             foreignField: '_id',
                             as          : '_id'
@@ -5592,7 +5592,7 @@ var Module = function (models, event) {
                         }
                     }, {
                         $lookup: {
-                            from        : 'Products',
+                            from        : 'Produits',
                             localField  : '_id.job._id',
                             foreignField: 'job',
                             as          : 'product'
@@ -5704,7 +5704,7 @@ var Module = function (models, event) {
                     resultArray = [];
                     sortField = Object.keys(sort)[0];
 
-                    products.forEach(function (el) { // need refactor on aggregate function
+                    Produits.forEach(function (el) { // need refactor on aggregate function
                         var newElement = {};
                         var project;
 
@@ -6707,7 +6707,7 @@ var Module = function (models, event) {
 
         this.getForReport = function (req, res, next) {
             var Model = models.get(req.session.lastDb, journalEntryCT, journalEntrySchema);
-            var Product = models.get(req.session.lastDb, 'Product', ProductSchema);
+            var Product = models.get(req.session.lastDb, 'Product', Produitschema);
             var query = req.query;
             var sourceDocument = query._id;
             var product;

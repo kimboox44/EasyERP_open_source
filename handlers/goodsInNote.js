@@ -47,7 +47,7 @@ var GoodsInNotes = function (models, event) {
                     return next(err);
                 }
 
-                AvailabilityHelper.receiveProducts({
+                AvailabilityHelper.receiveProduits({
                     dbName     : dbName,
                     uId        : user,
                     goodsInNote: result.toJSON()

@@ -31,17 +31,17 @@
         </th>
     </tr>
     </thead>
-    <tbody id="tbodyProducts">
+    <tbody id="tbodyProduits">
     <tr></tr>
 
-    <%products.forEach(function(elem, i){%>
+    <%Produits.forEach(function(elem, i){%>
 
     <%if (elem.product) {%>
     <tr class="productItem deleteRow" id="<%=elem._id%>" data-id="<%=elem.warehouse ? elem.warehouse._id : ''%>">
 
         <td data-name="productName">
 
-            <a class="current-selected" id="productsDd" href="javascript:;"
+            <a class="current-selected" id="ProduitsDd" href="javascript:;"
                data-id="<%= elem.product ? elem.product._id : ''%>">
 
                 <%=elem.product && elem.product.info ? elem.product.info.SKU : 'Select' %>

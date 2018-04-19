@@ -798,7 +798,7 @@ module.exports = function (models) {
                             };
 
                             if (result.wTrack) {
-                                objectToSave.products = [];
+                                objectToSave.Produits = [];
                                 result.wTrack.forEach(function (wTrack) {
                                     var productObject = {};
 
@@ -806,7 +806,7 @@ module.exports = function (models) {
                                     productObject.product = wTrack._id;
                                     productObject.taxes = 0;
                                     productObject.subTotal = wTrack.amount;
-                                    objectToSave.products.push(productObject);
+                                    objectToSave.Produits.push(productObject);
                                 });
                             }
                             if (result.project) {

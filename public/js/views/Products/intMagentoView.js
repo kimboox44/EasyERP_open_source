@@ -2,10 +2,10 @@ define([
     'Backbone',
     'jQuery',
     'Underscore',
-    'text!templates/Products/IntMagentoTemplate.html',
+    'text!templates/Produits/IntMagentoTemplate.html',
     'views/dialogViewBase',
     'models/ProductModel',
-    'collections/Products/filterCollection',
+    'collections/Produits/filterCollection',
     'common',
     'populate',
     'views/Notes/AttachView',
@@ -29,7 +29,7 @@ define([
             if (options && options.contentType) {
                 this.contentType = options.contentType;
             } else {
-                this.contentType = CONSTANTS.PRODUCTS;
+                this.contentType = CONSTANTS.Produits;
             }
 
             this.viewType = options.viewType || 'list';

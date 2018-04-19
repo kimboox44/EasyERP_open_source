@@ -111,7 +111,7 @@ define([
         },
 
         createItemListRow: function (item, index, className) {
-            var disabled = item.productsCount ? ' disabled' : '';
+            var disabled = item.ProduitsCount ? ' disabled' : '';
 
             return ('<li class="' + className + disabled + '" data-id="' + item._id + '" data-level="' + item.nestingLevel + '" data-sequence="' + item.sequence + '"><span class="content"><span class="dotted-line"></span><span class="text">' + item.name + '<span title="Delete" class="deleteCategoryItem trash icon-trash"></span><span title="Edit" class="editCategoryItem edit icon-pencil"></span></span></span></li>');
         },

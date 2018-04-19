@@ -10,7 +10,7 @@ define([
 
     var OptionsValuesCollection = Parent.extend({
         model: OptionsValuesModel,
-        url  : CONSTANTS.URLS.SETTINGS_PRODUCTS_VALUES,
+        url  : CONSTANTS.URLS.SETTINGS_Produits_VALUES,
 
         initialize: function (options) {
             function _errHandler(models, xhr) {
